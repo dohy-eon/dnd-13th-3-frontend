@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -10,13 +10,13 @@ const config: Config = {
     extend: {
       // MINU Design System - Grid
       maxWidth: {
-        'mobile': '375px', // MINU 디바이스 너비
-        'content': '335px', // MINU 콘텐츠 너비
+        mobile: '375px', // MINU 디바이스 너비
+        content: '335px', // MINU 콘텐츠 너비
       },
       screens: {
-        'mobile': '375px',
-        'tablet': '768px',
-        'desktop': '1024px',
+        mobile: '375px',
+        tablet: '768px',
+        desktop: '1024px',
       },
       // MINU Design System - Spacing (4-Point Grid)
       spacing: {
@@ -32,42 +32,69 @@ const config: Config = {
         '9': '32px',
         '10': '36px',
         'screen-margin': '20px', // MINU 스크린 마진
-        'gutter': '16px', // MINU 컬럼 간격
+        gutter: '16px', // MINU 컬럼 간격
       },
-      
+
       // MINU Design System - Typography
       fontFamily: {
-        'sans': ['Pretendard', 'sans-serif'],
-        'pretendard': ['Pretendard', 'sans-serif'],
+        sans: ['Pretendard', 'sans-serif'],
+        pretendard: ['Pretendard', 'sans-serif'],
       },
       fontSize: {
         // Display
-        'display-1': ['56px', { lineHeight: '72px', letterSpacing: '-0.0319em' }],
-        'display-2': ['40px', { lineHeight: '52px', letterSpacing: '-0.0282em' }],
+        'display-1': [
+          '56px',
+          { lineHeight: '72px', letterSpacing: '-0.0319em' },
+        ],
+        'display-2': [
+          '40px',
+          { lineHeight: '52px', letterSpacing: '-0.0282em' },
+        ],
         // Title
         'title-1': ['36px', { lineHeight: '48px', letterSpacing: '-0.027em' }],
         'title-2': ['32px', { lineHeight: '42px', letterSpacing: '-0.02em' }],
         'title-3': ['28px', { lineHeight: '38px', letterSpacing: '-0.0236em' }],
         'title-4': ['24px', { lineHeight: '32px', letterSpacing: '-0.023em' }],
         // Heading
-        'heading-1': ['22px', { lineHeight: '30px', letterSpacing: '-0.0194em' }],
-        'heading-2': ['20px', { lineHeight: '28px', letterSpacing: '-0.012em' }],
-        'headline-1': ['18px', { lineHeight: '26px', letterSpacing: '-0.002em' }],
+        'heading-1': [
+          '22px',
+          { lineHeight: '30px', letterSpacing: '-0.0194em' },
+        ],
+        'heading-2': [
+          '20px',
+          { lineHeight: '28px', letterSpacing: '-0.012em' },
+        ],
+        'headline-1': [
+          '18px',
+          { lineHeight: '26px', letterSpacing: '-0.002em' },
+        ],
         // Body
         'body-1': ['16px', { lineHeight: '24px', letterSpacing: '0.0057em' }],
-        'body-1-reading': ['16px', { lineHeight: '26px', letterSpacing: '0.0057em' }],
+        'body-1-reading': [
+          '16px',
+          { lineHeight: '26px', letterSpacing: '0.0057em' },
+        ],
         // Label
         'label-1': ['14px', { lineHeight: '20px', letterSpacing: '0.0145em' }],
-        'label-1-reading': ['14px', { lineHeight: '22px', letterSpacing: '0.0145em' }],
+        'label-1-reading': [
+          '14px',
+          { lineHeight: '22px', letterSpacing: '0.0145em' },
+        ],
         // Caption
-        'caption-1': ['12px', { lineHeight: '16px', letterSpacing: '0.0252em' }],
-        'caption-2': ['10px', { lineHeight: '14px', letterSpacing: '0.0252em' }],
+        'caption-1': [
+          '12px',
+          { lineHeight: '16px', letterSpacing: '0.0252em' },
+        ],
+        'caption-2': [
+          '10px',
+          { lineHeight: '14px', letterSpacing: '0.0252em' },
+        ],
       },
-      
+
       // MINU Design System - Colors (Toss Color)
       colors: {
         // Gray Scale
-        'gray': {
+        gray: {
           50: '#F8F9FA',
           100: '#F1F3F5',
           200: '#E9ECEF',
@@ -80,7 +107,7 @@ const config: Config = {
           900: '#212529',
         },
         // Blue Scale
-        'blue': {
+        blue: {
           50: '#E3F2FD',
           100: '#BBDEFB',
           200: '#90CAF9',
@@ -93,7 +120,7 @@ const config: Config = {
           900: '#0D47A1',
         },
         // Red Scale
-        'red': {
+        red: {
           50: '#FFEBEE',
           100: '#FFCDD2',
           200: '#EF9A9A',
@@ -106,7 +133,7 @@ const config: Config = {
           900: '#B71C1C',
         },
         // Orange Scale
-        'orange': {
+        orange: {
           50: '#FFF3E0',
           100: '#FFE0B2',
           200: '#FFCC80',
@@ -119,7 +146,7 @@ const config: Config = {
           900: '#E65100',
         },
         // Green Scale
-        'green': {
+        green: {
           50: '#E8F5E8',
           100: '#C8E6C9',
           200: '#A5D6A7',
@@ -132,7 +159,7 @@ const config: Config = {
           900: '#1B5E20',
         },
         // Teal Scale
-        'teal': {
+        teal: {
           50: '#E0F2F1',
           100: '#B2DFDB',
           200: '#80CBC4',
@@ -145,7 +172,7 @@ const config: Config = {
           900: '#004D40',
         },
         // Purple Scale
-        'purple': {
+        purple: {
           50: '#F3E5F5',
           100: '#E1BEE7',
           200: '#CE93D8',
@@ -158,14 +185,14 @@ const config: Config = {
           900: '#4A148C',
         },
         // Semantic Colors
-        'white': '#FFFFFF',
+        white: '#FFFFFF',
         'grey-background': '#F8F9FA',
         'layered-background': '#F1F3F5',
         'floated-background': '#E9ECEF',
         'dim-background': 'rgba(0, 0, 0, 0.2)',
         'border-hairline': '#E9ECEF',
       },
-      
+
       // MINU Design System - Icon Sizes
       width: {
         'icon-xs': '12px',
@@ -182,6 +209,6 @@ const config: Config = {
     },
   },
   plugins: [],
-}
+};
 
-export default config 
+export default config;
