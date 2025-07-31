@@ -1,3 +1,5 @@
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 @import "tailwindcss";
 
 :root {
@@ -11,8 +13,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   
-  --max-width-mobile: 768px;
-  --screen-mobile: 320px;
+  --max-width-mobile: 375px;
+  --screen-mobile: 375px;
   --screen-tablet: 768px;
   --screen-desktop: 1024px;
 }
