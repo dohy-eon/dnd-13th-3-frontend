@@ -1,25 +1,29 @@
 "use client";
-import { useTabStore } from "@/store/tabStore";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function MainTabSwitcher() {
-  const { activeTab, setTab } = useTabStore();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const isGoalActive = pathname === "/";
+  const isTimerActive = pathname === "/timer";
 
   return (
     <div className='flex justify-start items-center gap-3'>
       <button
         type='button'
-        onClick={() => setTab("goal")}
+        onClick={() => router.push("/")}
         className={`text-heading-2 font-bold ${
-          activeTab === "goal" ? "text-gray-900" : "text-gray-400"
+          isGoalActive ? "text-gray-900" : "text-gray-400"
         }`}
       >
         목표
       </button>
       <button
         type='button'
-        onClick={() => setTab("timer")}
+        onClick={() => router.push("/timer")}
         className={`text-heading-2 font-bold ${
-          activeTab === "timer" ? "text-gray-900" : "text-gray-400"
+          isTimerActive ? "text-gray-900" : "text-gray-400"
         }`}
       >
         타이머

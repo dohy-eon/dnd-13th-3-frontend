@@ -12,6 +12,10 @@ const config: Config = {
       maxWidth: {
         mobile: "375px", // MINU 디바이스 너비
         content: "335px", // MINU 콘텐츠 너비
+        tablet: "768px", //  최대 너비
+      },
+      minWidth: {
+        mobile: "375px", // 최소 너비
       },
       screens: {
         mobile: "375px",
@@ -21,11 +25,11 @@ const config: Config = {
       // MINU Design System - Spacing (4-Point Grid)
       spacing: {
         "0": "0px",
-        "1": "2px",
-        "2": "4px",
-        "3": "8px",
-        "4": "12px",
-        "5": "16px",
+        "1": "4px",
+        "2": "8px",
+        "3": "12px",
+        "4": "16px",
+        "5": "20px",
         "6": "20px",
         "7": "24px",
         "8": "28px",
@@ -191,6 +195,10 @@ const config: Config = {
         "floated-background": "#E9ECEF",
         "dim-background": "rgba(0, 0, 0, 0.2)",
         "border-hairline": "#E9ECEF",
+        // MINU Brand Colors
+        primary: "#557AF3", // 메인 컬러
+        secondary: "#839DF1", // secondary 컬러
+        "light-blue": "#B1C1FF", // light blue 컬러
       },
 
       // MINU Design System - Icon Sizes
@@ -208,7 +216,47 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    ({
+      addComponents,
+    }: {
+      addComponents: (
+        components: Record<
+          string,
+          Record<string, string | Record<string, string>>
+        >
+      ) => void;
+    }) => {
+      addComponents({
+        ".btn-main": {
+          "@apply px-2.5 py-3.5 rounded-xl font-semibold text-base leading-normal tracking-tight h-[52px]":
+            {},
+        },
+        ".btn-medium": {
+          "@apply px-2.5 py-3 rounded-[10px] font-medium text-sm leading-tight tracking-tight h-[44px]":
+            {},
+        },
+        ".btn-small": {
+          "@apply px-3 py-2 rounded-[46px] font-medium text-xs leading-none tracking-tight h-[32px]":
+            {},
+        },
+        ".btn-extra-small": {
+          "@apply px-2.5 py-1 rounded font-semibold text-[10px] leading-3 tracking-tight h-[32px]":
+            {},
+        },
+        ".btn-primary": {
+          "@apply bg-primary text-white": {},
+        },
+        ".btn-secondary": {
+          "@apply bg-white outline outline-1 outline-offset-[-1px] outline-primary text-primary":
+            {},
+        },
+        ".btn-disabled": {
+          "@apply bg-gray-100 text-gray-400 cursor-not-allowed": {},
+        },
+      });
+    },
+  ],
 };
 
 export default config;
