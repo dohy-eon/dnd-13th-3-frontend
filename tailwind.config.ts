@@ -8,6 +8,27 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        bounceOnly: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        "fade-out": "fadeOut 0.5s ease forwards",
+        "fade-in-bounce":
+          "fadeIn 0.5s ease forwards, bounceOnly 1.4s ease-in-out infinite",
+        "fade-in-delayed": "fadeIn 0.8s ease forwards 0.3s",
+      },
+
       // MINU Design System - Grid
       maxWidth: {
         mobile: "375px", // MINU 디바이스 너비

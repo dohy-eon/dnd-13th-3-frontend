@@ -5,7 +5,7 @@ export default function BottomNavbar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isHomeActive = pathname === "/" || pathname === "/timer";
+  const isHomeActive = pathname === "/main" || pathname === "/timer";
   const isChallengeActive = pathname === "/challenge";
   const isRecordActive = pathname === "/record";
 
@@ -28,7 +28,7 @@ export default function BottomNavbar() {
         </button>
         <button
           type='button'
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/main")}
           className={`flex flex-col items-center justify-center flex-1 h-full ${
             isHomeActive ? "text-blue-600" : "text-gray-600"
           }`}
