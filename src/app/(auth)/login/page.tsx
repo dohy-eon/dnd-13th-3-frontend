@@ -10,7 +10,7 @@ export default function LoginPage() {
   return (
     <main
       className={clsx(
-        "flex flex-col min-h-screen bg-primary relative items-center justify-between bg-primary"
+        "flex flex-col min-h-screen bg-primary relative items-center justify-between"
       )}
     >
       <CloudLayer />

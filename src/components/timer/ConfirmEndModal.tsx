@@ -22,9 +22,9 @@ export default function ConfirmEndModal({
           <button
             type='button'
             onClick={onCancel}
-            className='flex-1 btn-medium btn-secondary'
+            className='flex-1 btn-medium bg-gray-500 text-white'
           >
-            이어서 하기
+            이어서 시작
           </button>
           <button
             type='button'

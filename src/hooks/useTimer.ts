@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import useAnimationFrame from "use-animation-frame";
 
 interface TimerState {
   isRunning: boolean;
@@ -17,8 +18,8 @@ const INITIAL_TIMER_STATE: TimerState = {
 };
 
 export function useTimer() {
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const startTimeRef = useRef<number>(0);
+  const lastUpdateTimeRef = useRef<number>(0);
 
   const [state, setState] = useState<TimerState>(INITIAL_TIMER_STATE);
   const [isMounted, setIsMounted] = useState(false);
@@ -54,36 +55,34 @@ export function useTimer() {
     }
   }, [state, isMounted]);
 
+  useAnimationFrame((_deltaTime) => {
+    if (!state.isRunning) return;
+
+    const now = performance.now();
+    if (now - lastUpdateTimeRef.current >= 100) {
+      const elapsed = Date.now() - startTimeRef.current;
+      setState((prev) => ({ ...prev, elapsedTime: elapsed }));
+      lastUpdateTimeRef.current = now;
+    }
+  });
+
   const startTimer = useCallback(() => {
     const now = Date.now();
     startTimeRef.current = state.isPaused ? now - state.elapsedTime : now;
+    lastUpdateTimeRef.current = performance.now();
 
     setState((prev) => ({
       ...prev,
       isRunning: true,
       isPaused: false,
     }));
-
-    intervalRef.current = setInterval(() => {
-      const elapsed = Date.now() - startTimeRef.current;
-      setState((prev) => ({ ...prev, elapsedTime: elapsed }));
-    }, 100);
   }, [state.isPaused, state.elapsedTime]);
 
   const pauseTimer = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
     setState((prev) => ({ ...prev, isRunning: false, isPaused: true }));
   }, []);
 
   const endTimer = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-
     console.log("타이머 종료:", {
       mission: state.selectedMission,
       elapsedTime: state.elapsedTime,
@@ -104,26 +103,14 @@ export function useTimer() {
   }, [state.selectedMission, state.elapsedTime]);
 
   const resetTimer = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
     setState(INITIAL_TIMER_STATE);
     localStorage.removeItem("timerState");
     startTimeRef.current = 0;
+    lastUpdateTimeRef.current = 0;
   }, []);
 
   const setSelectedMission = useCallback((mission: string) => {
     setState((prev) => ({ ...prev, selectedMission: mission }));
-  }, []);
-
-  // 컴포넌트 언마운트 시 정리
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
   }, []);
 
   return {

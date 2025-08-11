@@ -11,18 +11,37 @@ export default function CircularTimer({
 }: CircularTimerProps) {
   return (
     <div className='relative flex items-center justify-center mb-8'>
-      <div className='w-72 h-72 rounded-full border-[3px] border-gray-100' />
-      {elapsedTime > 0 && (
-        <div
-          className='w-72 h-72 rounded-full absolute'
-          style={{
-            backgroundImage: `conic-gradient(from 0deg, rgb(85, 122, 243) 0deg, rgb(85, 122, 243) ${progressPercentage * 3.6}deg, transparent ${progressPercentage * 3.6}deg, transparent 360deg)`,
-            borderRadius: "50%",
-            border: "3px solid transparent",
-            backgroundClip: "padding-box",
-          }}
-        />
-      )}
+      <div className='w-76 h-76 rounded-full relative'>
+        <svg
+          className='w-full h-full rotate-[-90deg]'
+          viewBox='0 0 100 100'
+          role='img'
+          aria-label='타이머 진행률'
+        >
+          <circle
+            cx='50'
+            cy='50'
+            r='47'
+            fill='none'
+            stroke='#F1F3F5'
+            strokeWidth='1'
+          />
+          {elapsedTime > 0 && (
+            <circle
+              cx='50'
+              cy='50'
+              r='47'
+              fill='none'
+              stroke='#6366f1'
+              strokeWidth='2'
+              strokeDasharray={`${2 * Math.PI * 47}`}
+              strokeDashoffset={`${2 * Math.PI * 47 * (1 - progressPercentage / 100)}`}
+              strokeLinecap='round'
+              className='transition-all duration-100 ease-out'
+            />
+          )}
+        </svg>
+      </div>
       <div className='w-64 h-64 bg-white rounded-full shadow-[inset_2px_8px_19px_2px_rgba(189,208,255,1.00)] absolute' />
     </div>
   );
