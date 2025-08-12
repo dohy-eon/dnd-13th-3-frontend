@@ -1,4 +1,6 @@
 "use client";
+
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function BottomNavbar() {
@@ -8,52 +10,58 @@ export default function BottomNavbar() {
   const isHomeActive = pathname === "/main" || pathname === "/timer";
   const isChallengeActive = pathname === "/challenge";
   const isRecordActive = pathname === "/record";
+  const navItems = [
+    {
+      href: "/challenge",
+      label: "챌린지",
+      alt: "challenge",
+      isActive: isChallengeActive,
+      icon: "Medal",
+    },
+    {
+      href: "/main",
+      label: "홈",
+      alt: "home",
+      isActive: isHomeActive,
+      icon: "Home",
+    },
+    {
+      href: "/record",
+      label: "기록",
+      alt: "record",
+      isActive: isRecordActive,
+      icon: "Record",
+    },
+  ];
 
   return (
-    <div className='h-20 bg-gray-100 border-t border-gray-200'>
-      <div className='flex justify-around items-center h-full'>
-        <button
-          type='button'
-          onClick={() => router.push("/challenge")}
-          className={`flex flex-col items-center justify-center flex-1 h-full ${
-            isChallengeActive ? "text-blue-600" : "text-gray-600"
-          }`}
-        >
-          <div
-            className={`w-6 h-6 rounded mb-1 ${
-              isChallengeActive ? "bg-blue-600" : "bg-gray-400"
-            }`}
-          ></div>
-          <span className='text-xs'>챌린지</span>
-        </button>
-        <button
-          type='button'
-          onClick={() => router.push("/main")}
-          className={`flex flex-col items-center justify-center flex-1 h-full ${
-            isHomeActive ? "text-blue-600" : "text-gray-600"
-          }`}
-        >
-          <div
-            className={`w-6 h-6 rounded mb-1 ${
-              isHomeActive ? "bg-blue-600" : "bg-gray-400"
-            }`}
-          ></div>
-          <span className='text-xs'>홈</span>
-        </button>
-        <button
-          type='button'
-          onClick={() => router.push("/record")}
-          className={`flex flex-col items-center justify-center flex-1 h-full ${
-            isRecordActive ? "text-blue-600" : "text-gray-600"
-          }`}
-        >
-          <div
-            className={`w-6 h-6 rounded mb-1 ${
-              isRecordActive ? "bg-blue-600" : "bg-gray-400"
-            }`}
-          ></div>
-          <span className='text-xs'>기록</span>
-        </button>
+    <div className="max-w-[272px] mx-auto pb-4 sticky bottom-0 bg-transparent">
+      <div className="w-full px-4 bg-white rounded-[32px] outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-between items-center">
+        {navItems.map(({ href, label, alt, isActive, icon }) => (
+          <button
+            key={href}
+            type="button"
+            onClick={() => router.push(href)}
+            aria-current={isActive ? "page" : undefined}
+            className="h-16 min-w-20 px-4 py-2.5 inline-flex flex-col justify-center items-center gap-0.5"
+          >
+            <Image
+              src={`/images/logos/${icon}${isActive ? "Active" : ""}.svg`}
+              alt={alt}
+              width={24}
+              height={24}
+            />
+            <span
+              className={
+                isActive
+                  ? "text-primary text-xs font-semibold leading-none tracking-tight"
+                  : "text-gray-400 text-xs font-medium leading-none tracking-tight"
+              }
+            >
+              {label}
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );
