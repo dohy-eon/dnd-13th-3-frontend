@@ -8,8 +8,8 @@ function StepProgress({ currentStep }: { currentStep: number }) {
     []
   );
   return (
-    <div className='w-full px-screen-margin py-3'>
-      <div className='w-full max-w-content mx-auto grid grid-cols-3 gap-3'>
+    <div className='w-full py-3 px-screen-margin'>
+      <div className='w-full mx-auto grid grid-cols-3 gap-3'>
         {stepKeys.map((key, idx) => (
           <div
             key={key}

@@ -8,9 +8,9 @@ interface BottomBarProps {
 
 export default function BottomBar({ disabled, onNext, label }: BottomBarProps) {
   return (
-    <div className='fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-20'>
+    <div className='fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-20 max-w-tablet mx-auto'>
       <div className='py-3 w-full px-screen-margin'>
-        <div className='max-w-content mx-auto'>
+        <div className='mx-auto'>
           <button
             type='button'
             onClick={onNext}

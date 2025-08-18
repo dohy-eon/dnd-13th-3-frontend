@@ -14,7 +14,7 @@ function NicknameField({
   onCompositionEnd,
 }: NicknameFieldProps) {
   return (
-    <div className='space-y-2 max-w-content mx-auto'>
+    <div className='space-y-2 mx-auto'>
       <div className='w-full px-4 py-3.5 rounded-xl border border-gray-200'>
         <input
           type='text'

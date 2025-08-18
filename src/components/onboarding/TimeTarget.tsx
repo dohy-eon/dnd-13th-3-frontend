@@ -33,7 +33,7 @@ function TimeTarget({
   );
 
   return (
-    <div className='max-w-content w-full mx-auto'>
+    <div className='w-full mx-auto'>
       <div className='flex flex-col gap-3 mt-4'>
         {labels.map((label, idx) => (
           <SelectableButton
