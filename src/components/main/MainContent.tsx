@@ -17,7 +17,7 @@ export default function MainContent() {
   const [isGoalEditModalOpen, setGoalEditModalOpen] = useState(false);
   const [goal, setGoal] = useState("혼자 있는 시간 디지털 없이 보내기");
   const [targetTime, setTargetTime] = useState({ hours: 7, minutes: 0 });
-  const [todayScreenTime, setTodayScreenTime] = useState(210); // 더미데이터 (3시간 30분)
+  const [todayScreenTime, _setTodayScreenTime] = useState(210); // 더미데이터 (3시간 30분)
 
   const openTimeEditModal = () => setTimeEditModalOpen(true);
   const closeTimeEditModal = () => setTimeEditModalOpen(false);
@@ -51,7 +51,7 @@ export default function MainContent() {
     : "/images/logos/screentime.svg";
 
   return (
-    <div className='w-full h-full bg-white overflow-hidden flex flex-col'>
+    <div className='w-full h-[calc(100dvh-120px)] px-screen-margin bg-white overflow-hidden flex flex-col'>
       {/* 상단 탭 스위처 */}
       <div className='flex pt-[20px]'>
         <TabSwitcher />
