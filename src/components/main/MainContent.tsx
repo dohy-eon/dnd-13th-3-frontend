@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GoalTab } from "@/components/common";
 import {
   GoalEditModal,
@@ -11,6 +11,7 @@ import {
   TimeEditModal,
 } from "@/components/main";
 import { TabSwitcher } from "@/components/timer";
+import { loadOnboardingData } from "@/lib/onboardingStorage";
 
 export default function MainContent() {
   const [isTimeEditModalOpen, setTimeEditModalOpen] = useState(false);
@@ -18,6 +19,13 @@ export default function MainContent() {
   const [goal, setGoal] = useState("혼자 있는 시간 디지털 없이 보내기");
   const [targetTime, setTargetTime] = useState({ hours: 7, minutes: 0 });
   const [todayScreenTime, _setTodayScreenTime] = useState(210); // 더미데이터 (3시간 30분)
+
+  useEffect(() => {
+    const data = loadOnboardingData();
+    if (!data) return;
+    if (data.goal) setGoal(data.goal);
+    setTargetTime({ hours: data.hours ?? 0, minutes: data.minutes ?? 0 });
+  }, []);
 
   const openTimeEditModal = () => setTimeEditModalOpen(true);
   const closeTimeEditModal = () => setTimeEditModalOpen(false);

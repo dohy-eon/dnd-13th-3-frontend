@@ -4,6 +4,7 @@ export { default as Container } from "./Container";
 export { default as GoalSelect } from "./GoalSelect";
 export { default as NicknameField } from "./NicknameField";
 export { default as Onboarding } from "./Onboarding";
+export { default as OnboardingResult } from "./OnboardingResult";
 export { default as SelectableButton } from "./SelectableButton";
 export { default as SelectedIndicator } from "./SelectedIndicator";
 export { default as StepProgress } from "./StepProgress";

@@ -6,6 +6,7 @@ import { useGoalSelection } from "@/hooks/useGoalSelection";
 import { useNicknameInput } from "@/hooks/useNicknameInput";
 import { useTimeTarget } from "@/hooks/useTimeTarget";
 import { getOnboardingTitle, TOTAL_STEPS } from "@/lib/onboarding";
+import { saveOnboardingData } from "@/lib/onboardingStorage";
 import {
   BackHeader,
   BottomBar,
@@ -59,6 +60,8 @@ export default function Onboarding() {
     minutes,
     handleHoursChange,
     handleMinutesChange,
+    parsedHours,
+    parsedMinutes,
     isValid: isTimeValid,
   } = useTimeTarget(presetHours);
 
@@ -68,9 +71,50 @@ export default function Onboarding() {
   }, [currentStep, router]);
 
   const handleNextClick = useCallback(() => {
-    if (currentStep < TOTAL_STEPS) setCurrentStep((s) => s + 1);
-    else router.push("/main");
-  }, [currentStep, router]);
+    if (currentStep < TOTAL_STEPS) {
+      setCurrentStep((s) => s + 1);
+      return;
+    }
+
+    const goalText =
+      selectionType === "preset" && selectedIndex !== null
+        ? presets[selectedIndex]
+        : customGoal;
+
+    let finalHours = parsedHours;
+    let finalMinutes = parsedMinutes;
+    if (timeSelectionType === "preset" && selectedPresetIndex !== null) {
+      const total = presetHours[selectedPresetIndex] * 60;
+      finalHours = Math.floor(total / 60);
+      finalMinutes = total % 60;
+    }
+
+    try {
+      saveOnboardingData({
+        nickname,
+        goal: goalText,
+        hours: finalHours,
+        minutes: finalMinutes,
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to save onboarding data:", error);
+    }
+    router.push("/onboarding/result");
+  }, [
+    currentStep,
+    selectionType,
+    selectedIndex,
+    presets,
+    customGoal,
+    nickname,
+    parsedHours,
+    parsedMinutes,
+    timeSelectionType,
+    selectedPresetIndex,
+    presetHours,
+    router,
+  ]);
 
   const isStep1Valid = nickname.trim().length > 0;
   const isStep2Valid = isGoalValid;
