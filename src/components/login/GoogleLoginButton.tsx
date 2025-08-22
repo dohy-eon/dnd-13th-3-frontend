@@ -1,15 +1,14 @@
 "use client";
 
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { OAUTH_START_URL } from "@/lib/config";
 
 interface GoogleLoginButtonProps {
   onClick?: () => void;
 }
 
 export default function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
-  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -18,9 +17,8 @@ export default function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
   }, []);
 
   const handleClick = () => {
-    console.log("클릭 이벤트 핸들");
     onClick?.();
-    router.push("/onboarding");
+    window.location.replace(OAUTH_START_URL);
   };
 
   return (
