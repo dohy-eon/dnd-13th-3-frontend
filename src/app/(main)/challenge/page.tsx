@@ -6,7 +6,7 @@ export default async function ChallengePage() {
 
   if (hasChallenge && challengeData) {
     return (
-      <div className='h-[calc(100dvh-120px)]'>
+      <div className='h-[calc(100dvh-120px)] bg-primary'>
         <div className='flex flex-col items-center justify-center h-full'>
           <h1 className='text-title-1 font-bold text-gray-900 mb-8'>
             진행 중인 챌린지

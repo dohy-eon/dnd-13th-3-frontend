@@ -70,23 +70,36 @@ export default function TimeEditModal({
   if (!isOpen) return null;
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50'>
-      <div className='w-96 bg-white rounded-t-2xl flex flex-col items-center'>
-        {/* 모달 */}
-        <button
-          type='button'
-          className='w-full h-8 flex justify-center items-center cursor-pointer'
-          onClick={onClose}
-        >
-          <div className='w-12 h-1 bg-neutral-200 rounded-full' />
-        </button>
+    <div
+      className='fixed inset-0 bg-dim-background flex items-end z-50'
+      onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
+      role='dialog'
+      aria-modal='true'
+    >
+      <div
+        className='bg-white w-full min-w-mobile max-w-tablet mx-auto rounded-t-[39px] max-h-[70vh] overflow-y-auto animate-slide-up'
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+        role='document'
+      >
+        <div className='h-4 px-2.5 bg-white rounded-t-[39px] rounded-tr-[34px] flex flex-col justify-end items-center'>
+          <div className='w-12 h-1 bg-neutral-200 rounded-[40px]'></div>
+        </div>
 
-        {/* 내용 */}
-        <div className='w-80 py-4 flex flex-col items-center gap-2'>
-          <p className='w-full text-gray-800 text-xs font-medium font-pretendard leading-none tracking-tight'>
+        <div className='px-screen-margin py-[20px] bg-white'>
+          <h2 className='text-xl font-semibold text-gray-900 mb-1'>
             목표 시간 수정
+          </h2>
+          <p className='text-xs font-medium text-gray-400 leading-none tracking-tight'>
+            목표 시간을 설정해주세요.
           </p>
-          <div className='w-full h-16 flex justify-start items-start gap-3 mt-2'>
+        </div>
+
+        <div className='px-screen-margin pb-6 bg-white flex flex-col items-center gap-4'>
+          <div className='w-full h-16 flex justify-start items-start gap-3'>
             <TimeInput
               value={hours}
               onChange={handleHoursChange}
@@ -98,21 +111,23 @@ export default function TimeEditModal({
               label='분'
             />
           </div>
-          {error && <p className='text-red-500 text-xs mt-1'>{error}</p>}
+          {error && <p className='text-red-500 text-xs'>{error}</p>}
         </div>
 
-        {/* 완료버튼 */}
-        <div className='w-full p-2.5 flex justify-center'>
+        <div className='px-screen-margin pb-6 bg-white'>
           <button
             type='button'
-            className={`w-80 h-12 rounded-xl text-white text-base font-semibold font-pretendard leading-normal tracking-tight ${
-              isSaveDisabled ? "bg-gray-300" : "bg-indigo-500"
-            }`}
             onClick={handleSave}
             disabled={isSaveDisabled}
+            className={`w-full transition-colors ${
+              isSaveDisabled ? "btn-main btn-disabled" : "btn-main btn-primary"
+            }`}
           >
             완료
           </button>
+        </div>
+        <div className='h-8 relative backdrop-blur-lg'>
+          <div className='w-32 h-[5px] left-1/2 top-[21px] absolute bg-neutral-900 rounded-md transform -translate-x-1/2'></div>
         </div>
       </div>
     </div>

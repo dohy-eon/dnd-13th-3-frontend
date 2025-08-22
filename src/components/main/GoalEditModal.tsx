@@ -32,51 +32,63 @@ export default function GoalEditModal({
 
   return (
     <div
-      className={`fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
+      className='fixed inset-0 bg-dim-background flex items-end z-50'
+      onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
+      role='dialog'
+      aria-modal='true'
     >
       <div
-        className={`w-full bg-white rounded-t-2xl flex flex-col items-center transform transition-transform duration-300 ${isOpen ? "translate-y-0" : "translate-y-full"}`}
+        className='bg-white w-full min-w-mobile max-w-tablet mx-auto rounded-t-[39px] max-h-[70vh] overflow-y-auto animate-slide-up'
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+        role='document'
       >
-        {/* Modal Handle */}
-        <button
-          type='button'
-          className='w-full h-8 flex justify-center items-center cursor-pointer'
-          onClick={onClose}
-        >
-          <div className='w-12 h-1 bg-neutral-200 rounded-full' />
-        </button>
+        <div className='h-4 px-2.5 bg-white rounded-t-[39px] rounded-tr-[34px] flex flex-col justify-end items-center'>
+          <div className='w-12 h-1 bg-neutral-200 rounded-[40px]'></div>
+        </div>
 
-        {/* Content */}
-        <div className='w-full px-4 py-4 flex flex-col items-center gap-2'>
-          <p className='w-full text-gray-800 text-xs font-medium font-pretendard leading-none tracking-tight'>
+        <div className='px-screen-margin py-[20px] bg-white'>
+          <h2 className='text-xl font-semibold text-gray-900 mb-1'>
             목표 수정
+          </h2>
+          <p className='text-xs font-medium text-gray-400 leading-none tracking-tight'>
+            목표를 수정해주세요.
           </p>
-          <div className='w-full h-16 flex flex-col justify-start items-end gap-2 mt-2'>
-            <div className='self-stretch h-11 relative bg-white border-b-2 border-gray-100 overflow-hidden'>
+        </div>
+
+        <div className='px-screen-margin pb-6 bg-white flex flex-col items-center gap-4'>
+          <div className='w-full flex flex-col justify-start items-end gap-2'>
+            <div className='w-full h-11 relative bg-white border-b-2 border-gray-100 overflow-hidden'>
               <input
                 type='text'
                 value={goal}
                 onChange={(e) => setGoal(e.target.value)}
                 maxLength={20}
-                className='w-full h-full text-gray-900 text-xl font-semibold font-pretendard leading-7 bg-transparent outline-none'
+                className='w-full h-full text-gray-900 text-xl font-semibold leading-7 bg-transparent outline-none'
                 placeholder='목표를 수정해주세요.'
               />
             </div>
-            <p className='self-stretch text-right text-gray-400 text-xs font-normal font-pretendard leading-none tracking-tight'>
+            <p className='text-right text-gray-400 text-xs font-normal leading-none tracking-tight'>
               ({goal.length}/20)
             </p>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className='w-full p-4 flex justify-center'>
+        <div className='px-screen-margin pb-6 bg-white'>
           <button
             type='button'
-            className='w-full h-12 bg-indigo-500 rounded-xl text-white text-base font-semibold font-pretendard leading-normal tracking-tight'
+            className='w-full transition-colors btn-main btn-primary'
             onClick={handleSave}
           >
             완료
           </button>
+        </div>
+
+        <div className='h-8 relative backdrop-blur-lg'>
+          <div className='w-32 h-[5px] left-1/2 top-[21px] absolute bg-neutral-900 rounded-md transform -translate-x-1/2'></div>
         </div>
       </div>
     </div>

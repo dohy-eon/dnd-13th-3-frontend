@@ -82,9 +82,9 @@ export default function ChallengeCreateForm() {
               type='text'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder='ex.진 사람 디저트 사기'
+              placeholder='ex.유튜브 하루에 한시간만 하기'
               maxLength={20}
-              className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-400 text-base font-normal leading-normal tracking-tight focus:outline-primary focus:outline-2 focus:text-gray-900'
+              className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-normal leading-normal tracking-tight focus:outline-primary focus:outline-2'
             />
             <div className='text-right text-gray-400 text-xs font-normal leading-none tracking-tight'>
               ({title.length}/20)
@@ -111,7 +111,7 @@ export default function ChallengeCreateForm() {
                   setGoalTimeHours(value);
                 }}
                 placeholder='3'
-                className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-400 text-base font-normal leading-normal tracking-tight focus:outline-primary focus:outline-2 focus:text-gray-900'
+                className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-normal leading-normal tracking-tight focus:outline-primary focus:outline-2'
               />
               <div className='text-gray-400 text-xs leading-none tracking-tight'>
                 시간 단위로 입력해주세요 (최대 24시간)

@@ -112,7 +112,7 @@ export default function TimerContainer() {
         isModalOpen={modalState.showMissionModal}
       />
 
-      <div className='flex gap-3 mt-8'>
+      <div className='flex gap-3 mt-8 mb-4'>
         {buttonState.showStartButton ? (
           <button
             type='button'

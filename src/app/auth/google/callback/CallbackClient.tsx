@@ -54,8 +54,12 @@ export default function CallbackClient() {
         localStorage.setItem("refreshToken", res.refreshToken);
         localStorage.setItem("user", JSON.stringify(res.user));
         router.replace("/onboarding");
-      } catch (e: any) {
-        setMessage(e?.message ?? "로그인 처리 중 오류가 발생했습니다.");
+      } catch (e: unknown) {
+        const errorMessage =
+          e instanceof Error
+            ? e.message
+            : "로그인 처리 중 오류가 발생했습니다.";
+        setMessage(errorMessage);
       }
     })();
   }, [

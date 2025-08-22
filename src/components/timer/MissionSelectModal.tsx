@@ -114,7 +114,7 @@ export default function MissionSelectModal({
                     value={customMission}
                     onChange={(e) => setCustomMission(e.target.value)}
                     placeholder='미션을 입력해주세요'
-                    className='w-full h-full text-xl font-semibold text-gray-400 leading-7 focus:outline-none'
+                    className='w-full h-full text-xl font-semibold text-gray-900 leading-7 focus:outline-none'
                     maxLength={10}
                   />
                 </div>

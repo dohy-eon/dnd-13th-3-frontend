@@ -46,7 +46,7 @@ export default function StatsCards({
   return (
     <div className='w-full flex justify-center items-center gap-2'>
       {/* 목표 시간 카드 */}
-      <div className='w-40 px-5 py-3 bg-gray-100 rounded-2xl flex justify-start items-start gap-1'>
+      <div className='flex-1 px-5 py-3 bg-gray-100 rounded-2xl flex justify-start items-start gap-1'>
         <div className='flex flex-col justify-start items-start gap-2'>
           {/* 타이머 + 텍스트 */}
           <div className='flex justify-start items-center gap-1'>
@@ -61,7 +61,7 @@ export default function StatsCards({
             </div>
           </div>
           {/* 시간 + 연필 */}
-          <div className='w-32 flex justify-between items-center'>
+          <div className='w-full flex justify-between items-center'>
             <div className='text-gray-900 text-xl font-semibold font-pretendard leading-7'>
               {targetTime.minutes > 0
                 ? `${targetTime.hours}시간 ${targetTime.minutes}분`
@@ -84,7 +84,7 @@ export default function StatsCards({
       </div>
 
       {/* 오늘의 성공률 카드 */}
-      <div className='w-40 px-5 py-3 bg-gray-100 rounded-2xl flex justify-start items-center gap-1'>
+      <div className='flex-1 px-5 py-3 bg-gray-100 rounded-2xl flex justify-start items-center gap-1'>
         <div className='flex flex-col justify-start items-start gap-2'>
           {/* 별 + 텍스트 */}
           <div className='flex justify-start items-center gap-1'>
