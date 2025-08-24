@@ -1,5 +1,5 @@
-import { http } from "@/lib/api/http";
-import type { GoogleLoginRequestBody, LoginResponse } from "@/lib/auth";
+import { publicApi } from "@/lib/api/instances";
+import type { GoogleLoginRequestBody, LoginResponse } from "@/types/auth";
 
 /**
  * Google OAuth login/signup
@@ -9,7 +9,7 @@ import type { GoogleLoginRequestBody, LoginResponse } from "@/lib/auth";
 export async function loginWithGoogle(
   body: GoogleLoginRequestBody
 ): Promise<LoginResponse> {
-  const { data } = await http.post<LoginResponse>(
+  const { data } = await publicApi.post<LoginResponse>(
     "/api/auth/login/google",
     body
   );

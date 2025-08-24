@@ -5,8 +5,15 @@ import { useCallback, useMemo, useState } from "react";
 import { useGoalSelection } from "@/hooks/useGoalSelection";
 import { useNicknameInput } from "@/hooks/useNicknameInput";
 import { useTimeTarget } from "@/hooks/useTimeTarget";
+import { registerUserProfile } from "@/lib/api/user";
+import {
+  formatScreenTimeCustom,
+  mapGoalPresetToEnum,
+  mapPresetHoursToEnum,
+} from "@/lib/goals";
 import { getOnboardingTitle, TOTAL_STEPS } from "@/lib/onboarding";
 import { saveOnboardingData } from "@/lib/onboardingStorage";
+import { useUserStore } from "@/stores/userStore";
 import {
   BackHeader,
   BottomBar,
@@ -20,6 +27,8 @@ import {
 
 export default function Onboarding() {
   const router = useRouter();
+  const { setOnboardingData, completeOnboarding } = useUserStore();
+
   const {
     nickname,
     handleChange,
@@ -70,37 +79,71 @@ export default function Onboarding() {
     else router.push("/login");
   }, [currentStep, router]);
 
-  const handleNextClick = useCallback(() => {
+  const handleNextClick = useCallback(async () => {
     if (currentStep < TOTAL_STEPS) {
       setCurrentStep((s) => s + 1);
       return;
     }
 
-    const goalText =
-      selectionType === "preset" && selectedIndex !== null
-        ? presets[selectedIndex]
-        : customGoal;
-
-    let finalHours = parsedHours;
-    let finalMinutes = parsedMinutes;
-    if (timeSelectionType === "preset" && selectedPresetIndex !== null) {
-      const total = presetHours[selectedPresetIndex] * 60;
-      finalHours = Math.floor(total / 60);
-      finalMinutes = total % 60;
-    }
-
+    // 온보딩 완료 처리
     try {
+      // 1) Goal 매핑 (Korean label -> Enum)
+      const goalType =
+        selectionType === "preset" && selectedIndex != null
+          ? mapGoalPresetToEnum(presets[selectedIndex])
+          : "CUSTOM";
+      const goalCustom = selectionType === "custom" ? customGoal : null;
+
+      // 2) ScreenTimeGoal 매핑 (preset hours -> `<N>HOURS`, custom -> `CUSTOM` + formatted custom)
+      const screenTimeType =
+        timeSelectionType === "preset" && selectedPresetIndex != null
+          ? mapPresetHoursToEnum(presetHours[selectedPresetIndex])
+          : "CUSTOM";
+      const totalMinutes = parsedHours * 60 + parsedMinutes;
+      const screenTimeCustom =
+        timeSelectionType === "custom"
+          ? formatScreenTimeCustom(parsedHours, parsedMinutes)
+          : null;
+
+      // API 호출하여 프로필 등록
+      await registerUserProfile({
+        nickname,
+        goal: { type: goalType, custom: goalCustom },
+        screenTimeGoal: { type: screenTimeType, custom: screenTimeCustom },
+      });
+
+      // Zustand 스토어에 온보딩 데이터 저장
+      setOnboardingData({
+        nickname,
+        goal: { type: goalType, custom: goalCustom },
+        screenTimeGoal: { type: screenTimeType, custom: screenTimeCustom },
+      });
+
+      // 온보딩 완료 상태로 설정
+      completeOnboarding();
+
+      // 결과 페이지에서 사용할 요약 정보를 세션에 저장
+      const goalLabel =
+        selectionType === "preset" && selectedIndex != null
+          ? presets[selectedIndex]
+          : (customGoal ?? "");
+      const summaryHours =
+        timeSelectionType === "preset" && selectedPresetIndex != null
+          ? presetHours[selectedPresetIndex]
+          : parsedHours;
+      const summaryMinutes = timeSelectionType === "preset" ? 0 : parsedMinutes;
       saveOnboardingData({
         nickname,
-        goal: goalText,
-        hours: finalHours,
-        minutes: finalMinutes,
+        goal: goalLabel,
+        hours: summaryHours,
+        minutes: summaryMinutes,
       });
+
+      router.push("/onboarding/result");
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error("Failed to save onboarding data:", error);
+      console.error("Failed to register user profile:", error);
+      // 에러 처리 (사용자에게 알림 등)
     }
-    router.push("/onboarding/result");
   }, [
     currentStep,
     selectionType,
@@ -114,6 +157,8 @@ export default function Onboarding() {
     selectedPresetIndex,
     presetHours,
     router,
+    setOnboardingData,
+    completeOnboarding,
   ]);
 
   const isStep1Valid = nickname.trim().length > 0;

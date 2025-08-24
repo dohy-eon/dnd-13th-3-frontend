@@ -3,15 +3,15 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { loginWithGoogle } from "@/lib/api/auth";
+import { useUserStore } from "@/stores/userStore";
 
 export default function CallbackClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setUser, setTokens } = useUserStore();
+
   const code = searchParams.get("code");
   const error = searchParams.get("error");
-  const accessTokenParam = searchParams.get("accessToken");
-  const refreshTokenParam = searchParams.get("refreshToken");
-  const userParam = searchParams.get("user");
   const [message, setMessage] = useState("구글 로그인 처리 중...");
 
   const redirectUrl = useMemo(
@@ -20,26 +20,7 @@ export default function CallbackClient() {
   );
 
   useEffect(() => {
-    // 1) Backend-driven flow: tokens already in URL
-    if (accessTokenParam && refreshTokenParam) {
-      try {
-        localStorage.setItem("accessToken", accessTokenParam);
-        localStorage.setItem("refreshToken", refreshTokenParam);
-        if (userParam) {
-          try {
-            localStorage.setItem("user", userParam);
-          } catch (_) {
-            // ignore if not valid JSON
-          }
-        }
-        router.replace("/onboarding");
-      } catch (_e) {
-        setMessage("토큰 저장 중 오류가 발생했습니다.");
-      }
-      return;
-    }
-
-    // 2) Fallback: code exchange via API
+    // code exchange via API
     if (error) {
       setMessage(`구글 로그인 실패: ${error}`);
       return;
@@ -50,9 +31,12 @@ export default function CallbackClient() {
     (async () => {
       try {
         const res = await loginWithGoogle({ code, redirectUrl });
-        localStorage.setItem("accessToken", res.accessToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
-        localStorage.setItem("user", JSON.stringify(res.user));
+
+        // Zustand 스토어에 사용자 정보와 토큰 저장
+        setTokens(res.accessToken, res.refreshToken);
+        setUser(res.user);
+
+        // 기본적으로 온보딩으로 이동
         router.replace("/onboarding");
       } catch (e: unknown) {
         const errorMessage =
@@ -62,15 +46,7 @@ export default function CallbackClient() {
         setMessage(errorMessage);
       }
     })();
-  }, [
-    accessTokenParam,
-    refreshTokenParam,
-    userParam,
-    code,
-    error,
-    redirectUrl,
-    router,
-  ]);
+  }, [code, error, redirectUrl, router, setUser, setTokens]);
 
   return (
     <div className='min-h-screen flex items-center justify-center px-6'>

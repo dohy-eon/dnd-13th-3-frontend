@@ -2,9 +2,16 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import { useUserStore } from "@/stores/userStore";
 
 export default function ChallengeEmptyState() {
   const router = useRouter();
+  const { user, onboardingData } = useUserStore();
+  const nickname = useMemo(() => {
+    const n = user?.nickname || onboardingData?.nickname || "미누";
+    return n.endsWith("님") ? n : `${n}님`;
+  }, [user, onboardingData]);
 
   const handleStartChallenge = () => {
     router.push("/challenge/create");
@@ -41,7 +48,7 @@ export default function ChallengeEmptyState() {
         <div className='mb-8'>
           <div className='justify-start mx-auto'>
             <span className="text-gray-900 text-xl font-semibold font-['Pretendard'] leading-7">
-              미누님,{" "}
+              {nickname},{" "}
             </span>
             <span className="text-gray-900 text-xl font-medium font-['Pretendard'] leading-7">
               아직 도전 중인 챌린지가 없어요!
