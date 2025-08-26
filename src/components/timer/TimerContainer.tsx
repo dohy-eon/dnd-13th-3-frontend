@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { saveTimerRecord } from "@/lib/api/timer";
 import { useTimer } from "../../hooks/useTimer";
 import ConfirmEndModal from "./ConfirmEndModal";
 import MissionSelectModal from "./MissionSelectModal";
@@ -44,8 +45,27 @@ export default function TimerContainer() {
     timerStart();
   }, [selectedMission, timerStart]);
 
-  const endTimer = useCallback(() => {
+  const endTimer = useCallback(async () => {
     const result = timerEnd();
+    try {
+      const totalSeconds = Math.floor(result.elapsedTime / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      const now = new Date();
+      const startedAt = new Date(now.getTime() - result.elapsedTime);
+
+      await saveTimerRecord({
+        category: result.mission,
+        duration_hours: hours,
+        duration_minutes: minutes,
+        duration_seconds: seconds,
+        started_at: startedAt.toISOString(),
+        ended_at: now.toISOString(),
+      });
+    } catch (_error) {}
+
     setModalState((prev) => ({
       ...prev,
       showConfirmModal: false,
@@ -104,7 +124,7 @@ export default function TimerContainer() {
   }, [isRunning, isPaused]);
 
   return (
-    <div className='max-w-mobile mx-auto w-full h-full flex flex-col'>
+    <div className='max-w-mobile mx-auto w-full flex flex-col'>
       <TimerDisplay
         elapsedTime={elapsedTime}
         selectedMission={selectedMission}
@@ -112,7 +132,7 @@ export default function TimerContainer() {
         isModalOpen={modalState.showMissionModal}
       />
 
-      <div className='flex gap-3 mt-8 mb-4'>
+      <div className='flex gap-3 mt-8'>
         {buttonState.showStartButton ? (
           <button
             type='button'

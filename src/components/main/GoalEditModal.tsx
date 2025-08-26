@@ -32,7 +32,7 @@ export default function GoalEditModal({
 
   return (
     <div
-      className='fixed inset-0 bg-dim-background flex items-end z-50'
+      className='fixed inset-0 bg-dim-background flex items-end z-[99999]'
       onClick={onClose}
       onKeyDown={(e) => {
         if (e.key === "Escape") onClose();

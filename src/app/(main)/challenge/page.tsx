@@ -1,31 +1,63 @@
-import { ChallengeEmptyState } from "@/components/challenge";
-import { checkOngoingChallenge } from "@/lib/api/challenge";
+import {
+  ChallengeEmptyState,
+  ChallengeHeader,
+  ChallengeOngoing,
+} from "@/components/challenge";
+import { getChallenge } from "@/lib/api/challenge";
+import { getUserProfile } from "@/lib/api/user";
 
 export default async function ChallengePage() {
-  const { hasChallenge, challengeData } = await checkOngoingChallenge();
+  let hasChallenge = false;
+  let challengeData = null;
+  let userProfile = null;
+
+  try {
+    const [challengeResponse, userProfileResponse] = await Promise.all([
+      getChallenge(),
+      getUserProfile(),
+    ]);
+
+    console.log("🔍 Challenge 페이지: 챌린지 조회 결과:", challengeResponse);
+    console.log(
+      "🔍 Challenge 페이지: 사용자 프로필 조회 결과:",
+      userProfileResponse
+    );
+
+    hasChallenge = Boolean(
+      challengeResponse?.success &&
+        challengeResponse?.data?.challenges &&
+        Array.isArray(challengeResponse.data.challenges) &&
+        challengeResponse.data.challenges.length > 0
+    );
+    challengeData = hasChallenge ? challengeResponse.data.challenges[0] : null;
+    userProfile = userProfileResponse;
+  } catch (error) {
+    console.error("데이터 조회 실패:", error);
+    hasChallenge = false;
+    challengeData = null;
+    userProfile = null;
+  }
 
   if (hasChallenge && challengeData) {
     return (
-      <div className='h-[calc(100dvh-120px)] bg-primary'>
-        <div className='flex flex-col items-center justify-center h-full'>
-          <h1 className='text-title-1 font-bold text-gray-900 mb-8'>
-            진행 중인 챌린지
-          </h1>
-          <div className='w-full max-w-sm'>
-            <div className='bg-gray-100 p-4 rounded-lg'>
-              <p className='text-body-1 text-gray-600'>
-                진행 중인 챌린지가 있습니다.
-              </p>
-            </div>
-          </div>
+      <>
+        <ChallengeHeader hasChallenge={true} />
+        <div className='h-[calc(100dvh-40px)] bg-secondary overflow-y-auto'>
+          <ChallengeOngoing
+            challenge={challengeData}
+            userProfile={userProfile}
+          />
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className='h-[calc(100dvh-120px)] bg-primary'>
-      <ChallengeEmptyState />
-    </div>
+    <>
+      <ChallengeHeader hasChallenge={false} />
+      <div className='h-[calc(100dvh-40px)] bg-primary overflow-y-auto'>
+        <ChallengeEmptyState userProfile={userProfile} />
+      </div>
+    </>
   );
 }

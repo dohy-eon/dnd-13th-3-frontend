@@ -3,12 +3,10 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { loginWithGoogle } from "@/lib/api/auth";
-import { useUserStore } from "@/stores/userStore";
 
 export default function CallbackClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setUser, setTokens } = useUserStore();
 
   const code = searchParams.get("code");
   const error = searchParams.get("error");
@@ -32,9 +30,11 @@ export default function CallbackClient() {
       try {
         const res = await loginWithGoogle({ code, redirectUrl });
 
-        // Zustand 스토어에 사용자 정보와 토큰 저장
-        setTokens(res.accessToken, res.refreshToken);
-        setUser(res.user);
+        // 쿠키에 토큰 저장 (SSR 사용)
+        // biome-ignore lint/suspicious/noDocumentCookie: SSR을 위해 필요
+        document.cookie = `accessToken=${res.accessToken}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Strict`;
+        // biome-ignore lint/suspicious/noDocumentCookie: SSR을 위해 필요
+        document.cookie = `refreshToken=${res.refreshToken}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Strict`;
 
         // 기본적으로 온보딩으로 이동
         router.replace("/onboarding");
@@ -46,7 +46,7 @@ export default function CallbackClient() {
         setMessage(errorMessage);
       }
     })();
-  }, [code, error, redirectUrl, router, setUser, setTokens]);
+  }, [code, error, redirectUrl, router]);
 
   return (
     <div className='min-h-screen flex items-center justify-center px-6'>

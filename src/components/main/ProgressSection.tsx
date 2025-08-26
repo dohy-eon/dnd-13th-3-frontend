@@ -55,6 +55,7 @@ const ProgressSection = ({
             alt='character'
             width={47}
             height={37}
+            priority
           />
         </div>
       </div>

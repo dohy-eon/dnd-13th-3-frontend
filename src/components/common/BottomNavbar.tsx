@@ -12,7 +12,7 @@ export default function BottomNavbar() {
   const isRecordActive = pathname === "/record";
 
   return (
-    <div className='w-full pb-4 sticky bottom-0 bg-white'>
+    <div className='w-full pb-4 absolute bottom-0 left-0 right-0 z-[9999]'>
       <div className='max-w-[272px] mx-auto'>
         <div className='w-full px-4 bg-white rounded-[32px] outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-between items-center'>
           <button

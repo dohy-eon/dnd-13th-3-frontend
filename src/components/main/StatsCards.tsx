@@ -55,6 +55,7 @@ export default function StatsCards({
               alt='목표 시간'
               width={16}
               height={16}
+              priority
             />
             <div className='text-gray-400 text-sm font-medium font-pretendard leading-tight tracking-tight'>
               목표 시간
@@ -77,6 +78,7 @@ export default function StatsCards({
                 alt='수정'
                 width={18}
                 height={18}
+                priority
               />
             </button>
           </div>
@@ -93,6 +95,7 @@ export default function StatsCards({
               alt={successRateAltText}
               width={16}
               height={16}
+              priority
             />
             <div className='text-gray-400 text-sm font-medium font-pretendard leading-tight tracking-tight'>
               {cardTitle}

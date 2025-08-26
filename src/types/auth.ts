@@ -34,6 +34,7 @@ export interface ProfileRegistrationResponse {
 export interface UserProfileResponse {
   id: string;
   nickname: string;
+  characterIndex?: number;
   goal: {
     type: string;
     custom: string | null;

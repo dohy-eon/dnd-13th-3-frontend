@@ -58,11 +58,11 @@ export function parseScreenTimeValue(val?: string): {
   const upper = val.toUpperCase();
   if (upper.endsWith("HOURS")) {
     const n = parseInt(upper.replace("HOURS", ""));
-    return { hours: isNaN(n) ? 7 : n, minutes: 0 };
+    return { hours: Number.isNaN(n) ? 7 : n, minutes: 0 };
   }
   if (upper.endsWith("MINUTES")) {
     const m = parseInt(upper.replace("MINUTES", ""));
-    const total = isNaN(m) ? 420 : m; // default 7h
+    const total = Number.isNaN(m) ? 420 : m; // default 7h
     return { hours: Math.floor(total / 60), minutes: total % 60 };
   }
   if (/^\d+$/.test(val)) {

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { GoalTab } from "@/components/common";
 import {
   GoalEditModal,
@@ -11,98 +11,65 @@ import {
   TimeEditModal,
 } from "@/components/main";
 import { TabSwitcher } from "@/components/timer";
-import { mapGoalEnumToLabel, parseScreenTimeValue } from "@/lib/goals";
-import { useUserStore } from "@/stores/userStore";
+import { parseScreenTimeValue } from "@/lib/goals";
+import type { UserProfileResponse } from "@/types/auth";
+import type { ScreenTimeResponse } from "@/types/screentime";
 
-export default function MainContent() {
-  const { user, onboardingData } = useUserStore();
+interface MainContentProps {
+  userProfile: UserProfileResponse | null;
+  screenTimeData: ScreenTimeResponse | null;
+}
 
-  // 디버깅을 위한 로그
-  console.log("🔍 MainContent 렌더링:", { user, onboardingData });
+export default function MainContent({
+  userProfile,
+  screenTimeData,
+}: MainContentProps) {
+  const [isTimeEditModalOpen, setIsTimeEditModalOpen] = useState(false);
+  const [isGoalEditModalOpen, setIsGoalEditModalOpen] = useState(false);
 
-  const [isTimeEditModalOpen, setTimeEditModalOpen] = useState(false);
-  const [isGoalEditModalOpen, setGoalEditModalOpen] = useState(false);
+  const goal =
+    userProfile?.goal?.custom ||
+    userProfile?.goal?.type ||
+    "혼자 있는 시간 디지털 없이 보내기";
+  const targetTime = userProfile?.screenTimeGoal?.type
+    ? parseScreenTimeValue(userProfile.screenTimeGoal.type)
+    : { hours: 7, minutes: 0 };
+  const todayScreenTime =
+    screenTimeData?.data?.screenTimes?.[0]?.totalMinutes || 0;
 
-  // 사용자 정보에서 목표(라벨)과 스크린타임 목표 가져오기
-  const goal = useMemo(() => {
-    const type = user?.goal?.type || onboardingData?.goal?.type;
-    const custom = user?.goal?.custom || onboardingData?.goal?.custom;
-    return (
-      mapGoalEnumToLabel(type, custom) ||
-      custom ||
-      type ||
-      "혼자 있는 시간 디지털 없이 보내기"
-    );
-  }, [user, onboardingData]);
+  const openTimeEditModal = () => setIsTimeEditModalOpen(true);
+  const closeTimeEditModal = () => setIsTimeEditModalOpen(false);
 
-  const targetTime = useMemo(() => {
-    // screenTimeGoal 문자열 해석: `<N>HOURS` 또는 `<M>MINUTES` 또는 CUSTOM의 custom 값 동일 포맷
-    const type =
-      user?.screenTimeGoal?.type || onboardingData?.screenTimeGoal?.type;
-    const custom =
-      user?.screenTimeGoal?.custom || onboardingData?.screenTimeGoal?.custom;
+  const openGoalEditModal = () => setIsGoalEditModalOpen(true);
+  const closeGoalEditModal = () => setIsGoalEditModalOpen(false);
 
-    if (type && type !== "CUSTOM" && type !== "custom") {
-      return parseScreenTimeValue(type);
-    }
-    if (custom) {
-      return parseScreenTimeValue(custom);
-    }
-    return { hours: 7, minutes: 0 };
-  }, [user, onboardingData]);
-
-  const [todayScreenTime, _setTodayScreenTime] = useState(210); // 더미데이터 (3시간 30분)
-
-  const openTimeEditModal = () => setTimeEditModalOpen(true);
-  const closeTimeEditModal = () => setTimeEditModalOpen(false);
-
-  const openGoalEditModal = () => setGoalEditModalOpen(true);
-  const closeGoalEditModal = () => setGoalEditModalOpen(false);
-
-  const handleSaveTime = (newHours: string, newMinutes: string) => {
+  const handleSaveTime = (_newHours: string, _newMinutes: string) => {
     // TODO: API 호출로 시간 업데이트
     closeTimeEditModal();
   };
 
-  const handleSaveGoal = (newGoal: string) => {
+  const handleSaveGoal = (_newGoal: string) => {
     // TODO: API 호출로 목표 업데이트
     closeGoalEditModal();
   };
 
-  const goalScreenTime = useMemo(
-    () => targetTime.hours * 60 + targetTime.minutes,
-    [targetTime]
-  );
-  const isOverTime = useMemo(
-    () => goalScreenTime > 0 && todayScreenTime > goalScreenTime,
-    [goalScreenTime, todayScreenTime]
-  );
+  const goalScreenTime = targetTime.hours * 60 + targetTime.minutes;
+  const isOverTime = goalScreenTime > 0 && todayScreenTime > goalScreenTime;
   const backgroundImageSrc = isOverTime
     ? "/images/logos/screentimeOver.svg"
     : "/images/logos/screentime.svg";
 
-  // 사용자 정보와 온보딩 데이터가 모두 없으면 로딩 상태 표시
-  if (!user && !onboardingData) {
-    return (
-      <div className='w-full h-[calc(100dvh-120px)] flex items-center justify-center'>
-        <div className='text-center'>
-          <p className='text-gray-700 text-sm'>사용자 정보를 불러오는 중...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className='w-full h-[calc(100dvh-120px)] px-screen-margin bg-white overflow-y-auto flex flex-col'>
+    <div className='w-full h-[calc(100dvh-40px)] px-screen-margin bg-white overflow-y-auto flex flex-col'>
       {/* 상단 탭 스위처 */}
       <div className='flex pt-[20px]'>
         <TabSwitcher />
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className='pt-[16px] flex flex-col relative'>
+      <div className='pt-[16px] mb-[100px] flex flex-col relative'>
         <div className='z-20 relative'>
-          <GoalTab />
+          <GoalTab nickname={userProfile?.nickname || "미누"} />
         </div>
 
         <div className='flex flex-col items-center justify-center relative mt-5'>
@@ -113,6 +80,7 @@ export default function MainContent() {
               alt='Screen Time Background'
               fill
               className='object-cover'
+              priority
             />
           </div>
 
@@ -122,6 +90,7 @@ export default function MainContent() {
               goal={goal}
               openModal={openGoalEditModal}
               todayScreenTime={todayScreenTime}
+              nickname={userProfile?.nickname || "미누"}
             />
             <ProgressSection
               todayScreenTime={todayScreenTime}

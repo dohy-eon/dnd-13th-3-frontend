@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-
-import type { ChallengeFormData } from "@/lib/challenge";
+import { createChallenge } from "@/lib/api/challenge";
+import type { CreateChallengeResponse } from "@/lib/challenge";
 
 export default function ChallengeCreateForm() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function ChallengeCreateForm() {
     return { startDate: toYMD(start), endDate: toYMD(end) };
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const trimmedTitle = title.trim();
     const goalTime = parseInt(goalTimeHours, 10);
     if (
@@ -37,16 +37,26 @@ export default function ChallengeCreateForm() {
     )
       return;
 
-    // 챌린지 데이터 localStorage 저장 (API 연결 전 단순 테스트)
-    const challengeData: ChallengeFormData = {
-      title: trimmedTitle,
-      goalTimeHours: goalTime,
-      startDate,
-      endDate,
-    };
+    try {
+      const challengeData = {
+        title: trimmedTitle,
+        start_date: startDate,
+        end_date: endDate,
+        goal_time_minutes: goalTime * 60,
+      };
 
-    localStorage.setItem("challengeData", JSON.stringify(challengeData));
-    router.push("/challenge/success");
+      console.log("🔍 챌린지 생성 시작:", challengeData);
+      const result: CreateChallengeResponse =
+        await createChallenge(challengeData);
+      console.log("✅ 챌린지 생성 성공:", result);
+
+      const successUrl = `/challenge/success?challengeId=${result.data.challenge_id}&title=${encodeURIComponent(trimmedTitle)}&goalTime=${goalTime}&startDate=${startDate}&endDate=${endDate}`;
+      console.log("🚀 성공 페이지로 이동:", successUrl);
+      router.push(successUrl);
+    } catch (error) {
+      console.error("❌ 챌린지 생성 실패:", error);
+      alert("챌린지 생성에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   const handleCancel = () => {

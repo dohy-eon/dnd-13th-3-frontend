@@ -18,7 +18,19 @@ export async function registerUserProfile(
 
 //사용자 프로필 조회
 export async function getUserProfile(): Promise<UserProfileResponse> {
-  const { data } =
-    await privateApi.get<UserProfileResponse>("/api/user/profile");
-  return data;
+  console.log("🔍 getUserProfile API 호출 시작");
+  try {
+    const { data } =
+      await privateApi.get<UserProfileResponse>("/api/user/profile");
+    console.log("✅ getUserProfile API 성공:", data);
+    console.log("🔍 characterIndex 확인:", {
+      value: data.characterIndex,
+      type: typeof data.characterIndex,
+      exists: "characterIndex" in data,
+    });
+    return data;
+  } catch (error) {
+    console.error("❌ getUserProfile API 실패:", error);
+    throw error;
+  }
 }

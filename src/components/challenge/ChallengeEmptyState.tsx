@@ -2,16 +2,24 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
-import { useUserStore } from "@/stores/userStore";
+import type { UserProfileResponse } from "@/types/auth";
 
-export default function ChallengeEmptyState() {
+interface ChallengeEmptyStateProps {
+  userProfile: UserProfileResponse | null;
+}
+
+export default function ChallengeEmptyState({
+  userProfile,
+}: ChallengeEmptyStateProps) {
+  const nickname = userProfile?.nickname || "미누";
+  const displayNickname = nickname.endsWith("님") ? nickname : `${nickname}님`;
+
   const router = useRouter();
-  const { user, onboardingData } = useUserStore();
-  const nickname = useMemo(() => {
-    const n = user?.nickname || onboardingData?.nickname || "미누";
-    return n.endsWith("님") ? n : `${n}님`;
-  }, [user, onboardingData]);
+
+  const getCharacterImage = (characterIndex?: number) => {
+    const index = characterIndex || 1;
+    return `/images/logos/ChallengingCharater${index}.svg`;
+  };
 
   const handleStartChallenge = () => {
     router.push("/challenge/create");
@@ -28,15 +36,15 @@ export default function ChallengeEmptyState() {
                 alt='Challenge Background'
                 fill
                 className='object-cover'
+                priority
               />
             </div>
           </div>
-
           <div className='relative z-20 mb-20'>
             <div className='w-80 h-80 relative'>
               <Image
-                src='/images/logos/ChallengeIcon.svg'
-                alt='Challenge Icon'
+                src={getCharacterImage(userProfile?.characterIndex)}
+                alt='도전하는 캐릭터'
                 fill
                 className='object-contain'
               />
@@ -44,11 +52,11 @@ export default function ChallengeEmptyState() {
           </div>
         </div>
       </div>
-      <div className='bg-white py-12 rounded-t-3xl relative z-30 -mt-8 px-screen-margin'>
+      <div className='bg-white pt-6 rounded-t-3xl relative z-30 -mt-8 pb-[100px] px-screen-margin'>
         <div className='mb-8'>
           <div className='justify-start mx-auto'>
             <span className="text-gray-900 text-xl font-semibold font-['Pretendard'] leading-7">
-              {nickname},{" "}
+              {displayNickname},{" "}
             </span>
             <span className="text-gray-900 text-xl font-medium font-['Pretendard'] leading-7">
               아직 도전 중인 챌린지가 없어요!

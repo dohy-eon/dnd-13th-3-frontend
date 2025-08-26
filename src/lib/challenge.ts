@@ -11,6 +11,7 @@ export interface Participant {
   current_time_minutes: number;
   achievement_rate: number;
   status: ChallengeStatus;
+  characterIndex: number;
 }
 
 // 챌린지 정보
@@ -29,26 +30,52 @@ export interface CreateChallengeRequest {
   start_date: string;
   end_date: string;
   goal_time_minutes: number;
-  type: ChallengeType;
   title: string;
 }
 
 // 챌린지 생성 응답
 export interface CreateChallengeResponse {
-  challenge_id: number;
+  success: boolean;
   message: string;
+  data: {
+    challenge_id: number;
+  };
 }
 
 // 챌린지 조회 응답
 export interface GetChallengeResponse {
   success: boolean;
   message: string;
-  data: Challenge;
+  data: {
+    challenges: Challenge[];
+  };
 }
 
 // 공유 챌린지 링크 생성 응답
 export interface InviteUrlResponse {
-  url: string;
+  success: boolean;
+  message: string;
+  data: {
+    url: string;
+  };
+}
+
+// 챌린지 참여 요청
+export interface JoinChallengeRequest {
+  invite_code: string;
+}
+
+// 챌린지 참여 응답
+export interface JoinChallengeResponse {
+  success: boolean;
+  message: string;
+  data: {
+    message: string;
+    title: string;
+    challenge_id: number;
+    start_date: string;
+    end_date: string;
+  };
 }
 
 // 챌린지 폼 데이터

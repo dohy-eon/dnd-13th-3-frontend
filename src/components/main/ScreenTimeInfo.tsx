@@ -6,12 +6,14 @@ interface ScreenTimeInfoProps {
   goal: string;
   openModal: () => void;
   todayScreenTime: number;
+  nickname: string;
 }
 
 export default function ScreenTimeInfo({
   goal,
   openModal,
   todayScreenTime,
+  nickname,
 }: ScreenTimeInfoProps) {
   return (
     <button
@@ -21,7 +23,7 @@ export default function ScreenTimeInfo({
     >
       <div className='absolute left-1/2 top-[32px] transform -translate-x-1/2 text-center'>
         <div className='text-gray-500 text-sm font-medium font-pretendard whitespace-nowrap'>
-          오늘의 스크린타임
+          {nickname}님의 오늘의 스크린타임
         </div>
         <div className='text-gray-900 text-3xl font-semibold font-pretendard leading-10 whitespace-nowrap'>
           {`${Math.floor(todayScreenTime / 60)}시간 ${todayScreenTime % 60}분`}
@@ -38,6 +40,7 @@ export default function ScreenTimeInfo({
           width={14}
           height={14}
           className='flex-shrink-0'
+          priority
         />
       </div>
     </button>

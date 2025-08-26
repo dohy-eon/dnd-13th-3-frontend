@@ -1,37 +1,70 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { generateInviteUrl } from "@/lib/api/challenge";
 
 export default function ChallengeSuccess() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLinkCopied, setIsLinkCopied] = useState(false);
-  const [challengeData, setChallengeData] = useState<{
-    title: string;
-    goalTimeHours: number;
-    startDate: string;
-    endDate: string;
-  } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [inviteUrl, setInviteUrl] = useState<string>("");
+  const [isLinkGenerated, setIsLinkGenerated] = useState(false);
+  const isGeneratingRef = useRef(false);
+
+  const challengeData = {
+    challengeId: searchParams.get("challengeId") || "",
+    title: searchParams.get("title") || "목표 없음",
+    goalTimeHours: parseInt(searchParams.get("goalTime") || "0", 10),
+    startDate: searchParams.get("startDate") || "",
+    endDate: searchParams.get("endDate") || "",
+  };
 
   useEffect(() => {
-    const storedData = localStorage.getItem("challengeData");
-    if (storedData) {
-      setChallengeData(JSON.parse(storedData));
-    } else {
-      router.push("/challenge");
-    }
-  }, [router]);
+    const generateLink = async () => {
+      if (
+        !challengeData.challengeId ||
+        isLinkGenerated ||
+        isGeneratingRef.current
+      )
+        return;
+
+      isGeneratingRef.current = true;
+      setIsLoading(true);
+      try {
+        const response = await generateInviteUrl(challengeData.challengeId);
+        console.log("✅ 초대 링크 생성 성공:", response);
+
+        if (response.success && response.data?.url) {
+          setInviteUrl(response.data.url);
+          setIsLinkGenerated(true);
+        }
+      } catch (error) {
+        console.error("❌ 초대 링크 생성 실패:", error);
+      } finally {
+        setIsLoading(false);
+        isGeneratingRef.current = false;
+      }
+    };
+
+    generateLink();
+  }, [challengeData.challengeId, isLinkGenerated]);
 
   const handleCopyLink = async () => {
-    try {
-      const dummyLink = "https://example.com/challenge/invite/123";
-      await navigator.clipboard.writeText(dummyLink);
-      setIsLinkCopied(true);
+    if (!inviteUrl) {
+      alert("초대 링크가 아직 생성되지 않았습니다.");
+      return;
+    }
 
+    try {
+      await navigator.clipboard.writeText(inviteUrl);
+      setIsLinkCopied(true);
       setTimeout(() => setIsLinkCopied(false), 2000);
     } catch (error) {
-      console.error("링크 복사 실패:", error);
+      console.error("❌ 링크 복사 실패:", error);
+      alert("링크 복사에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -47,14 +80,6 @@ export default function ChallengeSuccess() {
 
     return `${year}.${month}.${day}`;
   };
-
-  if (!challengeData) {
-    return (
-      <div className='flex flex-col h-full bg-white items-center justify-center'>
-        <div className='text-gray-500'>로딩 중...</div>
-      </div>
-    );
-  }
 
   return (
     <div className='flex flex-col h-full bg-white'>
@@ -121,9 +146,12 @@ export default function ChallengeSuccess() {
           <button
             type='button'
             onClick={handleCopyLink}
-            className='flex-1 px-2.5 py-3.5 bg-primary rounded-xl inline-flex justify-center items-center gap-2.5'
+            disabled={isLoading || !inviteUrl}
+            className='flex-1 px-2.5 py-3.5 bg-primary rounded-xl inline-flex justify-center items-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed'
           >
-            <div className='text-white text-base font-semibold'>링크 복사</div>
+            <div className='text-white text-base font-semibold'>
+              {inviteUrl ? "링크 복사" : "링크 생성 중..."}
+            </div>
           </button>
         </div>
       </div>
