@@ -51,6 +51,18 @@ privateApi.interceptors.request.use(async (config) => {
       `Bearer ${accessToken}`;
   }
 
+  // Debug: 로그로 토큰 및 실행 컨텍스트 확인
+  if (!accessToken) {
+    const ctx = typeof window !== "undefined" ? "client" : "server";
+    // 주의: 토큰 값은 로그에 남기지 않음
+    console.warn(
+      `[privateApi] No accessToken found in ${ctx}. Authorization header will be missing. baseURL: ${config.baseURL ?? "(inherit)"}`
+    );
+  } else {
+    const ctx = typeof window !== "undefined" ? "client" : "server";
+    console.log(`[privateApi] Using accessToken from ${ctx}.`);
+  }
+
   return config;
 });
 

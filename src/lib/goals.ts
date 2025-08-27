@@ -50,18 +50,36 @@ export function formatScreenTimeCustom(hours: number, minutes: number): string {
   return `${total}MINUTES`;
 }
 
-export function parseScreenTimeValue(val?: string): {
+export function parseScreenTimeValue(
+  val?: string | { type: string; custom: string | null }
+): {
   hours: number;
   minutes: number;
 } {
   if (!val) return { hours: 7, minutes: 0 };
-  const upper = val.toUpperCase();
+
+  // Handle object format { type: string, custom: string | null }
+  if (typeof val === "object" && val !== null) {
+    if (val.type === "CUSTOM" && val.custom) {
+      const total = parseInt(val.custom, 10);
+      if (!isNaN(total)) {
+        return { hours: Math.floor(total / 60), minutes: total % 60 };
+      }
+    } else if (/^\d+$/.test(val.type)) {
+      const total = parseInt(val.type, 10);
+      return { hours: Math.floor(total / 60), minutes: total % 60 };
+    }
+    return { hours: 7, minutes: 0 };
+  }
+
+  // Handle string format
+  const upper = String(val).toUpperCase();
   if (upper.endsWith("HOURS")) {
-    const n = parseInt(upper.replace("HOURS", ""));
+    const n = parseInt(upper.replace("HOURS", "").trim());
     return { hours: Number.isNaN(n) ? 7 : n, minutes: 0 };
   }
   if (upper.endsWith("MINUTES")) {
-    const m = parseInt(upper.replace("MINUTES", ""));
+    const m = parseInt(upper.replace("MINUTES", "").trim());
     const total = Number.isNaN(m) ? 420 : m; // default 7h
     return { hours: Math.floor(total / 60), minutes: total % 60 };
   }

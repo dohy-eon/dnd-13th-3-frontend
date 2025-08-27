@@ -28,9 +28,45 @@ export async function getUserProfile(): Promise<UserProfileResponse> {
       type: typeof data.characterIndex,
       exists: "characterIndex" in data,
     });
-    return data;
+    // Return a plain JSON-serializable clone to avoid RSC serialization issues
+    const plain = JSON.parse(JSON.stringify(data)) as UserProfileResponse;
+    return plain;
   } catch (error) {
     console.error("❌ getUserProfile API 실패:", error);
+    throw error;
+  }
+}
+
+// 프로필 수정 (닉네임 제외 목표/시간/캐릭터 포함 가능)
+export type UpdateProfileRequest = {
+  goal?: {
+    type: string; // preset label string or "CUSTOM"
+    custom?: string | null; // only when type === "CUSTOM"
+  };
+  screenTimeGoal?: {
+    type: string; // "120" | "240" | "360" | "480" | "CUSTOM"
+    custom?: string | null; // only when type === "CUSTOM" (minutes as string)
+  };
+  nickname?: string;
+  characterIndex?: number;
+};
+
+export async function updateUserProfile(
+  body: UpdateProfileRequest
+): Promise<{ message: string }> {
+  console.log(
+    "🔄 updateUserProfile 요청 데이터:",
+    JSON.stringify(body, null, 2)
+  );
+  try {
+    const { data } = await privateApi.patch<{ message: string }>(
+      "/api/user/profile",
+      body
+    );
+    console.log("✅ updateUserProfile 성공:", data);
+    return data;
+  } catch (error) {
+    console.error("❌ updateUserProfile 실패:", error);
     throw error;
   }
 }

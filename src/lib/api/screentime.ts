@@ -4,6 +4,20 @@ import type {
 } from "@/types/screentime";
 import { privateApi } from "./instances";
 
+// 스크린타임 생성/갱신 (하루 1회, 진입 시 호출)
+export const createOrUpdateScreenTime = async (): Promise<{
+  success: boolean;
+  message: string;
+  data?: ScreenTimeResponse["data"];
+}> => {
+  const { data } = await privateApi.post<{
+    success: boolean;
+    message: string;
+    data?: ScreenTimeResponse["data"];
+  }>("/api/screentime");
+  return data;
+};
+
 // 일간 스크린타임 조회
 export const getScreenTimeDay = async (
   date?: string

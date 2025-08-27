@@ -23,7 +23,7 @@ export default function ScreenTimeInfo({
     >
       <div className='absolute left-1/2 top-[32px] transform -translate-x-1/2 text-center'>
         <div className='text-gray-500 text-sm font-medium font-pretendard whitespace-nowrap'>
-          {nickname}님의 오늘의 스크린타임
+          오늘의 스크린타임
         </div>
         <div className='text-gray-900 text-3xl font-semibold font-pretendard leading-10 whitespace-nowrap'>
           {`${Math.floor(todayScreenTime / 60)}시간 ${todayScreenTime % 60}분`}
