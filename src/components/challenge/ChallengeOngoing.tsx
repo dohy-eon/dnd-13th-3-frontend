@@ -23,7 +23,7 @@ export default function ChallengeOngoing({
   const [activeTab, setActiveTab] = useState<"current" | "past">("current");
 
   const sortedParticipants = [...challenge.participants].sort(
-    (a, b) => b.current_time_minutes - a.current_time_minutes
+    (a, b) => a.current_time_minutes - b.current_time_minutes
   );
 
   const formatTime = (minutes: number) => {
@@ -32,7 +32,10 @@ export default function ChallengeOngoing({
     return hours > 0 ? `${hours}시간 ${mins}분` : `${mins}분`;
   };
 
-  const currentUser = challenge.participants[0] || null;
+  const currentUser =
+    challenge.participants.find(
+      (participant) => participant.userId.toString() === userProfile?.id
+    ) || null;
 
   const getCharacterImage = (characterIndex?: number) => {
     const index = characterIndex || 1;
@@ -115,7 +118,10 @@ export default function ChallengeOngoing({
                       priority
                     />
                     <span className='text-blue-700 text-xs font-medium'>
-                      {Math.floor((challenge.goal_time_minutes * 7) / 60)}시간
+                      {Math.round(
+                        ((challenge.goal_time_minutes * 7) / 60) * 10
+                      ) / 10}
+                      시간
                     </span>
                   </div>
                 </div>
@@ -206,7 +212,7 @@ export default function ChallengeOngoing({
                         />
                       )}
                       {rank > 3 && (
-                        <div className='w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600'>
+                        <div className='w-9 h-9 flex items-center justify-center text-base font-medium text-primary'>
                           {rank}
                         </div>
                       )}
@@ -225,12 +231,21 @@ export default function ChallengeOngoing({
                         {participant.nickname}
                       </div>
                       <div className='flex items-center justify-between'>
-                        <div className='text-sm text-gray-600'>{timeText}</div>
-                        <div className="justify-start text-gray-400 text-xs font-medium font-['Pretendard'] leading-none tracking-tight">
-                          {Math.ceil(
-                            (participant.current_time_minutes /
-                              (challenge.goal_time_minutes * 7)) *
-                              100
+                        <div
+                          className={`text-sm ${participant.current_time_minutes > (challenge.goal_time_minutes * 7) ? "text-red-400" : "text-gray-600"}`}
+                        >
+                          {timeText}
+                        </div>
+                        <div
+                          className={`justify-start text-xs font-medium font-['Pretendard'] leading-none tracking-tight ${participant.current_time_minutes > (challenge.goal_time_minutes * 7) ? "text-red-400" : "text-gray-400"}`}
+                        >
+                          {Math.min(
+                            100,
+                            Math.ceil(
+                              (participant.current_time_minutes /
+                                (challenge.goal_time_minutes * 7)) *
+                                100
+                            )
                           )}
                           %
                         </div>
@@ -247,7 +262,7 @@ export default function ChallengeOngoing({
                               isCurrentUser ? "bg-gray-500" : "bg-gray-300"
                             }`}
                             style={{
-                              width: `${Math.round((participant.current_time_minutes / (challenge.goal_time_minutes * 7)) * 100)}%`,
+                              width: `${Math.min(100, Math.round((participant.current_time_minutes / (challenge.goal_time_minutes * 7)) * 100))}%`,
                             }}
                           />
                         </div>

@@ -3,14 +3,15 @@ import { getChallengeHistory } from "@/lib/api/challenge";
 import { getUserProfile } from "@/lib/api/user";
 
 interface ChallengeDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function ChallengeDetailPage({
   params,
 }: ChallengeDetailPageProps) {
+  const { id } = await params;
   let challengeHistory = null;
   let userProfile = null;
   let targetChallenge = null;
@@ -35,7 +36,7 @@ export default async function ChallengeDetailPage({
 
     // URL의 ID와 일치하는 챌린지 찾기
     targetChallenge = challengeResponse.data.challenges.find(
-      (challenge) => challenge.challengeId.toString() === params.id
+      (challenge) => challenge.challengeId.toString() === id
     );
   } catch (error) {
     console.error("데이터 조회 실패:", error);

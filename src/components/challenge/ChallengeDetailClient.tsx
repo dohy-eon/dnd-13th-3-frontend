@@ -58,16 +58,19 @@ export function ChallengeDetailClient({
   return (
     <div className='flex flex-col h-[100dvh] bg-primary'>
       <div className='relative px-4 py-6 flex items-center'>
-        <button type='button' onClick={handleBack} className='absolute left-4'>
+        <button type='button' onClick={handleBack}>
           <Image
             src='/images/logos/BackBtnWhite.svg'
             alt='뒤로가기'
             width={12}
             height={22}
             priority
-            className='w-3 h-[22px] object-contain'
+            className='w-[12px] h-[22px]'
           />
         </button>
+        <h1 className='absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold text-white'>
+          {" "}
+        </h1>
       </div>
       <div className='flex-1 px-4 pb-6 overflow-y-auto'>
         <div className='mb-8 text-center'>
@@ -216,8 +219,8 @@ export function ChallengeDetailClient({
                         height={36}
                       />
                     ) : (
-                      <div className='w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center'>
-                        <span className='text-white text-xs font-bold'>
+                      <div className='w-9 h-9 flex items-center justify-center'>
+                        <span className='text-primary text-base font-medium'>
                           {rank}
                         </span>
                       </div>

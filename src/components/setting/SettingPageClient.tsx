@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getUserProfile } from "@/lib/api/user";
 import type { UserProfileResponse } from "@/types/auth";
+import LogoutModal from "./LogoutModal";
 
 interface SettingPageClientProps {
   user: UserProfileResponse | null;
@@ -16,6 +17,7 @@ export function SettingPageClient({ user }: SettingPageClientProps) {
   const [currentUser, setCurrentUser] = useState<UserProfileResponse | null>(
     user
   );
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const fetchLatestUserData = async () => {
@@ -57,9 +59,8 @@ export function SettingPageClient({ user }: SettingPageClientProps) {
     router.push("/setting/edit");
   };
 
-  const _handleLogout = () => {
-    // TODO: 로그아웃 처리
-    console.log("로그아웃");
+  const handleLogout = () => {
+    setShowLogoutModal(true);
   };
 
   const handleNotificationToggle = () => {
@@ -134,7 +135,7 @@ export function SettingPageClient({ user }: SettingPageClientProps) {
           >
             <div
               className={`w-12 h-7 left-0 top-0 absolute rounded-full transition-colors duration-200 ${
-                isNotificationEnabled ? "bg-indigo-500" : "bg-gray-300"
+                isNotificationEnabled ? "bg-gray-300" : "bg-primary"
               }`}
             ></div>
             <div
@@ -165,7 +166,11 @@ export function SettingPageClient({ user }: SettingPageClientProps) {
               </div>
             </div>
           </div>
-          <div className='self-stretch p-4 bg-white rounded-xl inline-flex justify-between items-center w-full'>
+          <button
+            type='button'
+            onClick={handleLogout}
+            className='self-stretch p-4 bg-white rounded-xl inline-flex justify-between items-center w-full'
+          >
             <div className='flex justify-start items-center gap-2'>
               <div className='w-5 h-5 relative'>
                 <Image
@@ -179,9 +184,13 @@ export function SettingPageClient({ user }: SettingPageClientProps) {
                 로그아웃
               </div>
             </div>
-          </div>
+          </button>
         </div>
       </div>
+
+      {showLogoutModal && (
+        <LogoutModal onClose={() => setShowLogoutModal(false)} />
+      )}
     </div>
   );
 }

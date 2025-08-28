@@ -30,11 +30,6 @@ export function ChallengeHistoryTab({
     return `${hours}시간 ${mins}분`;
   };
 
-  const getAchievementRate = (current: number, goal: number) => {
-    if (goal === 0) return 0;
-    return Math.round((current / goal) * 100);
-  };
-
   const getFirstPlaceParticipant = (participants: HistoryParticipant[]) => {
     return participants.reduce((prev, current) =>
       prev.achievement_rate > current.achievement_rate ? prev : current
@@ -63,10 +58,6 @@ export function ChallengeHistoryTab({
     <div className='space-y-4'>
       {challenges.map((challenge) => {
         const firstPlace = getFirstPlaceParticipant(challenge.participants);
-        const achievementRate = getAchievementRate(
-          firstPlace.current_time_minutes,
-          challenge.goal_time_minutes
-        );
         return (
           <button
             type='button'
@@ -75,8 +66,17 @@ export function ChallengeHistoryTab({
             className='w-full rounded-2xl outline outline-1 outline-gray-200 flex flex-col justify-start items-start text-left'
           >
             <div className='w-full px-4 py-3 bg-gray-100 rounded-tl-2xl rounded-tr-2xl flex flex-col justify-start items-start gap-1'>
-              <div className='self-stretch justify-start text-gray-900 text-base font-semibold font-["Pretendard"] leading-normal tracking-tight'>
-                {challenge.title}
+              <div className='w-full flex justify-between items-start'>
+                <div className='flex-1 justify-start text-gray-900 text-base font-semibold font-["Pretendard"] leading-normal tracking-tight'>
+                  {challenge.title}
+                </div>
+                <Image
+                  src='/images/logos/ChallengeDetailBtn.svg'
+                  alt='챌린지 상세 버튼'
+                  width={24}
+                  height={24}
+                  priority
+                />
               </div>
               <div className='self-stretch justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
                 {formatDate(challenge.start_date)} -{" "}
@@ -87,34 +87,15 @@ export function ChallengeHistoryTab({
               <div className='inline-flex justify-start items-center gap-2'>
                 <div className='w-6 h-6 relative'>
                   <Image
-                    src='/images/logos/MedalFirst.svg'
-                    alt='1등 메달'
+                    src='/images/logos/Ranked1.svg'
+                    alt='1위'
                     width={24}
                     height={24}
                     priority
                   />
                 </div>
-                <div className='justify-start text-gray-500 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
-                  {firstPlace.nickname}
-                </div>
-              </div>
-              <div className='self-stretch inline-flex justify-start items-center gap-1.5'>
-                <div className='p-[3px] inline-flex flex-col justify-center items-start gap-2.5'>
-                  <Image
-                    src='/images/logos/HourglassLast.svg'
-                    alt='스크린타임'
-                    width={16}
-                    height={16}
-                    priority
-                  />
-                </div>
-                <div className='flex justify-start items-center gap-2'>
-                  <div className='justify-start text-gray-500 text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
-                    {formatTime(firstPlace.current_time_minutes)} 사용
-                  </div>
-                  <div className='justify-start text-primary text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
-                    {achievementRate}%
-                  </div>
+                <div className='justify-start text-gray-500 text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
+                  {formatTime(firstPlace.current_time_minutes)} 사용
                 </div>
               </div>
             </div>
