@@ -6,14 +6,12 @@ interface ScreenTimeInfoProps {
   goal: string;
   openModal: () => void;
   todayScreenTime: number;
-  nickname: string;
 }
 
 export default function ScreenTimeInfo({
   goal,
   openModal,
   todayScreenTime,
-  nickname,
 }: ScreenTimeInfoProps) {
   return (
     <button

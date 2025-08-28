@@ -52,16 +52,16 @@ export default function JoinChallengeClient() {
   };
 
   const handleGoHome = () => {
-    router.push("/");
+    router.push("/main");
   };
 
   if (!inviteCode) {
     return (
-      <div className='min-h-screen flex flex-col bg-primary'>
+      <div className='min-h-screen flex flex-col bg-white'>
         <div className='flex-1 flex items-center justify-center px-6'>
           <div className='text-center'>
-            <div className='w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4' />
-            <p className='text-white text-lg font-medium'>
+            <div className='w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4' />
+            <p className='text-gray-900 text-lg font-medium'>
               초대 코드를 확인하는 중...
             </p>
           </div>
@@ -72,11 +72,11 @@ export default function JoinChallengeClient() {
 
   if (isLoading) {
     return (
-      <div className='min-h-screen flex flex-col bg-primary'>
+      <div className='min-h-screen flex flex-col bg-white'>
         <div className='flex-1 flex items-center justify-center px-6'>
           <div className='text-center'>
-            <div className='w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4' />
-            <p className='text-white text-lg font-medium'>
+            <div className='w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4' />
+            <p className='text-gray-900 text-lg font-medium'>
               챌린지에 참여하는 중...
             </p>
           </div>
@@ -86,8 +86,80 @@ export default function JoinChallengeClient() {
   }
 
   if (error) {
+    if (error.includes("본인이 생성한 챌린지에는 참여할 수 없습니다")) {
+      return (
+        <div className='min-h-screen flex flex-col bg-white'>
+          <div className='flex-1 flex items-center justify-center px-6'>
+            <div className='text-center w-full max-w-sm'>
+              <div className='flex items-center justify-center mx-auto mb-6'>
+                <Image
+                  src='/images/logos/ChallengeCantJoin.svg'
+                  alt='Cannot Join'
+                  width={96}
+                  height={96}
+                  priority
+                />
+              </div>
+              <div className='inline-flex flex-col justify-start items-start gap-2'>
+                <div className='text-center justify-start text-primary text-xl font-semibold font-["Pretendard"] leading-loose'>
+                  해당 링크로 입장이 어려워요..
+                </div>
+                <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                  내가 만든 챌린지는 링크로 입장할 수 없어요.
+                  <br />앱 내에서 재입장해주세요!
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='pb-8 px-6'>
+            <button
+              type='button'
+              onClick={handleGoHome}
+              className='w-full px-6 py-3.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors'
+            >
+              홈으로
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    if (error.includes("이미 참여한 챌린지입니다")) {
+      return (
+        <div className='min-h-screen flex flex-col bg-white'>
+          <div className='flex-1 flex items-center justify-center px-6'>
+            <div className='text-center w-full max-w-sm'>
+              <div className='flex items-center justify-center mx-auto mb-6'>
+                <Image
+                  src='/images/logos/ChallengeCantJoin.svg'
+                  alt='Already Joined'
+                  width={96}
+                  height={96}
+                  priority
+                />
+              </div>
+              <div className='inline-flex flex-col justify-start items-start gap-2'>
+                <div className='text-center justify-start text-primary text-xl font-semibold font-["Pretendard"] leading-loose'>
+                  이미 챌린지에 참여하셨습니다
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='pb-8 px-6'>
+            <button
+              type='button'
+              onClick={handleGoHome}
+              className='w-full px-6 py-3.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors'
+            >
+              홈으로
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div className='min-h-screen flex flex-col bg-primary'>
+      <div className='min-h-screen flex flex-col bg-white'>
         <div className='flex-1 flex items-center justify-center px-6'>
           <div className='text-center'>
             <div className='w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-6'>
@@ -96,18 +168,19 @@ export default function JoinChallengeClient() {
                 alt='Error'
                 width={40}
                 height={40}
+                priority
                 className='text-white'
               />
             </div>
-            <h1 className='text-white text-xl font-bold mb-3'>참여 실패</h1>
-            <p className='text-white text-base mb-8 text-center'>{error}</p>
+            <h1 className='text-gray-900 text-xl font-bold mb-3'>참여 실패</h1>
+            <p className='text-gray-600 text-base mb-8 text-center'>{error}</p>
           </div>
         </div>
         <div className='pb-8 px-6'>
           <button
             type='button'
             onClick={handleGoHome}
-            className='w-full px-6 py-3.5 bg-white text-primary rounded-xl font-semibold hover:bg-gray-100 transition-colors'
+            className='w-full px-6 py-3.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors'
           >
             홈으로 돌아가기
           </button>
@@ -118,48 +191,63 @@ export default function JoinChallengeClient() {
 
   if (challengeInfo) {
     return (
-      <div className='min-h-screen flex flex-col bg-primary'>
+      <div className='min-h-screen flex flex-col bg-white'>
         <div className='flex-1 flex items-center justify-center px-6'>
           <div className='text-center w-full max-w-sm'>
-            <div className='w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6'>
+            <div className='w-[94px] h-[94px] flex items-center justify-center mx-auto mb-6'>
               <Image
-                src='/images/logos/ChallengeIcon.svg'
+                src='/images/logos/Latter.svg'
                 alt='Success'
-                width={40}
-                height={40}
-                className='text-white'
+                width={94}
+                height={94}
+                priority
               />
             </div>
-            <h1 className='text-white text-xl font-bold mb-3'>참여 성공!</h1>
-            <p className='text-white text-base mb-6 text-center'>
-              {challengeInfo.data.message}
-            </p>
+            <div className='w-80 inline-flex flex-col text-center gap-2 mb-8'>
+              <div className='text-center justify-start text-primary text-xl font-semibold font-["Pretendard"] leading-loose'>
+                챌린지에 초대 되었습니다!
+              </div>
+              <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                챌린지에 함께 참여해볼까요?
+              </div>
+            </div>
 
-            <div className='bg-white/10 rounded-2xl p-5 mb-8'>
-              <div className='space-y-4'>
-                <div className='flex justify-between items-center'>
-                  <span className='text-white/80 text-sm font-medium'>
-                    챌린지 제목
-                  </span>
-                  <span className='text-white font-semibold text-right flex-1 ml-4'>
-                    {challengeInfo.data.title}
-                  </span>
+            <div className='w-80 py-4 bg-gray-100 rounded-xl inline-flex flex-col justify-start items-center gap-4 mb-8'>
+              <div className='w-72 inline-flex justify-between items-center'>
+                <div className='text-center justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                  챌린지 기간
                 </div>
-                <div className='flex justify-between items-center'>
-                  <span className='text-white/80 text-sm font-medium'>
-                    시작일
-                  </span>
-                  <span className='text-white font-semibold'>
-                    {challengeInfo.data.start_date}
-                  </span>
+                <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                  {challengeInfo.data.start_date} ~{" "}
+                  {challengeInfo.data.end_date}
                 </div>
-                <div className='flex justify-between items-center'>
-                  <span className='text-white/80 text-sm font-medium'>
-                    종료일
+              </div>
+              <div className='w-72 inline-flex justify-between items-center'>
+                <div className='text-center justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                  목표 시간
+                </div>
+                <div className='flex items-center gap-1'>
+                  <span className='text-sm font-medium text-gray-900'>
+                    {Math.round(
+                      (challengeInfo.data.goal_time_minutes / 60) * 7 * 10
+                    ) / 10}
+                    시간
                   </span>
-                  <span className='text-white font-semibold'>
-                    {challengeInfo.data.end_date}
-                  </span>
+                  <div className="justify-start text-gray-500 text-xs font-medium font-['Pretendard'] leading-none tracking-tight">
+                    · 하루{" "}
+                    {Math.round(
+                      (challengeInfo.data.goal_time_minutes / 60) * 10
+                    ) / 10}
+                    시간
+                  </div>
+                </div>
+              </div>
+              <div className='w-72 inline-flex justify-between items-center'>
+                <div className='text-center justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                  함께하는 목표
+                </div>
+                <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                  {challengeInfo.data.title}
                 </div>
               </div>
             </div>
@@ -169,9 +257,9 @@ export default function JoinChallengeClient() {
           <button
             type='button'
             onClick={handleGoToChallenge}
-            className='w-full px-6 py-3.5 bg-white text-primary rounded-xl font-semibold hover:bg-gray-100 transition-colors'
+            className='w-full px-6 py-3.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors'
           >
-            챌린지 보러가기
+            챌린지 참가하기
           </button>
         </div>
       </div>

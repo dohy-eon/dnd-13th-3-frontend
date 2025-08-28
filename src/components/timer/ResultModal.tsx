@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface ResultModalProps {
   mission: string;
   elapsedTime: number;
@@ -22,24 +24,44 @@ export default function ResultModal({
 
   return (
     <div className='fixed inset-0 bg-dim-background flex items-center justify-center z-50 p-4'>
-      <div className='bg-white rounded-2xl p-6 min-w-screen-mobile mx-4'>
-        <h2 className='text-lg font-semibold text-gray-900 mb-2'>미션 완료!</h2>
-        <div className='mb-6'>
-          <p className='text-sm text-gray-600 mb-2'>
-            <span className='font-medium'>{mission}</span>을(를) 완료했습니다.
-          </p>
-          <p className='text-xs text-gray-500 mt-1'>집중한 시간</p>
-          <p className='text-2xl font-bold text-primary'>
-            {formatTime(elapsedTime)}
-          </p>
+      <div className='w-80 p-5 bg-white rounded-2xl inline-flex flex-col justify-start items-center gap-5'>
+        <div className='self-stretch flex flex-col justify-start items-center gap-3'>
+          <div className='h-10 relative flex flex-col justify-center items-center'>
+            <Image
+              src='/images/logos/CircleCheck.svg'
+              alt='완료'
+              width={40}
+              height={40}
+            />
+          </div>
+          <div className='self-stretch flex flex-col justify-center items-center gap-1'>
+            <div className='justify-start text-gray-900 text-xl font-semibold leading-7'>
+              미션 완료!
+            </div>
+            <div className='self-stretch text-center justify-start text-gray-400 text-sm font-medium leading-tight tracking-tight'>
+              {mission}을(를) 완료했습니다!
+            </div>
+          </div>
+          <div className='w-72 py-3 bg-gray-100 rounded-xl flex flex-col justify-center items-center gap-0.5'>
+            <div className='self-stretch text-center justify-start text-gray-400 text-xs font-medium leading-none tracking-tight'>
+              집중한 시간
+            </div>
+            <div className='justify-start text-primary text-2xl font-medium leading-loose'>
+              {formatTime(elapsedTime)}
+            </div>
+          </div>
         </div>
-        <button
-          type='button'
-          onClick={onConfirm}
-          className='w-full btn-medium btn-primary'
-        >
-          확인
-        </button>
+        <div className='self-stretch inline-flex justify-start items-start gap-2'>
+          <button
+            type='button'
+            onClick={onConfirm}
+            className='w-72 px-8 py-3 bg-primary rounded-[10px] flex justify-center items-center gap-2.5 overflow-hidden'
+          >
+            <div className='justify-start text-white text-sm font-medium leading-tight tracking-tight'>
+              확인
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   );

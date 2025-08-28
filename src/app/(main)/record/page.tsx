@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { MainHeader } from "@/components/main";
 
@@ -269,9 +270,12 @@ export default function RecordPage() {
                 <div className='w-full flex justify-center'>
                   <article className='w-full bg-white rounded-xl p-5 sm:p-6 flex flex-col items-center gap-3 border border-gray-200 shadow-xs'>
                     <div className='w-9 h-9 rounded-md flex items-center justify-center'>
-                      <img
+                      <Image
                         src='/images/logos/Icon/Normal/Hourglass.svg'
                         alt='모래시계 아이콘'
+                        width={36}
+                        height={36}
+                        priority
                       />
                     </div>
                     <div className='text-center'>
@@ -302,10 +306,13 @@ export default function RecordPage() {
                       {/* KakaoTalk */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/KakaoTalk.svg'
                             alt='카카오톡 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>카카오톡</span>
                         </div>
@@ -316,10 +323,13 @@ export default function RecordPage() {
                       {/* Instagram */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/insta.svg'
                             alt='인스타그램 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>인스타그램</span>
                         </div>
@@ -330,10 +340,13 @@ export default function RecordPage() {
                       {/* Chrome */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/chrome.svg'
                             alt='크롬 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>크롬</span>
                         </div>
@@ -344,10 +357,13 @@ export default function RecordPage() {
                       {/* YouTube */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/youtube.svg'
                             alt='유튜브 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>YouTube</span>
                         </div>
@@ -366,10 +382,13 @@ export default function RecordPage() {
                     <article className='bg-white rounded-xl p-5 flex flex-col gap-6 border border-gray-200 shadow-xs mb-[86px]'>
                       <div className='flex flex-col gap-2'>
                         <div className='flex items-center gap-1 text-label-1 text-gray-500'>
-                          <img
+                          <Image
                             src='/images/logos/Icon/Normal/Graph Next.svg'
                             alt='그래프 아이콘'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>어제와 비교</span>
                         </div>
@@ -379,10 +398,13 @@ export default function RecordPage() {
                       </div>
                       <div className='flex flex-col gap-2'>
                         <div className='flex items-center gap-1 text-label-1 text-gray-500'>
-                          <img
+                          <Image
                             src='/images/logos/Icon/Normal/Sprout.svg'
                             alt='새싹 아이콘'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>내일 추천 목표</span>
                         </div>
@@ -400,9 +422,12 @@ export default function RecordPage() {
                 <div className='w-full flex justify-center'>
                   <article className='w-full bg-white rounded-xl p-5 sm:p-6 flex flex-col items-center gap-3 border border-gray-200 shadow-xs'>
                     <div className='w-9 h-9 rounded-md flex items-center justify-center'>
-                      <img
+                      <Image
                         src='/images/logos/Icon/Normal/Hourglass.svg'
                         alt='모래시계 아이콘'
+                        width={36}
+                        height={36}
+                        priority
                       />
                     </div>
                     <div className='text-center'>
@@ -437,10 +462,13 @@ export default function RecordPage() {
                       {/* KakaoTalk */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/KakaoTalk.svg'
                             alt='카카오톡 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>카카오톡</span>
                         </div>
@@ -451,10 +479,13 @@ export default function RecordPage() {
                       {/* Instagram */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/insta.svg'
                             alt='인스타그램 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>인스타그램</span>
                         </div>
@@ -465,10 +496,13 @@ export default function RecordPage() {
                       {/* Chrome */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/chrome.svg'
                             alt='크롬 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>크롬</span>
                         </div>
@@ -479,10 +513,13 @@ export default function RecordPage() {
                       {/* YouTube */}
                       <div className='flex items-center justify-between py-2'>
                         <div className='flex items-center gap-2 text-label-1 font-medium text-gray-900'>
-                          <img
+                          <Image
                             src='/images/logos/youtube.svg'
                             alt='유튜브 로고'
+                            width={24}
+                            height={24}
                             className='w-6 h-6'
+                            priority
                           />
                           <span>YouTube</span>
                         </div>
@@ -496,10 +533,13 @@ export default function RecordPage() {
                   {/* AI Feedback */}
                   <div className='flex flex-col gap-3 md:order-1'>
                     <div className='flex items-center gap-1 text-label-1 text-gray-600 px-1'>
-                      <img
+                      <Image
                         src='/images/logos/Icon/Normal/AI.svg'
                         alt='AI 로고'
+                        width={24}
+                        height={24}
                         className='w-6 h-6'
+                        priority
                       />
                       <span>AI 피드백</span>
                     </div>

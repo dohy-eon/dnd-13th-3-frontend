@@ -9,7 +9,7 @@ export default function ChallengeSuccess() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLinkCopied, setIsLinkCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
   const [inviteUrl, setInviteUrl] = useState<string>("");
   const [isLinkGenerated, setIsLinkGenerated] = useState(false);
   const isGeneratingRef = useRef(false);
@@ -90,6 +90,7 @@ export default function ChallengeSuccess() {
             alt='Challenge Create Icon'
             fill
             className='object-contain'
+            priority
           />
         </div>
       </div>
@@ -146,12 +147,9 @@ export default function ChallengeSuccess() {
           <button
             type='button'
             onClick={handleCopyLink}
-            disabled={isLoading || !inviteUrl}
             className='flex-1 px-2.5 py-3.5 bg-primary rounded-xl inline-flex justify-center items-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed'
           >
-            <div className='text-white text-base font-semibold'>
-              {inviteUrl ? "링크 복사" : "링크 생성 중..."}
-            </div>
+            <div className='text-white text-base font-semibold'>링크 복사</div>
           </button>
         </div>
       </div>
@@ -163,6 +161,7 @@ export default function ChallengeSuccess() {
               alt='Copy Link'
               width={24}
               height={24}
+              priority
             />
             <div className='text-white text-sm font-medium'>
               링크 복사가 완료되었습니다.

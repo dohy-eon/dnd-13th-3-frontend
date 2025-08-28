@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { createChallenge } from "@/lib/api/challenge";
@@ -79,7 +80,7 @@ export default function ChallengeCreateForm() {
     <div className='flex flex-col justify-between h-full'>
       <div className='flex flex-col gap-8 pt-8'>
         <div className='flex flex-col gap-4'>
-          <div className='flex flex-col gap-1'>
+          <div className='flex flex-col gap-2'>
             <div className='text-gray-900 text-xl font-semibold leading-7'>
               함께 할 챌린지 목표는?
             </div>
@@ -94,16 +95,16 @@ export default function ChallengeCreateForm() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder='ex.유튜브 하루에 한시간만 하기'
               maxLength={20}
-              className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-normal leading-normal tracking-tight focus:outline-primary focus:outline-2'
+              className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-normal leading-normal tracking-tight focus:outline-gray-500 focus:outline-2'
             />
-            <div className='text-right text-gray-400 text-xs font-normal leading-none tracking-tight'>
+            <div className='text-right text-gray-400 text-xs font-normal'>
               ({title.length}/20)
             </div>
           </div>
         </div>
         <div className='flex flex-col gap-8'>
           <div className='flex flex-col gap-4'>
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <div className='text-gray-900 text-xl font-semibold leading-7'>
                 목표 시간은 어느 정도가 좋을까요?
               </div>
@@ -121,22 +122,25 @@ export default function ChallengeCreateForm() {
                   setGoalTimeHours(value);
                 }}
                 placeholder='3'
-                className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-normal leading-normal tracking-tight focus:outline-primary focus:outline-2'
+                className='w-full px-4 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-normal leading-normal tracking-tight focus:outline-gray-500 focus:outline-2'
               />
-              <div className='text-gray-400 text-xs leading-none tracking-tight'>
-                시간 단위로 입력해주세요 (최대 24시간)
-              </div>
               <div className='min-h-[20px] flex items-center'>
                 {goalTimeHours && parseInt(goalTimeHours) > 24 && (
-                  <div className='text-red-500 text-xs leading-none tracking-tight'>
-                    하루는 24시간을 초과할 수 없습니다.
+                  <div className='flex items-center gap-1 text-rose-500 text-xs font-medium'>
+                    <Image
+                      src='/images/logos/Alert.svg'
+                      alt='경고'
+                      width={15}
+                      height={15}
+                    />
+                    24시간 이상은 입력이 불가합니다
                   </div>
                 )}
               </div>
             </div>
           </div>
           <div className='flex flex-col gap-4'>
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <div className='text-gray-900 text-base font-semibold leading-normal tracking-tight'>
                 챌린지는 일주일간 진행돼요.
               </div>

@@ -2,6 +2,7 @@ import { privateApi } from "@/lib/api/instances";
 import type {
   CreateChallengeRequest,
   CreateChallengeResponse,
+  GetChallengeHistoryResponse,
   GetChallengeResponse,
   InviteUrlResponse,
   JoinChallengeResponse,
@@ -85,6 +86,25 @@ export async function joinChallenge(
     return data;
   } catch (error) {
     console.error("❌ 챌린지 참여 API 호출 실패:", error);
+    throw error;
+  }
+}
+
+export async function getChallengeHistory(): Promise<GetChallengeHistoryResponse> {
+  try {
+    const { data } = await privateApi.get<GetChallengeHistoryResponse>(
+      "/api/challenge/history"
+    );
+
+    console.log("✅ 챌린지 히스토리 API 응답 성공:", {
+      data: data,
+      hasData: !!data.data,
+      historyLength: data.data?.challenges?.length || 0,
+    });
+
+    return data;
+  } catch (error) {
+    console.error("❌ 챌린지 히스토리 API 호출 실패:", error);
     throw error;
   }
 }

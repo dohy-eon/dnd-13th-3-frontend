@@ -1,5 +1,10 @@
 export { default as ChallengeCreateForm } from "./ChallengeCreateForm";
+export { ChallengeDetailClient } from "./ChallengeDetailClient";
 export { default as ChallengeEmptyState } from "./ChallengeEmptyState";
+export { default as ChallengeFullModal } from "./ChallengeFullModal";
 export { default as ChallengeHeader } from "./ChallengeHeader";
+export { ChallengeHistoryClient } from "./ChallengeHistoryClient";
+export { ChallengeHistoryTab } from "./ChallengeHistoryTab";
 export { default as ChallengeOngoing } from "./ChallengeOngoing";
 export { default as ChallengeSuccess } from "./ChallengeSuccessModal";
+export { default as InviteFriendModal } from "./InviteFriendModal";

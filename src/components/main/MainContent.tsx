@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GoalTab } from "@/components/common";
 import {
   GoalEditModal,
@@ -135,13 +135,14 @@ export default function MainContent({
     try {
       // If matches one of preset labels, use that label as type; else custom
       const mapped = mapGoalPresetToEnum(_newGoal);
-      const isPreset = mapped !== "CUSTOM";
+      const isPreset =
+        mapped !== undefined && mapped !== null && mapped !== "custom";
       const goalPart = isPreset
         ? { goal: { type: mapped, custom: null } }
-        : { goal: { type: "CUSTOM", custom: _newGoal } };
+        : { goal: { type: "custom", custom: _newGoal } };
       const screenTimePart = buildCurrentScreenTimeBody();
       const identityPart = buildIdentityBody();
-      const body = { ...identityPart, ...goalPart, ...screenTimePart } as any;
+      const body = { ...identityPart, ...goalPart, ...screenTimePart };
 
       await updateUserProfile(body);
       closeGoalEditModal();
@@ -204,7 +205,6 @@ export default function MainContent({
               goal={goal}
               openModal={openGoalEditModal}
               todayScreenTime={todayScreenTime}
-              nickname={nicknameProp}
             />
             <ProgressSection
               todayScreenTime={todayScreenTime}

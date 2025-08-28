@@ -14,6 +14,20 @@ export interface Participant {
   characterIndex: number;
 }
 
+// 챌린지 히스토리용 참가자 정보
+export interface HistoryParticipant {
+  userId: number;
+  nickname: string;
+  characterIndex: number;
+  current_time_minutes: number;
+  instagram_minutes: number;
+  youtube_minutes: number;
+  kakaotalk_minutes: number;
+  chrome_minutes: number;
+  achievement_rate: number;
+  status: ChallengeStatus;
+}
+
 // 챌린지 정보
 export interface Challenge {
   challengeId: number;
@@ -23,6 +37,58 @@ export interface Challenge {
   title: string;
   goal_time_minutes: number;
   participants: Participant[];
+}
+
+// 현재 진행중인 챌린지용 참가자 정보
+export interface CurrentChallengeParticipant {
+  userId: number;
+  nickname: string;
+  current_time_minutes: number;
+  achievement_rate: number;
+  status: ChallengeStatus;
+  characterIndex: number;
+  instagram_minutes: number;
+  youtube_minutes: number;
+  kakaotalk_minutes: number;
+  chrome_minutes: number;
+}
+
+// 현재 진행중인 챌린지
+export interface CurrentChallenge {
+  challengeId: number;
+  type: ChallengeType;
+  start_date: string;
+  end_date: string;
+  title: string;
+  goal_time_minutes: number;
+  invite_url: string;
+  participants: CurrentChallengeParticipant[];
+}
+
+// 현재 진행중인 챌린지 조회 응답
+export interface GetCurrentChallengeResponse {
+  success: boolean;
+  message: string;
+  data: CurrentChallenge;
+}
+
+// 챌린지 히스토리 정보
+export interface ChallengeHistory {
+  challengeId: number;
+  start_date: string;
+  end_date: string;
+  title: string;
+  goal_time_minutes: number;
+  participants: HistoryParticipant[];
+}
+
+// 챌린지 히스토리 응답
+export interface GetChallengeHistoryResponse {
+  success: boolean;
+  message: string;
+  data: {
+    challenges: ChallengeHistory[];
+  };
 }
 
 // 챌린지 생성 요청 데이터
@@ -75,6 +141,7 @@ export interface JoinChallengeResponse {
     challenge_id: number;
     start_date: string;
     end_date: string;
+    goal_time_minutes: number;
   };
 }
 

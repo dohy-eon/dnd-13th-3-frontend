@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { updateUserProfile } from "@/lib/api/user";
 import type { UserProfileResponse } from "@/types/auth";
 
 interface ProfileEditClientProps {
@@ -20,35 +21,50 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
       user?.goal?.type ||
       "혼자 있는 시간 디지털 없이 보내기"
   );
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
   const handleBack = () => {
     router.back();
   };
 
-  const handleSave = () => {
-    // TODO: API 호출
-    console.log("프로필 저장:", {
-      characterIndex: selectedCharacter,
-      nickname,
-      goal,
-    });
-    router.back();
+  const handleSave = async () => {
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      const isGoalChanged = goal !== (user?.goal?.custom || user?.goal?.type);
+
+      const profileData = {
+        nickname,
+        characterIndex: selectedCharacter,
+        goal: {
+          type: isGoalChanged ? "custom" : user?.goal?.type || "NO_SCREEN",
+          custom: isGoalChanged ? goal : user?.goal?.custom || null,
+        },
+        screenTimeGoal: user?.screenTimeGoal || {
+          type: "CUSTOM",
+          custom: null,
+        },
+      };
+
+      const response = await updateUserProfile(profileData);
+      console.log("프로필 저장 성공:", response);
+      setShowSuccessToast(true);
+
+      setTimeout(() => {
+        router.back();
+      }, 1000);
+    } catch (error) {
+      console.error("프로필 저장 실패:", error);
+      alert("프로필 저장에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getCharacterImage = (characterIndex: number) => {
     return `/images/logos/Charater${characterIndex}.svg`;
-  };
-
-  const getCharacterColors = (characterIndex: number) => {
-    const colors = {
-      1: { border: "border-primary", bg: "bg-primary" },
-      2: { border: "border-green-500", bg: "bg-green-500" },
-      3: { border: "border-yellow-500", bg: "bg-yellow-500" },
-      4: { border: "border-purple-500", bg: "bg-purple-500" },
-      5: { border: "border-pink-500", bg: "bg-pink-500" },
-      6: { border: "border-orange-500", bg: "bg-orange-500" },
-    };
-    return colors[characterIndex as keyof typeof colors] || colors[1];
   };
 
   if (!user) {
@@ -66,6 +82,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                 alt='뒤로가기'
                 width={12}
                 height={22}
+                priority
               />
             </button>
             <h1 className='absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold text-gray-900'>
@@ -77,9 +94,8 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
               <h2 className='text-base font-medium text-gray-900 mb-4'>
                 프로필 캐릭터
               </h2>
-              <div className='grid grid-cols-6 gap-3 items-center'>
+              <div className='flex flex-wrap gap-5'>
                 {[1, 2, 3, 4, 5, 6].map((index) => {
-                  const colors = getCharacterColors(index);
                   const isSelected = selectedCharacter === index;
 
                   return (
@@ -87,27 +103,27 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                       type='button'
                       key={index}
                       onClick={() => setSelectedCharacter(index)}
-                      className={`relative w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-                        isSelected ? `${colors.border} border-2` : ""
+                      className={`relative w-[68px] h-[68px] rounded-full flex items-center justify-center transition-all flex-shrink-0 ${
+                        isSelected ? "border-primary border-2" : ""
                       }`}
                     >
                       <Image
                         src={getCharacterImage(index)}
                         alt={`캐릭터 ${index}`}
-                        width={48}
-                        height={48}
+                        width={68}
+                        height={68}
                         className='rounded-full object-cover'
+                        priority
                       />
                       {isSelected && (
-                        <div
-                          className={`absolute -top-1 -right-1 w-6 h-6 ${colors.bg} rounded-full flex items-center justify-center z-10`}
-                        >
+                        <div className='absolute -top-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center z-10'>
                           <Image
                             src='/images/logos/Check.svg'
                             alt='선택됨'
                             width={16}
                             height={16}
                             className='w-4 h-4'
+                            priority
                           />
                         </div>
                       )}
@@ -125,7 +141,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                   type='text'
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
-                  className='w-full px-4 py-3.5 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-600 text-base font-medium leading-normal tracking-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:outline-transparent'
+                  className='w-full px-4 py-3.5 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-medium leading-normal tracking-tight focus:outline-none focus:outline-2 focus:outline-gray-500'
                   placeholder='닉네임을 입력하세요'
                   maxLength={10}
                 />
@@ -157,7 +173,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                 type='text'
                 value={goal}
                 onChange={(e) => setGoal(e.target.value)}
-                className='w-full px-4 py-3.5 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-600 text-base font-medium leading-normal tracking-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:outline-transparent'
+                className='w-full px-4 py-3.5 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-medium leading-normal tracking-tight focus:outline-none focus:outline-2 focus:outline-gray-500'
                 placeholder='목표를 입력하세요'
               />
             </div>
@@ -167,12 +183,29 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
           <button
             type='button'
             onClick={handleSave}
-            className='w-full transition-colors btn-main btn-primary'
+            disabled={isLoading}
+            className='w-full transition-colors btn-main btn-primary disabled:opacity-50 disabled:cursor-not-allowed'
           >
             저장
           </button>
         </div>
       </div>
+      {showSuccessToast && (
+        <div className='fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50'>
+          <div className='w-80 py-3 bg-neutral-900/90 rounded-lg inline-flex justify-center items-center gap-1.5'>
+            <Image
+              src='/images/logos/CopyLink.svg'
+              alt='CopyLink'
+              width={24}
+              height={24}
+              priority
+            />
+            <div className='text-white text-sm font-medium'>
+              프로필을 수정했습니다.
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

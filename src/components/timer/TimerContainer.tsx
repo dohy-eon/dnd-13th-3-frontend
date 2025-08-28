@@ -132,13 +132,13 @@ export default function TimerContainer() {
         isModalOpen={modalState.showMissionModal}
       />
 
-      <div className='flex gap-3 mt-8'>
+      <div className='flex gap-3 mt-8 mb-4'>
         {buttonState.showStartButton ? (
           <button
             type='button'
             onClick={startTimer}
             disabled={!selectedMission}
-            className={`flex-1 btn-medium mb-4 ${
+            className={`flex-1 btn-medium ${
               selectedMission
                 ? "btn-primary"
                 : "bg-gray-200 text-gray-500 cursor-not-allowed"
@@ -153,7 +153,7 @@ export default function TimerContainer() {
               onClick={buttonState.isPaused ? startTimer : pauseTimer}
               className={`flex-1 btn-medium ${
                 buttonState.isPaused
-                  ? "bg-gray-500 text-white"
+                  ? "bg-gray-200 text-gray-500"
                   : "btn-secondary"
               }`}
             >

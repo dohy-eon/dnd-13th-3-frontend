@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getUserProfile } from "@/lib/api/user";
 import type { UserProfileResponse } from "@/types/auth";
 
 interface SettingPageClientProps {
@@ -12,24 +13,44 @@ interface SettingPageClientProps {
 export function SettingPageClient({ user }: SettingPageClientProps) {
   const router = useRouter();
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
+  const [currentUser, setCurrentUser] = useState<UserProfileResponse | null>(
+    user
+  );
 
-  console.log("🔍 SettingPageClient 렌더링:", { user });
+  useEffect(() => {
+    const fetchLatestUserData = async () => {
+      try {
+        const latestUser = await getUserProfile();
+        setCurrentUser(latestUser);
+      } catch (error) {
+        console.error("최신 사용자 데이터 가져오기 실패:", error);
+        setCurrentUser(user);
+      }
+    };
+
+    fetchLatestUserData();
+  }, [user]);
+
+  console.log("🔍 SettingPageClient 렌더링:", { currentUser });
   console.log("🔍 사용자 정보 상세:", {
-    nickname: user?.nickname,
-    characterIndex: user?.characterIndex,
-    goal: user?.goal,
-    id: user?.id,
+    nickname: currentUser?.nickname,
+    characterIndex: currentUser?.characterIndex,
+    goal: currentUser?.goal,
+    id: currentUser?.id,
   });
   console.log("🔍 characterIndex 상세:", {
-    value: user?.characterIndex,
-    type: typeof user?.characterIndex,
-    characterImage: user?.characterIndex
-      ? `/images/logos/Charater${user.characterIndex}.svg`
+    value: currentUser?.characterIndex,
+    type: typeof currentUser?.characterIndex,
+    characterImage: currentUser?.characterIndex
+      ? `/images/logos/Charater${currentUser.characterIndex}.svg`
       : "undefined",
   });
 
   const handleBack = () => {
     router.back();
+    setTimeout(() => {
+      router.refresh();
+    }, 100);
   };
 
   const handleEditProfile = () => {
@@ -68,7 +89,7 @@ export function SettingPageClient({ user }: SettingPageClientProps) {
         <div className='flex flex-col items-center'>
           <div className='relative mb-3'>
             <Image
-              src={getCharacterImage(user?.characterIndex || 1)}
+              src={getCharacterImage(currentUser?.characterIndex || 1)}
               alt='프로필 캐릭터'
               width={80}
               height={80}
@@ -77,7 +98,7 @@ export function SettingPageClient({ user }: SettingPageClientProps) {
           </div>
           <div className='flex items-center gap-2'>
             <span className='text-lg font-semibold text-gray-900'>
-              {user?.nickname}님
+              {currentUser?.nickname}님
             </span>
             <button type='button' onClick={handleEditProfile}>
               <Image

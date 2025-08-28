@@ -89,14 +89,14 @@ export default function Onboarding() {
       const goalType =
         selectionType === "preset" && selectedIndex != null
           ? mapGoalPresetToEnum(presets[selectedIndex])
-          : "CUSTOM";
+          : "custom";
       const goalCustom = selectionType === "custom" ? customGoal : null;
 
       // 2) ScreenTimeGoal 매핑 (preset hours -> `<N>HOURS`, custom -> `CUSTOM` + formatted custom)
       const screenTimeType =
         timeSelectionType === "preset" && selectedPresetIndex !== null
           ? mapPresetHoursToEnum(presetHours[selectedPresetIndex])
-          : "CUSTOM";
+          : "custom";
       const _totalMinutes = parsedHours * 60 + parsedMinutes;
       const screenTimeCustom =
         timeSelectionType === "custom"
