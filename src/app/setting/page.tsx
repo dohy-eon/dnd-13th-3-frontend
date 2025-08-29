@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { SettingPageClient } from "@/components/setting/SettingPageClient";
 import { getUserProfile } from "@/lib/api/user";
 

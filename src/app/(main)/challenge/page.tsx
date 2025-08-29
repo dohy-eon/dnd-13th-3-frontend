@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { ChallengeHeader, ChallengeOngoing } from "@/components/challenge";
 import ChallengeEmptyStateClient from "@/components/challenge/ChallengeEmptyStateClient";
 import { getChallenge, getChallengeHistory } from "@/lib/api/challenge";

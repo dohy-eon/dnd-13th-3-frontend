@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { ChallengeHistoryClient } from "@/components/challenge";
 import { getChallengeHistory } from "@/lib/api/challenge";
 import { getUserProfile } from "@/lib/api/user";

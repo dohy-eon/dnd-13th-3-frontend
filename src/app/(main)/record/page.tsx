@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import RecordClient from "@/components/record/RecordClient";
 import { getScreenTimeDay, getScreenTimeWeek } from "@/lib/api/screentime";
 import { getUserProfile } from "@/lib/api/user";
