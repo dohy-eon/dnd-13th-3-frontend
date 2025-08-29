@@ -68,19 +68,6 @@ export default function StatsCards({
                 ? `${targetTime.hours}시간 ${targetTime.minutes}분`
                 : `${targetTime.hours}시간`}
             </div>
-            <button
-              type='button'
-              onClick={openModal}
-              className='cursor-pointer'
-            >
-              <Image
-                src='/images/logos/Icon/Normal/Pencil.svg'
-                alt='수정'
-                width={18}
-                height={18}
-                priority
-              />
-            </button>
           </div>
         </div>
       </div>

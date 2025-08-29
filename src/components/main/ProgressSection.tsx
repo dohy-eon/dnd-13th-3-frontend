@@ -1,13 +1,16 @@
 import Image from "next/image";
+import { getCharacterImage } from "@/utils/character";
 
 interface ProgressSectionProps {
   todayScreenTime: number;
   goalScreenTime: number;
+  characterIndex?: number;
 }
 
 const ProgressSection = ({
   todayScreenTime,
   goalScreenTime,
+  characterIndex,
 }: ProgressSectionProps) => {
   const progressPercentage =
     goalScreenTime > 0 ? (todayScreenTime / goalScreenTime) * 100 : 0;
@@ -17,7 +20,7 @@ const ProgressSection = ({
   const isOverTime = progressPercentage > 100;
   const characterImageSrc = isOverTime
     ? "/images/logos/Error.svg"
-    : "/images/logos/MinuDefault.svg";
+    : getCharacterImage(characterIndex);
 
   return (
     <div className='relative w-full max-w-full flex flex-col items-center mt-[243px]'>
@@ -47,14 +50,14 @@ const ProgressSection = ({
           style={{ width: `${Math.min(progressPercentage, 100)}%` }}
         ></div>
         <div
-          className={`absolute ${isOverTime ? "bottom-4" : "bottom-2"} transition-all duration-500 z-30`}
-          style={{ left: `calc(${characterPosition}% - 23.5px)` }}
+          className={`absolute bottom-4 transition-all duration-500 z-30`}
+          style={{ left: `calc(${characterPosition}% - 3%)` }}
         >
           <Image
             src={characterImageSrc}
             alt='character'
-            width={47}
-            height={37}
+            width={60}
+            height={60}
             priority
           />
         </div>

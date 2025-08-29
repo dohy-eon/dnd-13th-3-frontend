@@ -32,7 +32,9 @@ export interface ScreenTimeWeekResponse {
     };
     dailyRecords: Array<{
       date: string;
+      dayOfWeek: string;
       totalMinutes: number;
+      status: "UNDER" | "OVER" | "NO_DATA";
       appTimes: {
         instagram: number;
         youtube: number;
