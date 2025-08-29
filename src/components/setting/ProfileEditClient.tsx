@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateUserProfile } from "@/lib/api/user";
 import type { UserProfileResponse } from "@/types/auth";
 
@@ -21,11 +21,40 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
       user?.goal?.type ||
       "혼자 있는 시간 디지털 없이 보내기"
   );
+  const [hours, setHours] = useState("7");
+  const [minutes, setMinutes] = useState("0");
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
+  // screenTimeGoal 초기값 설정
+  useEffect(() => {
+    if (user?.screenTimeGoal?.custom) {
+      const totalMinutes = parseInt(user.screenTimeGoal.custom, 10);
+      if (!Number.isNaN(totalMinutes)) {
+        setHours(Math.floor(totalMinutes / 60).toString());
+        setMinutes((totalMinutes % 60).toString());
+      }
+    }
+  }, [user?.screenTimeGoal?.custom]);
+
   const handleBack = () => {
     router.back();
+  };
+
+  const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === "" || /^\d{0,2}$/.test(value)) {
+      setHours(value);
+    }
+  };
+
+  const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === "" || /^\d{0,2}$/.test(value)) {
+      if (parseInt(value, 10) < 60) {
+        setMinutes(value);
+      }
+    }
   };
 
   const handleSave = async () => {
@@ -34,15 +63,26 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
     setIsLoading(true);
     try {
       const isGoalChanged = goal !== (user?.goal?.custom || user?.goal?.type);
+      const totalMinutes =
+        parseInt(hours || "0", 10) * 60 + parseInt(minutes || "0", 10);
+      const isScreenTimeChanged =
+        totalMinutes !== parseInt(user?.screenTimeGoal?.custom || "420", 10);
 
       const profileData = {
         nickname,
         characterIndex: selectedCharacter,
         goal: {
-          type: isGoalChanged ? "custom" : user?.goal?.type || "NO_SCREEN",
+          type: isGoalChanged ? "CUSTOM" : user?.goal?.type || "NO_SCREEN",
           custom: isGoalChanged ? goal : user?.goal?.custom || null,
         },
-        screenTimeGoal: user?.screenTimeGoal,
+        screenTimeGoal: {
+          type: isScreenTimeChanged
+            ? "CUSTOM"
+            : user?.screenTimeGoal?.type || "420",
+          custom: isScreenTimeChanged
+            ? totalMinutes.toString()
+            : user?.screenTimeGoal?.custom || "420",
+        },
       };
 
       const response = await updateUserProfile(profileData);
@@ -173,6 +213,41 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                 className='w-full px-4 py-3.5 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 text-gray-900 text-base font-medium leading-normal tracking-tight focus:outline-none focus:outline-2 focus:outline-gray-500'
                 placeholder='목표를 입력하세요'
               />
+            </div>
+            <div>
+              <h2 className='text-base font-medium text-gray-900 mb-3'>
+                목표 화면시간
+              </h2>
+              <div className='flex gap-3'>
+                <div className='flex-1 h-12 px-5 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 flex items-center justify-end gap-1 overflow-hidden'>
+                  <input
+                    type='text'
+                    inputMode='numeric'
+                    pattern='[0-9]*'
+                    autoComplete='off'
+                    value={hours}
+                    onChange={handleHoursChange}
+                    className='w-[56px] bg-transparent text-right text-base font-medium text-gray-600 outline-none'
+                  />
+                  <span className='text-gray-400 text-base font-medium'>
+                    시간
+                  </span>
+                </div>
+                <div className='flex-1 h-12 px-5 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 flex items-center justify-end gap-1 overflow-hidden'>
+                  <input
+                    type='text'
+                    inputMode='numeric'
+                    pattern='[0-9]*'
+                    autoComplete='off'
+                    value={minutes}
+                    onChange={handleMinutesChange}
+                    className='w-[56px] bg-transparent text-right text-base font-medium text-gray-600 outline-none'
+                  />
+                  <span className='text-gray-400 text-base font-medium'>
+                    분
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

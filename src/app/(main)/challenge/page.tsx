@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 import { ChallengeHeader, ChallengeOngoing } from "@/components/challenge";
 import ChallengeEmptyStateClient from "@/components/challenge/ChallengeEmptyStateClient";

@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 import { ProfileEditClient } from "@/components/setting/ProfileEditClient";
 import { getUserProfile } from "@/lib/api/user";

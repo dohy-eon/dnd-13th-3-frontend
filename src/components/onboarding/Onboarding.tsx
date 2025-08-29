@@ -85,7 +85,7 @@ export default function Onboarding() {
       const goalType =
         selectionType === "preset" && selectedIndex != null
           ? mapGoalPresetToEnum(presets[selectedIndex])
-          : "custom";
+          : "CUSTOM";
       const goalCustom = selectionType === "custom" ? customGoal : null;
 
       // 2) ScreenTimeGoal을 분 단위로 계산하여 전송
@@ -94,7 +94,7 @@ export default function Onboarding() {
         type:
           timeSelectionType === "preset" && selectedPresetIndex !== null
             ? (presetHours[selectedPresetIndex] * 60).toString()
-            : "custom",
+            : "CUSTOM",
         custom: timeSelectionType === "custom" ? totalMinutes.toString() : null,
       };
 
