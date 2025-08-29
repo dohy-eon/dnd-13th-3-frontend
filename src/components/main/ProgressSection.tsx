@@ -36,7 +36,7 @@ const ProgressSection = ({
             : {}
         }
       >
-        <div className='absolute top-full mt-5 w-full flex justify-between items-center'>
+        <div className='absolute top-full mt-2 w-full flex justify-between items-center'>
           <div className='text-gray-600 text-sm font-medium font-pretendard'>
             치유중
           </div>
