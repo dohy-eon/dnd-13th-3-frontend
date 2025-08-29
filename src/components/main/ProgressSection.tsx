@@ -37,21 +37,21 @@ const ProgressSection = ({
         }
       >
         <div className='absolute -bottom-5 w-full flex justify-between items-center'>
-          <div className='text-gray-500 text-sm font-medium font-pretendard'>
+          <div className='text-gray-600 text-sm font-medium font-pretendard'>
             치유중
           </div>
-          <div className='text-gray-500 text-sm font-medium font-pretendard'>
+          <div className='text-gray-600 text-sm font-medium font-pretendard'>
             {Math.floor(goalScreenTime / 60)}시간{" "}
             {goalScreenTime % 60 > 0 ? `${goalScreenTime % 60}분` : ""}
           </div>
         </div>
         <div
-          className={`absolute h-4 rounded-full ${progressPercentage > 100 ? "bg-red-500" : "bg-blue-500"}`}
+          className={`absolute h-4 rounded-full ${progressPercentage > 100 ? "bg-red-500" : "bg-primary"}`}
           style={{ width: `${Math.min(progressPercentage, 100)}%` }}
         ></div>
         <div
           className={`absolute bottom-4 transition-all duration-500 z-30`}
-          style={{ left: `calc(${characterPosition}% - 3%)` }}
+          style={{ left: `calc(${characterPosition}% - 20%)` }}
         >
           <Image
             src={characterImageSrc}

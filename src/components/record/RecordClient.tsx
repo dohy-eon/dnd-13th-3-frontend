@@ -42,6 +42,8 @@ export default function RecordClient({
 }: RecordClientProps) {
   const [segment, setSegment] = useState<Segment>("today");
   const [selectedDay, setSelectedDay] = useState<DayKey>("mon");
+  // 주간 탭에서 요일 활성 하이라이트를 숨길지 여부 (선택값과 무관한 UI 전용 상태)
+  const [suppressWeekActive, setSuppressWeekActive] = useState(false);
   const [aiFeedback, setAIFeedback] = useState<
     AIFeedbackResponse["data"] | null
   >(null);
@@ -251,6 +253,12 @@ export default function RecordClient({
   const selectedDelta = goalMinutes - selectedDayRecord.totalMinutes;
   const selectedDeltaHM = minutesToHM(Math.abs(selectedDelta));
 
+  // Weekly average values
+  const averageMinutes = Math.round(weekData?.data?.averageMinutes ?? 0);
+  const averageHM = minutesToHM(averageMinutes);
+  const averageDelta = goalMinutes - averageMinutes;
+  const averageDeltaHM = minutesToHM(Math.abs(averageDelta));
+
   // Fetch AI feedback when segment or selected day changes
   useEffect(() => {
     const fetchAIFeedback = async () => {
@@ -401,7 +409,10 @@ export default function RecordClient({
                 aria-selected={segment === "today"}
                 aria-controls='panel-today'
                 id='tab-today'
-                onClick={() => setSegment("today")}
+                onClick={() => {
+                  setSegment("today");
+                  setSuppressWeekActive(false);
+                }}
                 className={`flex-1 py-2 rounded-full text-body-1 font-medium transition-colors ${
                   segment === "today"
                     ? "bg-white text-gray-900 shadow-sm font-semibold"
@@ -416,7 +427,10 @@ export default function RecordClient({
                 aria-selected={segment === "week"}
                 aria-controls='panel-week'
                 id='tab-week'
-                onClick={() => setSegment("week")}
+                onClick={() => {
+                  setSegment("week");
+                  setSuppressWeekActive(true);
+                }}
                 className={`flex-1 py-2 rounded-full text-body-1 font-medium transition-colors ${
                   segment === "week"
                     ? "bg-white text-gray-900 shadow-sm font-semibold"
@@ -445,12 +459,17 @@ export default function RecordClient({
                     ] as DayKey[]
                   ).map((day) => {
                     const hasData = availableDays.has(day);
-                    const isSelected = selectedDay === day;
+                    const isSelected =
+                      !suppressWeekActive && selectedDay === day;
                     return (
                       <button
                         key={day}
                         type='button'
-                        onClick={() => hasData && setSelectedDay(day)}
+                        onClick={() => {
+                          if (!hasData) return;
+                          setSelectedDay(day);
+                          setSuppressWeekActive(false);
+                        }}
                         className={`flex-1 p-1 inline-flex flex-col justify-start items-center gap-1 ${
                           !hasData ? "opacity-30 cursor-not-allowed" : ""
                         }`}
@@ -531,7 +550,7 @@ export default function RecordClient({
                         </div>
                       </div>
                     ) : (
-                      <div className='px-3 py-2 bg-gray-100 rounded-2xl outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-center items-center gap-0.5'>
+                      <div className='px-3 py-2 bg-gray-100 rounded-3xl outline outline-1 outline-offset-[-1px] outline-gray-100 inline-flex justify-center items-center gap-0.5'>
                         <img
                           src='/images/logos/Icon/Normal/under.svg'
                           alt='미만 아이콘'
@@ -584,7 +603,7 @@ export default function RecordClient({
                             alt='인스타그램 로고'
                             className='w-6 h-6'
                           />
-                          <span>인스타그램</span>
+                          <span>Instagram</span>
                         </div>
                         <span className='text-caption-1 text-gray-500'>
                           {formatAppTime(todayRecord.appTimes.instagram)}
@@ -598,7 +617,7 @@ export default function RecordClient({
                             alt='크롬 로고'
                             className='w-6 h-6'
                           />
-                          <span>크롬</span>
+                          <span>Chrome</span>
                         </div>
                         <span className='text-caption-1 text-gray-500'>
                           {formatAppTime(todayRecord.appTimes.chrome)}
@@ -669,12 +688,18 @@ export default function RecordClient({
                       />
                     </div>
                     <div className='text-center'>
-                      <p className='m-0 text-label-1 text-gray-600'>{`${dayMeta[selectedDay].full}의 스크린타임`}</p>
+                      <p className='m-0 text-label-1 text-gray-600'>
+                        {suppressWeekActive
+                          ? "평균"
+                          : `${dayMeta[selectedDay].full}의 스크린타임`}
+                      </p>
                       <h2 className='m-0 text-title-2 text-gray-900 font-semibold'>
-                        {formatHM(selectedHM.hours, selectedHM.minutes)}
+                        {suppressWeekActive
+                          ? formatHM(averageHM.hours, averageHM.minutes)
+                          : formatHM(selectedHM.hours, selectedHM.minutes)}
                       </h2>
                     </div>
-                    {selectedDelta < 0 ? (
+                    {(suppressWeekActive ? averageDelta : selectedDelta) < 0 ? (
                       <div className='px-3 py-2 bg-gray-100 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-100 inline-flex justify-center items-center gap-0.5'>
                         <img
                           src='/images/logos/Icon/Normal/over.svg'
@@ -687,8 +712,14 @@ export default function RecordClient({
                           </span>
                           <span className='text-rose-500 text-caption-1 font-medium leading-none tracking-tight'>
                             {formatHM(
-                              selectedDeltaHM.hours,
-                              selectedDeltaHM.minutes
+                              (suppressWeekActive
+                                ? averageDeltaHM
+                                : selectedDeltaHM
+                              ).hours,
+                              (suppressWeekActive
+                                ? averageDeltaHM
+                                : selectedDeltaHM
+                              ).minutes
                             )}
                           </span>
                           <span className='text-gray-500 text-caption-1 font-medium leading-none tracking-tight'>
@@ -698,7 +729,7 @@ export default function RecordClient({
                         </div>
                       </div>
                     ) : (
-                      <div className='px-3 py-2 bg-gray-100 rounded-2xl outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-center items-center gap-0.5'>
+                      <div className='px-3 py-2 bg-gray-100 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-100 inline-flex justify-center items-center gap-0.5'>
                         <img
                           src='/images/logos/Icon/Normal/under.svg'
                           alt='미만 아이콘'
@@ -710,8 +741,14 @@ export default function RecordClient({
                           </span>
                           <span className='text-indigo-500 text-caption-1 font-medium leading-none tracking-tight'>
                             {formatHM(
-                              selectedDeltaHM.hours,
-                              selectedDeltaHM.minutes
+                              (suppressWeekActive
+                                ? averageDeltaHM
+                                : selectedDeltaHM
+                              ).hours,
+                              (suppressWeekActive
+                                ? averageDeltaHM
+                                : selectedDeltaHM
+                              ).minutes
                             )}
                           </span>
                           <span className='text-gray-500 text-caption-1 font-medium leading-none tracking-tight'>
@@ -754,7 +791,7 @@ export default function RecordClient({
                             alt='인스타그램 로고'
                             className='w-6 h-6'
                           />
-                          <span>인스타그램</span>
+                          <span>Instagram</span>
                         </div>
                         <span className='text-caption-1 text-gray-500'>
                           {formatAppTime(selectedDayRecord.appTimes.instagram)}
@@ -768,7 +805,7 @@ export default function RecordClient({
                             alt='크롬 로고'
                             className='w-6 h-6'
                           />
-                          <span>크롬</span>
+                          <span>Chrome</span>
                         </div>
                         <span className='text-caption-1 text-gray-500'>
                           {formatAppTime(selectedDayRecord.appTimes.chrome)}
@@ -810,9 +847,34 @@ export default function RecordClient({
                         <p className='text-red-500 text-center'>{error}</p>
                       ) : aiFeedback ? (
                         <div className='space-y-4'>
-                          <p className='m-0 text-body-2 text-gray-900 whitespace-pre-line'>
-                            {aiFeedback.feedback}
-                          </p>
+                          <div className='space-y-3'>
+                            {(() => {
+                              const raw = aiFeedback.feedback as unknown;
+                              const text =
+                                typeof raw === "string"
+                                  ? raw
+                                  : Array.isArray(raw)
+                                    ? raw
+                                        .filter((x) => typeof x === "string")
+                                        .join("\n\n")
+                                    : "";
+                              const cleaned = text
+                                .replace(/\\n/g, " ")
+                                .replace(/\r/g, "");
+                              return cleaned
+                                .split(/\n+/)
+                                .map((p) => p.trim())
+                                .filter((p) => p.length > 0)
+                                .map((paragraph) => (
+                                  <p
+                                    key={paragraph}
+                                    className='m-0 text-body-2 text-gray-900'
+                                  >
+                                    {paragraph}
+                                  </p>
+                                ));
+                            })()}
+                          </div>
 
                           {aiFeedback.insights.length > 0 && (
                             <div className='mt-4'>

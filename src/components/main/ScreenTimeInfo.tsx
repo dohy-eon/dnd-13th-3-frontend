@@ -19,16 +19,16 @@ export default function ScreenTimeInfo({
       className='relative justify-center items-center cursor-pointer text-left w-full'
       onClick={openModal}
     >
-      <div className='absolute left-1/2 top-[32px] transform -translate-x-1/2 text-center'>
-        <div className='text-gray-500 text-sm font-medium font-pretendard whitespace-nowrap'>
+      <div className='absolute left-1/2 top-[16px] transform -translate-x-1/2 text-center'>
+        <div className='text-gray-500 text-label-1 font-medium whitespace-nowrap'>
           오늘의 스크린타임
         </div>
-        <div className='text-gray-900 text-3xl font-semibold font-pretendard leading-10 whitespace-nowrap'>
+        <div className='text-gray-900 text-3xl font-semibold font-pretendard leading-10 mt-[4px] whitespace-nowrap'>
           {`${Math.floor(todayScreenTime / 60)}시간 ${todayScreenTime % 60}분`}
         </div>
       </div>
 
-      <div className='absolute left-1/2 transform -translate-x-1/2 px-3 py-2 bg-white rounded-2xl flex items-center gap-1 top-[110px]'>
+      <div className='absolute left-1/2 transform -translate-x-1/2 px-3 py-2 bg-white outline outline-1 outline-gray-300 rounded-2xl flex items-center gap-1 top-[92px]'>
         <span className='text-gray-500 text-xs font-medium font-pretendard leading-none tracking-tight whitespace-nowrap'>
           {goal}
         </span>

@@ -57,7 +57,7 @@ export default function StatsCards({
               height={16}
               priority
             />
-            <div className='text-gray-400 text-sm font-medium font-pretendard leading-tight tracking-tight'>
+            <div className='text-gray-500 text-sm font-medium font-pretendard leading-tight tracking-tight'>
               목표 시간
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function StatsCards({
               height={16}
               priority
             />
-            <div className='text-gray-400 text-sm font-medium font-pretendard leading-tight tracking-tight'>
+            <div className='text-gray-500 text-sm font-medium font-pretendard leading-tight tracking-tight'>
               {cardTitle}
             </div>
           </div>
