@@ -19,7 +19,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
   const [goal, setGoal] = useState(
     user?.goal?.custom ||
       user?.goal?.type ||
-      "혼자 있는 시간 디지털 없이 보내기"
+      "혼자 있는 시간 디지털 없이 보내보기"
   );
   const [hours, setHours] = useState("7");
   const [minutes, setMinutes] = useState("0");

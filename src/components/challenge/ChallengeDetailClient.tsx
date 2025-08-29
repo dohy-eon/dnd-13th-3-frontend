@@ -185,7 +185,9 @@ export function ChallengeDetailClient({
           </div>
         </div>
         <div>
-          <h2 className='text-gray-900 text-lg font-semibold mb-4'>최종 랭킹</h2>
+          <h2 className='text-gray-900 text-lg font-semibold mb-4'>
+            최종 랭킹
+          </h2>
           <div className='space-y-3'>
             {sortedParticipants.map((participant, index) => {
               const rank = index + 1;
@@ -193,14 +195,19 @@ export function ChallengeDetailClient({
                 userProfile && participant.userId.toString() === userProfile.id;
               const isTop3 = rank <= 3;
               const isTop6 = rank <= 6;
-              const totalGoalTime = challenge.goal_time_minutes * 7; 
-              const hasExceededGoal = participant.current_time_minutes >= totalGoalTime;
+              const totalGoalTime = challenge.goal_time_minutes * 7;
+              const hasExceededGoal =
+                participant.current_time_minutes >= totalGoalTime;
 
               return (
                 <div
                   key={participant.userId}
                   className={`rounded-xl px-4 py-3 flex items-center gap-3 ${
-                    isTop3 ? "bg-white" : isTop6 ? "bg-indigo-100" : "bg-gray-100"
+                    isTop3
+                      ? "bg-white"
+                      : isTop6
+                        ? "bg-indigo-100"
+                        : "bg-gray-100"
                   }`}
                 >
                   <div className='w-[36px] h-[36px] flex items-center justify-center'>
@@ -251,9 +258,11 @@ export function ChallengeDetailClient({
                       <div className='text-sm font-medium text-gray-900'>
                         {participant.nickname}
                       </div>
-                      <div className={`text-xs font-medium ${
-                        hasExceededGoal ? 'text-gray-400' : 'text-primary'
-                      }`}>
+                      <div
+                        className={`text-xs font-medium ${
+                          hasExceededGoal ? "text-gray-400" : "text-primary"
+                        }`}
+                      >
                         {formatTime(participant.current_time_minutes)}
                       </div>
                     </div>

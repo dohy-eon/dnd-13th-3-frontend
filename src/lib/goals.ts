@@ -32,7 +32,7 @@ export function mapGoalEnumToLabel(
     case "HEALTH_CARE":
       return "눈 건강을 지키고 싶어요";
     case "NO_SCREEN":
-      return "혼자 있는 시간 디지털 없이 보내기";
+      return "혼자 있는 시간 디지털 없이 보내보기";
     case "custom":
       return custom || "나만의 목표";
     default:
@@ -50,13 +50,15 @@ export function parseScreenTimeValue(
 
   // Handle object format { type: string, custom: string | null }
   if (typeof val === "object" && val !== null) {
-    if (val.type === "CUSTOM" && val.custom) {
+    const typeString = String(val.type || "");
+    const typeUpper = typeString.toUpperCase();
+    if (typeUpper === "CUSTOM" && val.custom) {
       const total = parseInt(val.custom, 10);
       if (!Number.isNaN(total)) {
         return { hours: Math.floor(total / 60), minutes: total % 60 };
       }
-    } else if (/^\d+$/.test(val.type)) {
-      const total = parseInt(val.type, 10);
+    } else if (/^\d+$/.test(typeString)) {
+      const total = parseInt(typeString, 10);
       return { hours: Math.floor(total / 60), minutes: total % 60 };
     }
     return { hours: 7, minutes: 0 };

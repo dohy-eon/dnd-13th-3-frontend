@@ -12,7 +12,7 @@ interface ChallengeHeaderProps {
 }
 
 export default function ChallengeHeader({
-  hasChallenge
+  hasChallenge,
 }: ChallengeHeaderProps) {
   const router = useRouter();
   const [showFullModal, setShowFullModal] = useState(false);

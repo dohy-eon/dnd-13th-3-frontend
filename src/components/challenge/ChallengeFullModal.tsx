@@ -14,7 +14,7 @@ export default function ChallengeFullModal({
   };
 
   return (
-    <div 
+    <div
       className='fixed inset-0 bg-dim-background flex items-center justify-center z-50 p-4'
       onClick={handleBackdropClick}
     >

@@ -139,7 +139,7 @@ export default function MainContent({
         mapped !== undefined && mapped !== null && mapped !== "custom";
       const goalPart = isPreset
         ? { goal: { type: mapped, custom: null } }
-        : { goal: { type: "custom", custom: _newGoal } };
+        : { goal: { type: "CUSTOM", custom: _newGoal } };
       const screenTimePart = buildCurrentScreenTimeBody();
       const identityPart = buildIdentityBody();
       const body = { ...identityPart, ...goalPart, ...screenTimePart };

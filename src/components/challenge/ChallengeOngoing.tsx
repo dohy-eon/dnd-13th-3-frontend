@@ -7,9 +7,9 @@ import type {
   GetChallengeHistoryResponse,
 } from "@/lib/challenge";
 import type { UserProfileResponse } from "@/types/auth";
+import ChallengeFullModal from "./ChallengeFullModal";
 import { ChallengeHistoryTab } from "./ChallengeHistoryTab";
 import InviteFriendModal from "./InviteFriendModal";
-import ChallengeFullModal from "./ChallengeFullModal";
 
 interface ChallengeOngoingProps {
   challenge: CurrentChallenge;
@@ -121,7 +121,8 @@ export default function ChallengeOngoing({
                       />
                     </div>
                     <div className='justify-start text-gray-600 text-sm font-normal leading-tight tracking-tight ml-1'>
-                    목표 {Math.round(
+                      목표{" "}
+                      {Math.round(
                         ((challenge.goal_time_minutes * 7) / 60) * 10
                       ) / 10}
                       시간 중
@@ -145,7 +146,7 @@ export default function ChallengeOngoing({
                       priority
                     />
                     <span className='text-blue-700 text-xs font-medium'>
-                     친구 초대
+                      친구 초대
                     </span>
                   </button>
                 </div>
@@ -304,15 +305,13 @@ export default function ChallengeOngoing({
           )}
         </div>
       </div>
-              {showInviteModal && (
-                <InviteFriendModal
-                  onClose={handleCloseInviteModal}
-                  inviteUrl={challenge.invite_url || ""}
-                />
-              )}
-              {showFullModal && (
-                <ChallengeFullModal onClose={handleCloseFullModal} />
-              )}
+      {showInviteModal && (
+        <InviteFriendModal
+          onClose={handleCloseInviteModal}
+          inviteUrl={challenge.invite_url || ""}
+        />
+      )}
+      {showFullModal && <ChallengeFullModal onClose={handleCloseFullModal} />}
     </div>
   );
 }

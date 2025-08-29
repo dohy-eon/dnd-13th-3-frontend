@@ -441,7 +441,7 @@ export default function RecordClient({
               </button>
             </div>
             {segment === "today" ? (
-              <p className='m-0 text-body-1 font-medium text-gray-700 text-center'>
+              <p className='m-0 text-body-1 text-[18px] font-medium text-gray-700 text-center '>
                 {dateLabel}
               </p>
             ) : (
@@ -487,7 +487,7 @@ export default function RecordClient({
                           />
                         </div>
                         <div
-                          className={`text-center text-caption-2 font-medium leading-none ${
+                          className={`text-center text-caption-1 font-medium leading-none ${
                             isSelected ? "text-gray-900" : "text-gray-400"
                           }`}
                         >

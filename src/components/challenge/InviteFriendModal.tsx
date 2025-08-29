@@ -59,7 +59,7 @@ export default function InviteFriendModal({
   }
 
   return (
-    <div 
+    <div
       className='fixed inset-0 bg-dim-background flex items-center justify-center z-[99999] p-4'
       onClick={handleBackdropClick}
     >
