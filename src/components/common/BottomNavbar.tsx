@@ -36,7 +36,7 @@ export default function BottomNavbar() {
               className={
                 isChallengeActive
                   ? "text-primary text-xs font-semibold leading-none tracking-tight"
-                  : "text-gray-400 text-xs font-medium leading-none tracking-tight"
+                  : "text-gray-600 text-xs font-medium leading-none tracking-tight"
               }
             >
               챌린지
@@ -63,7 +63,7 @@ export default function BottomNavbar() {
               className={
                 isHomeActive
                   ? "text-primary text-xs font-semibold leading-none tracking-tight"
-                  : "text-gray-400 text-xs font-medium leading-none tracking-tight"
+                  : "text-gray-600 text-xs font-medium leading-none tracking-tight"
               }
             >
               홈
@@ -90,7 +90,7 @@ export default function BottomNavbar() {
               className={
                 isRecordActive
                   ? "text-primary text-xs font-semibold leading-none tracking-tight"
-                  : "text-gray-400 text-xs font-medium leading-none tracking-tight"
+                  : "text-gray-600 text-xs font-medium leading-none tracking-tight"
               }
             >
               기록
