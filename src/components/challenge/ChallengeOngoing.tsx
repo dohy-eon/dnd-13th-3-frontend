@@ -163,7 +163,7 @@ export default function ChallengeOngoing({
               className={`absolute top-1 bottom-1 bg-white rounded-[30px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.09)] transition-all duration-300 ease-in-out ${
                 activeTab === "current"
                   ? "left-1.5 w-[calc(50%-0.75rem)]"
-                  : "left-[calc(50%+0.75rem)] w-[calc(50%-0.75rem)]"
+                  : "left-[calc(50%+0.75rem)] w-[calc(50%-1.2rem)]"
               }`}
             />
             <button
