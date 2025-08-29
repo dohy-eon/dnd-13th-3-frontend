@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import type { UserProfileResponse } from "@/types/auth";
 
 interface ChallengeEmptyStateProps {
@@ -10,8 +13,13 @@ export default function ChallengeEmptyState({
   userProfile,
   onStartChallenge,
 }: ChallengeEmptyStateProps) {
+  const router = useRouter();
   const nickname = userProfile?.nickname || "미누";
   const displayNickname = nickname.endsWith("님") ? nickname : `${nickname}님`;
+
+  const handleViewHistory = () => {
+    router.push("/history");
+  };
 
   return (
     <div className='flex flex-col h-full'>
@@ -39,15 +47,34 @@ export default function ChallengeEmptyState({
             </div>
           </div>
           <div className='relative z-20 mb-20'>
-            <div className='w-80 h-80 relative'>
+            <div className='w-[301px] h-[237px] relative'>
               <Image
-                src={"/images/logos/ChallengingCharater1.svg"}
+                src={"/images/logos/NoChallenge.svg"}
                 alt='도전하는 캐릭터'
                 fill
                 className='object-contain'
                 priority
               />
             </div>
+          </div>
+          <div className='absolute bottom-12 left-1/2 transform -translate-x-1/2 z-30'>
+            <button
+              type='button'
+              onClick={handleViewHistory}
+              className='px-3 py-2 bg-white rounded-2xl outline outline-1 outline-offset-[-1px] outline-indigo-300 inline-flex justify-center items-center gap-1 overflow-hidden'
+            >
+              <div className='w-3.5 h-3.5 relative'>
+                <Image
+                  src='/images/logos/Star.svg'
+                  alt='별 아이콘'
+                  fill
+                  className='object-contain'
+                />
+              </div>
+              <div className="justify-start text-blue-700 text-xs font-medium font-['Pretendard'] leading-none tracking-tight">
+                지난 챌린지 보기
+              </div>
+            </button>
           </div>
         </div>
       </div>

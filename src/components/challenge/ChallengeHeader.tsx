@@ -24,10 +24,6 @@ export default function ChallengeHeader({
     router.push("/setting");
   };
 
-  const handleHistoryClick = () => {
-    router.push("/challenge/history");
-  };
-
   const handleAddClick = () => {
     if ((challengeData?.participants?.length ?? 0) >= 6) {
       setShowFullModal(true);
@@ -97,14 +93,6 @@ export default function ChallengeHeader({
         priority
       />
       <div className='flex items-center gap-2'>
-        <button type='button' onClick={handleHistoryClick}>
-          <Image
-            src='/images/logos/History.svg'
-            alt='Add'
-            width={24}
-            height={24}
-          />
-        </button>
         <button type='button' onClick={handleSettingClick}>
           <Image
             src='/images/logos/Setting.svg'
