@@ -189,7 +189,7 @@ export default function MainContent({
 
         <div className='flex flex-col items-center justify-center relative mt-5'>
           {/* 배경 이미지 */}
-          <div className='w-[335px] h-[335px] relative z-0 rounded-[16px] overflow-hidden'>
+          <div className='w-full h-[335px] relative z-0 rounded-[16px] overflow-hidden'>
             <Image
               src={backgroundImageSrc}
               alt='Screen Time Background'
@@ -215,7 +215,7 @@ export default function MainContent({
         </div>
 
         {/* 통계 카드 */}
-        <div className='flex justify-center mt-3 w-[335px] mx-auto'>
+        <div className='flex justify-center mt-3 w-full mx-auto'>
           <StatsCards
             targetTime={targetTime}
             openModal={openTimeEditModal}
