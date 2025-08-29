@@ -100,28 +100,28 @@ export default function ChallengeOngoing({
                         priority
                       />
                     </div>
-                    <div className='justify-start text-gray-500 text-sm font-medium ml-1'>
-                      현재 누적 스크린타임
+                    <div className='justify-start text-gray-600 text-sm font-normal leading-tight tracking-tight ml-1'>
+                    목표 {Math.round(
+                        ((challenge.goal_time_minutes * 7) / 60) * 10
+                      ) / 10}
+                      시간 중
                     </div>
                   </div>
                 </div>
                 <div className='flex flex-row justify-between mt-2'>
-                  <div className='text-3xl font-bold text-black'>
+                  <div className='text-gray-900 text-3xl font-medium leading-10'>
                     {formatTime(currentUser?.current_time_minutes || 0)}
                   </div>
                   <div className='bg-indigo-300 rounded-2xl px-3 py-2 flex items-center gap-2'>
                     <Image
-                      src='/images/logos/Clock.svg'
-                      alt='시계'
+                      src='/images/logos/AddPeople.svg'
+                      alt='친구추가'
                       width={20}
                       height={20}
                       priority
                     />
                     <span className='text-blue-700 text-xs font-medium'>
-                      {Math.round(
-                        ((challenge.goal_time_minutes * 7) / 60) * 10
-                      ) / 10}
-                      시간
+                     친구 초대
                     </span>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default function ChallengeOngoing({
           </div>
         </div>
       </div>
-      <div className='bg-white rounded-t-3xl h-[calc(100vh-400px)] relative z-10 -mt-[40px]'>
+      <div className='bg-white rounded-t-3xl h-[calc(100vh-380px)] relative z-10 -mt-[60px]'>
         <div className='w-full h-16 pb-4 mx-auto pt-6 px-6'>
           <div className='w-full px-1.5 py-1 bg-gray-100 rounded-[30px] flex justify-between items-center relative'>
             <div

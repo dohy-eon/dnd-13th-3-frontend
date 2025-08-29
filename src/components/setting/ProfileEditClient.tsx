@@ -219,7 +219,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                 목표 화면시간
               </h2>
               <div className='flex gap-3'>
-                <div className='flex-1 h-12 px-5 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 flex items-center justify-end gap-1 overflow-hidden'>
+                <div className='flex-1 h-12 bg-white px-5 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 flex items-center justify-end gap-1 overflow-hidden'>
                   <input
                     type='text'
                     inputMode='numeric'
@@ -233,7 +233,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                     시간
                   </span>
                 </div>
-                <div className='flex-1 h-12 px-5 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 flex items-center justify-end gap-1 overflow-hidden'>
+                <div className='flex-1 h-12 bg-white px-5 py-3.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 flex items-center justify-end gap-1 overflow-hidden'>
                   <input
                     type='text'
                     inputMode='numeric'
