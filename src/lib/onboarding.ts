@@ -4,7 +4,14 @@ export const TOTAL_STEPS = 3;
 export const ALLOWED_CHARS_REGEX = /[^A-Za-z가-힣\s]/g;
 
 export function sanitizeNickname(value: string): string {
-  return value.replace(ALLOWED_CHARS_REGEX, "").replace(/\s{2,}/g, " ");
+  if (!value || typeof value !== "string") return "";
+
+  // 한글 입력이 안전하게 처리되도록 trim 후 필터링
+  const trimmed = value.trim();
+  const filtered = trimmed.replace(ALLOWED_CHARS_REGEX, "");
+
+  // 연속된 공백을 하나로 변환
+  return filtered.replace(/\s{2,}/g, " ");
 }
 
 // 스텝별 타이틀

@@ -6,11 +6,7 @@ import { useGoalSelection } from "@/hooks/useGoalSelection";
 import { useNicknameInput } from "@/hooks/useNicknameInput";
 import { useTimeTarget } from "@/hooks/useTimeTarget";
 import { registerUserProfile } from "@/lib/api/user";
-import {
-  formatScreenTimeCustom,
-  mapGoalPresetToEnum,
-  mapPresetHoursToEnum,
-} from "@/lib/goals";
+import { mapGoalPresetToEnum } from "@/lib/goals";
 import { getOnboardingTitle, TOTAL_STEPS } from "@/lib/onboarding";
 import { saveOnboardingData } from "@/lib/onboardingStorage";
 import {
@@ -92,22 +88,21 @@ export default function Onboarding() {
           : "custom";
       const goalCustom = selectionType === "custom" ? customGoal : null;
 
-      // 2) ScreenTimeGoal 매핑 (preset hours -> `<N>HOURS`, custom -> `CUSTOM` + formatted custom)
-      const screenTimeType =
-        timeSelectionType === "preset" && selectedPresetIndex !== null
-          ? mapPresetHoursToEnum(presetHours[selectedPresetIndex])
-          : "custom";
-      const _totalMinutes = parsedHours * 60 + parsedMinutes;
-      const screenTimeCustom =
-        timeSelectionType === "custom"
-          ? formatScreenTimeCustom(parsedHours, parsedMinutes)
-          : null;
+      // 2) ScreenTimeGoal을 분 단위로 계산하여 전송
+      const totalMinutes = parsedHours * 60 + parsedMinutes;
+      const screenTimeGoal = {
+        type:
+          timeSelectionType === "preset" && selectedPresetIndex !== null
+            ? (presetHours[selectedPresetIndex] * 60).toString()
+            : "custom",
+        custom: timeSelectionType === "custom" ? totalMinutes.toString() : null,
+      };
 
       // API 호출하여 프로필 등록
       await registerUserProfile({
         nickname,
         goal: { type: goalType, custom: goalCustom },
-        screenTimeGoal: { type: screenTimeType, custom: screenTimeCustom },
+        screenTimeGoal,
       });
 
       // 결과 페이지에서 사용할 요약 정보를 세션에 저장

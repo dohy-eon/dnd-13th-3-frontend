@@ -25,6 +25,11 @@ function NicknameField({
           placeholder='ex.미누미누'
           className='w-full text-base font-normal text-gray-900 placeholder-gray-400 outline-none'
           maxLength={10}
+          autoComplete='off'
+          autoCorrect='off'
+          autoCapitalize='off'
+          spellCheck='false'
+          inputMode='text'
         />
       </div>
       <p className='text-xs font-normal text-gray-400 leading-none'>

@@ -42,10 +42,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
           type: isGoalChanged ? "custom" : user?.goal?.type || "NO_SCREEN",
           custom: isGoalChanged ? goal : user?.goal?.custom || null,
         },
-        screenTimeGoal: user?.screenTimeGoal || {
-          type: "CUSTOM",
-          custom: null,
-        },
+        screenTimeGoal: user?.screenTimeGoal,
       };
 
       const response = await updateUserProfile(profileData);

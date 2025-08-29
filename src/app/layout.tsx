@@ -13,10 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Minu',
-  description: '건강한 디지털 라이프를 위한 스크린타임 관리 및 생산성 향상 서비스',
+  title: "Minu",
+  description:
+    "건강한 디지털 라이프를 위한 스크린타임 관리 및 생산성 향상 서비스",
   icons: {
-    icon: '/images/logos/MinuCharacter.svg',
+    icon: "/images/logos/MinuCharacter.svg",
   },
 };
 

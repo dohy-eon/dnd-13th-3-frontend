@@ -107,8 +107,8 @@ export default function MainContent({
 
       const screenTimePart = {
         screenTimeGoal: {
-          type: "CUSTOM",
-          custom: String(totalMinutes),
+          type: "custom",
+          custom: totalMinutes.toString(),
         },
       };
 
