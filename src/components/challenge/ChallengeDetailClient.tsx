@@ -114,7 +114,7 @@ export function ChallengeDetailClient({
                 </div>
               </div>
             )}
-            <div className='absolute left-[calc(50%-60px-20px)] transform -translate-x-1/2'>
+            <div className='absolute left-[calc(50%-140px)] transform -translate-x-1/2'>
               {top3[1] ? (
                 <div className='flex flex-col items-center'>
                   <div className='relative w-[64px] h-[82px] mb-2'>
@@ -148,7 +148,7 @@ export function ChallengeDetailClient({
                 <div className='w-16 h-16' />
               )}
             </div>
-            <div className='absolute right-[calc(50%-60px-20px)] transform translate-x-1/2'>
+            <div className='absolute right-[calc(50%-140px)] transform translate-x-1/2'>
               {top3[2] ? (
                 <div className='flex flex-col items-center'>
                   <div className='relative w-[64px] h-[82px] mb-2'>

@@ -103,7 +103,7 @@ export default function ChallengeOngoing({
                   alt='도전하는 캐릭터'
                   width={120}  
                   height={120} 
-                  className='object-contain'
+                  className='object-contain transform translate-y-8'
                   priority
                 />
               </div>

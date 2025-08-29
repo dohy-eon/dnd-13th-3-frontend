@@ -52,7 +52,7 @@ export default function BottomNavbar() {
               src={
                 isHomeActive
                   ? "/images/logos/HomeActive.svg"
-                  : "/images/logos/Container.svg"
+                  : "/images/logos/Home.svg"
               }
               alt='home'
               width={24}
