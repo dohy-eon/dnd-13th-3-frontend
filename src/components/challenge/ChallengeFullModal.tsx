@@ -32,10 +32,10 @@ export default function ChallengeFullModal({
               />
             </div>
             <div className='flex flex-col justify-center items-center gap-1'>
-              <div className='text-gray-900 text-xl font-semibold font-["Pretendard"] leading-7'>
+              <div className='text-gray-900 text-xl font-semibold leading-7'>
                 앗! 벌써 6명이 다 모였어요.
               </div>
-              <div className='text-center text-gray-400 text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
+              <div className='text-center text-gray-400 text-xs font-medium leading-none tracking-tight'>
                 지금은 더 이상 친구를 초대할 수 없어요.
               </div>
             </div>
@@ -46,7 +46,7 @@ export default function ChallengeFullModal({
               onClick={onClose}
               className='w-full px-8 py-3 bg-primary rounded-[10px] flex justify-center items-center gap-2.5 overflow-hidden'
             >
-              <div className='text-white text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+              <div className='text-white text-sm font-medium leading-tight tracking-tight'>
                 확인
               </div>
             </button>

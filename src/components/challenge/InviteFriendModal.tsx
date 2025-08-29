@@ -77,17 +77,17 @@ export default function InviteFriendModal({
               />
             </div>
             <div className='flex flex-col justify-center items-center gap-1'>
-              <div className='text-gray-900 text-xl font-semibold font-["Pretendard"] leading-7'>
+              <div className='text-gray-900 text-xl font-semibold leading-7'>
                 친구를 초대하시겠어요?
               </div>
               <div className='text-center'>
-                <span className='text-gray-400 text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
+                <span className='text-gray-400 text-xs font-medium leading-none tracking-tight'>
                   최대{" "}
                 </span>
-                <span className='text-primary text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
+                <span className='text-primary text-xs font-medium leading-none tracking-tight'>
                   6명
                 </span>
-                <span className='text-gray-400 text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
+                <span className='text-gray-400 text-xs font-medium leading-none tracking-tight'>
                   까지 함께할 수 있어요!
                 </span>
               </div>
@@ -99,7 +99,7 @@ export default function InviteFriendModal({
               onClick={handleCopyLink}
               className='w-full px-8 py-3 bg-primary rounded-[10px] flex justify-center items-center gap-2.5 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed'
             >
-              <div className='text-white text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+              <div className='text-white text-sm font-medium leading-tight tracking-tight'>
                 링크 복사
               </div>
             </button>

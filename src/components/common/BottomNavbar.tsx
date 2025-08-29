@@ -13,13 +13,13 @@ export default function BottomNavbar() {
 
   return (
     <div className='fixed bottom-0 left-0 right-0 z-[9999] pb-safe-area-inset-bottom'>
-      <div className='max-w-[272px] mx-auto px-4 pb-4'>
-        <div className='w-full bg-white rounded-[32px] outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-between items-center shadow-lg'>
+      <div className='max-w-[288px] mx-auto pb-4'>
+        <div className='w-full bg-white rounded-[32px] outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-center gap-[64px] items-center shadow-lg'>
           <button
             type='button'
             onClick={() => router.push("/challenge")}
             aria-current={isChallengeActive ? "page" : undefined}
-            className='h-16 min-w-20 px-4 py-2.5 inline-flex flex-col justify-center items-center gap-0.5'
+            className='h-16 px-4 py-2.5 inline-flex flex-col justify-center items-center gap-0.5'
           >
             <Image
               src={
@@ -46,7 +46,7 @@ export default function BottomNavbar() {
             type='button'
             onClick={() => router.push("/main")}
             aria-current={isHomeActive ? "page" : undefined}
-            className='h-16 min-w-20 px-4 py-2.5 inline-flex flex-col justify-center items-center gap-0.5'
+            className='h-16 px-4 py-2.5 inline-flex flex-col justify-center items-center gap-0.5'
           >
             <Image
               src={
@@ -73,7 +73,7 @@ export default function BottomNavbar() {
             type='button'
             onClick={() => router.push("/record")}
             aria-current={isRecordActive ? "page" : undefined}
-            className='h-16 min-w-20 px-4 py-2.5 inline-flex flex-col justify-center items-center gap-0.5'
+            className='h-16 px-4 py-2.5 inline-flex flex-col justify-center items-center gap-0.5'
           >
             <Image
               src={

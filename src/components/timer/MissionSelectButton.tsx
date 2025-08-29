@@ -16,14 +16,14 @@ export default function MissionSelectButton({
 }: MissionSelectButtonProps) {
   const getButtonStyle = () => {
     if (disabled) {
-      return "px-5 py-2 bg-gray-200 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-gray-300 inline-flex justify-center items-center gap-1 mb-8 cursor-not-allowed";
+      return "px-[12px] py-2 bg-gray-50 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-gray-300 inline-flex justify-center items-center gap-1 mb-8 cursor-not-allowed";
     }
 
     if (selectedMission) {
-      return "px-5 py-2 bg-gray-100 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-2 mb-8";
+      return "px-[12px] py-2 bg-gray-50 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-2 mb-8";
     }
 
-    return "px-5 py-2 bg-gray-100 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-2 mb-8";
+    return "px-[12px] py-2 bg-gray-50 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-2 mb-8";
   };
 
   const getTextStyle = () => {

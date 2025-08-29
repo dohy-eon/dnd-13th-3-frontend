@@ -101,10 +101,10 @@ export default function JoinChallengeClient() {
                 />
               </div>
               <div className='inline-flex flex-col justify-start items-start gap-2'>
-                <div className='text-center justify-start text-primary text-xl font-semibold font-["Pretendard"] leading-loose'>
+                <div className='text-center justify-start text-primary text-xl font-semibold leading-loose'>
                   해당 링크로 입장이 어려워요..
                 </div>
-                <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                <div className='text-center justify-start text-gray-800 text-sm font-medium leading-tight tracking-tight'>
                   내가 만든 챌린지는 링크로 입장할 수 없어요.
                   <br />앱 내에서 재입장해주세요!
                 </div>
@@ -139,7 +139,7 @@ export default function JoinChallengeClient() {
                 />
               </div>
               <div className='inline-flex flex-col justify-start items-start gap-2'>
-                <div className='text-center justify-start text-primary text-xl font-semibold font-["Pretendard"] leading-loose'>
+                <div className='text-center justify-start text-primary text-xl font-semibold leading-loose'>
                   이미 챌린지에 참여하셨습니다
                 </div>
               </div>
@@ -204,26 +204,26 @@ export default function JoinChallengeClient() {
               />
             </div>
             <div className='w-80 inline-flex flex-col text-center gap-2 mb-8'>
-              <div className='text-center justify-start text-primary text-xl font-semibold font-["Pretendard"] leading-loose'>
+              <div className='text-center justify-start text-primary text-xl font-semibold leading-loose'>
                 챌린지에 초대 되었습니다!
               </div>
-              <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+              <div className='text-center justify-start text-gray-800 text-sm font-medium leading-tight tracking-tight'>
                 챌린지에 함께 참여해볼까요?
               </div>
             </div>
 
             <div className='w-80 py-4 bg-gray-100 rounded-xl inline-flex flex-col justify-start items-center gap-4 mb-8'>
               <div className='w-72 inline-flex justify-between items-center'>
-                <div className='text-center justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                <div className='text-center justify-start text-gray-400 text-sm font-medium leading-tight tracking-tight'>
                   챌린지 기간
                 </div>
-                <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                <div className='text-center justify-start text-gray-800 text-sm font-medium leading-tight tracking-tight'>
                   {challengeInfo.data.start_date} ~{" "}
                   {challengeInfo.data.end_date}
                 </div>
               </div>
               <div className='w-72 inline-flex justify-between items-center'>
-                <div className='text-center justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                <div className='text-center justify-start text-gray-400 text-sm font-medium leading-tight tracking-tight'>
                   목표 시간
                 </div>
                 <div className='flex items-center gap-1'>
@@ -233,7 +233,7 @@ export default function JoinChallengeClient() {
                     ) / 10}
                     시간
                   </span>
-                  <div className="justify-start text-gray-500 text-xs font-medium font-['Pretendard'] leading-none tracking-tight">
+                  <div className="justify-start text-gray-500 text-xs font-medium leading-none tracking-tight">
                     · 하루{" "}
                     {Math.round(
                       (challengeInfo.data.goal_time_minutes / 60) * 10
@@ -243,10 +243,10 @@ export default function JoinChallengeClient() {
                 </div>
               </div>
               <div className='w-72 inline-flex justify-between items-center'>
-                <div className='text-center justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                <div className='text-center justify-start text-gray-400 text-sm font-medium leading-tight tracking-tight'>
                   함께하는 목표
                 </div>
-                <div className='text-center justify-start text-gray-800 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                <div className='text-center justify-start text-gray-800 text-sm font-medium leading-tight tracking-tight'>
                   {challengeInfo.data.title}
                 </div>
               </div>

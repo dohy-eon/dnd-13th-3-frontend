@@ -78,7 +78,7 @@ export default function ChallengeOngoing({
               height={24}
               priority
             />
-            <span className='text-lg font-semibold text-gray-900'>
+            <span className='text-medium font-medium text-gray-800'>
               {challenge.title}
             </span>
           </div>
@@ -97,11 +97,12 @@ export default function ChallengeOngoing({
               </div>
             </div>
             <div className='relative z-20'>
-              <div className='w-60 h-48 relative'>
+              <div className='w-[120px] h-48 relative'>
                 <Image
                   src={getCharacterImage(userProfile?.characterIndex)}
                   alt='도전하는 캐릭터'
-                  fill
+                  width={120}  
+                  height={120} 
                   className='object-contain'
                   priority
                 />
@@ -136,7 +137,7 @@ export default function ChallengeOngoing({
                   <button
                     type='button'
                     onClick={handleInviteClick}
-                    className='px-[12px] py-[6px] bg-indigo-300 rounded-[46px] inline-flex justify-center items-center gap-0.5 overflow-hidden hover:bg-indigo-400 transition-colors'
+                    className='h-[32px] my-auto px-3 py-1 bg-indigo-300 rounded-[46px] inline-flex justify-center items-center gap-1 overflow-hidden hover:bg-indigo-400 transition-colors'
                   >
                     <Image
                       src='/images/logos/AddPeople.svg'
@@ -146,7 +147,7 @@ export default function ChallengeOngoing({
                       priority
                     />
                     <span className='text-blue-700 text-xs font-medium'>
-                      친구 초대
+                     친구초대
                     </span>
                   </button>
                 </div>
@@ -174,7 +175,7 @@ export default function ChallengeOngoing({
                   : "text-gray-400 font-medium"
               }`}
             >
-              현재 랭킹
+              <span className='w-20 text-center'>현재 랭킹</span>
             </button>
             <button
               type='button'
@@ -185,7 +186,7 @@ export default function ChallengeOngoing({
                   : "text-gray-400 font-medium"
               }`}
             >
-              지난 챌린지
+              <span className='w-20 text-center'>지난 챌린지</span>
             </button>
           </div>
         </div>
@@ -205,7 +206,7 @@ export default function ChallengeOngoing({
                   <div
                     key={participant.userId}
                     className={`flex items-center gap-4 px-6 py-2 ${
-                      isCurrentUser ? "bg-gray-50" : "bg-white"
+                      isCurrentUser ? "bg-gray-100" : "bg-white"
                     }`}
                   >
                     <div className='flex-shrink-0'>
@@ -262,7 +263,7 @@ export default function ChallengeOngoing({
                           {timeText}
                         </div>
                         <div
-                          className={`justify-start text-xs font-medium font-['Pretendard'] leading-none tracking-tight ${participant.current_time_minutes > (challenge.goal_time_minutes * 7) ? "text-red-400" : "text-gray-400"}`}
+                          className={`justify-start text-xs font-medium leading-none tracking-tight ${participant.current_time_minutes > (challenge.goal_time_minutes * 7) ? "text-red-400" : "text-gray-400"}`}
                         >
                           {Math.min(
                             100,

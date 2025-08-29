@@ -91,7 +91,7 @@ export function ChallengeHistoryClient({
                 >
                   <div className='w-full px-4 py-3 bg-gray-100 rounded-tl-2xl rounded-tr-2xl flex flex-col justify-start items-start gap-1'>
                     <div className='w-full flex justify-between items-start'>
-                      <div className='flex-1 justify-start text-gray-900 text-base font-semibold font-["Pretendard"] leading-normal tracking-tight'>
+                      <div className='flex-1 justify-start text-gray-900 text-base font-semibold leading-normal tracking-tight'>
                         {challenge.title}
                       </div>
                       <Image
@@ -102,7 +102,7 @@ export function ChallengeHistoryClient({
                         priority
                       />
                     </div>
-                    <div className='self-stretch justify-start text-gray-400 text-sm font-medium font-["Pretendard"] leading-tight tracking-tight'>
+                    <div className='self-stretch justify-start text-gray-400 text-sm font-medium leading-tight tracking-tight'>
                       {formatDate(challenge.start_date)} -{" "}
                       {formatDate(challenge.end_date)}
                     </div>
@@ -118,7 +118,7 @@ export function ChallengeHistoryClient({
                           priority
                         />
                       </div>
-                      <div className='justify-start text-gray-500 text-xs font-medium font-["Pretendard"] leading-none tracking-tight'>
+                      <div className='justify-start text-gray-500 text-xs font-medium leading-none tracking-tight'>
                         {formatTime(firstPlace.current_time_minutes)} 사용
                       </div>
                     </div>

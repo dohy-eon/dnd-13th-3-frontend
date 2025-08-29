@@ -117,7 +117,7 @@ export default function ChallengeSuccess() {
               <span className='text-sm font-medium text-gray-900'>
                 {challengeData.goalTimeHours * 7}시간
               </span>
-              <div className="justify-start text-gray-500 text-xs font-medium font-['Pretendard'] leading-none tracking-tight">
+              <div className="justify-start text-gray-500 text-xs font-medium leading-none tracking-tight">
                 · 하루 {challengeData.goalTimeHours}시간
               </div>
             </div>

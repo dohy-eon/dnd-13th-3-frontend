@@ -9,7 +9,7 @@ export default function MainTabSwitcher() {
   const isTimerActive = pathname === "/timer";
 
   return (
-    <div className='flex justify-start items-center gap-3'>
+    <div className='flex justify-start items-center gap-4'>
       <button
         type='button'
         onClick={() => router.push("/main")}

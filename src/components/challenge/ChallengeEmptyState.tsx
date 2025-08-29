@@ -71,7 +71,7 @@ export default function ChallengeEmptyState({
                   className='object-contain'
                 />
               </div>
-              <div className="justify-start text-blue-700 text-xs font-medium font-['Pretendard'] leading-none tracking-tight">
+              <div className="justify-start text-blue-700 text-xs font-medium leading-none tracking-tight">
                 지난 챌린지 보기
               </div>
             </button>
@@ -81,10 +81,10 @@ export default function ChallengeEmptyState({
       <div className='bg-white pt-6 rounded-t-3xl relative z-30 -mt-8 pb-[100px] px-screen-margin'>
         <div className='mb-8'>
           <div className='flex flex-col justify-start mx-auto'>
-            <span className="text-gray-900 text-xl font-semibold font-['Pretendard'] leading-7">
+            <span className="text-gray-900 text-xl font-semibold leading-7">
               {displayNickname}
             </span>
-            <span className="text-gray-900 text-xl font-medium font-['Pretendard'] leading-7">
+            <span className="text-gray-900 text-xl font-medium leading-7">
               아직 도전 중인 챌린지가 없어요!
             </span>
           </div>

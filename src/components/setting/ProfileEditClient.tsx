@@ -109,24 +109,23 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
   }
 
   return (
-    <div className='h-[100dvh] bg-gray-50'>
-      <div className='flex flex-col h-full justify-between'>
-        <div className='flex-1'>
-          <div className='relative px-4 py-6 flex items-center'>
-            <button type='button' onClick={handleBack}>
-              <Image
-                src='/images/logos/SettingBack.svg'
-                alt='뒤로가기'
-                width={12}
-                height={22}
-                priority
-              />
-            </button>
-            <h1 className='absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold text-gray-900'>
-              프로필 편집
-            </h1>
-          </div>
-          <div className='px-4 py-6 space-y-8'>
+    <div className='h-[100dvh] bg-gray-50 flex flex-col'>
+      <div className='flex-1 overflow-y-auto'>
+        <div className='relative px-4 py-6 flex items-center'>
+          <button type='button' onClick={handleBack}>
+            <Image
+              src='/images/logos/SettingBack.svg'
+              alt='뒤로가기'
+              width={12}
+              height={22}
+              priority
+            />
+          </button>
+          <h1 className='absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold text-gray-900'>
+            프로필 편집
+          </h1>
+        </div>
+        <div className='px-4 py-6 space-y-8 pb-6'>
             <div>
               <h2 className='text-base font-medium text-gray-900 mb-4'>
                 프로필 캐릭터
@@ -141,7 +140,7 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
                       key={index}
                       onClick={() => setSelectedCharacter(index)}
                       className={`relative w-[68px] h-[68px] rounded-full flex items-center justify-center transition-all flex-shrink-0 ${
-                        isSelected ? "border-primary border-2" : ""
+                        isSelected ? "ring-2 ring-primary" : ""
                       }`}
                     >
                       <Image
@@ -251,17 +250,17 @@ export function ProfileEditClient({ user }: ProfileEditClientProps) {
             </div>
           </div>
         </div>
-        <div className='p-4'>
-          <button
-            type='button'
-            onClick={handleSave}
-            disabled={isLoading}
-            className='w-full transition-colors btn-main btn-primary disabled:opacity-50 disabled:cursor-not-allowed'
-          >
-            저장
-          </button>
-        </div>
+      <div className='flex-shrink-0 p-4 bg-gray-50 border-t border-gray-100'>
+        <button
+          type='button'
+          onClick={handleSave}
+          disabled={isLoading}
+          className='w-full transition-colors btn-main btn-primary disabled:opacity-50 disabled:cursor-not-allowed'
+        >
+          저장
+        </button>
       </div>
+      
       {showSuccessToast && (
         <div className='fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50'>
           <div className='w-80 py-3 bg-neutral-900/90 rounded-lg inline-flex justify-center items-center gap-1.5'>
