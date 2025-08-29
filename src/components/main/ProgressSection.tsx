@@ -36,11 +36,11 @@ const ProgressSection = ({
             : {}
         }
       >
-        <div className='absolute -bottom-5 w-full flex justify-between items-center'>
-          <div className='text-gray-600 text-sm font-medium font-pretendard mt-2'>
+        <div className='absolute top-full mt-5 w-full flex justify-between items-center'>
+          <div className='text-gray-600 text-sm font-medium font-pretendard'>
             치유중
           </div>
-          <div className='text-gray-600 text-sm font-medium font-pretendard mt-2'>
+          <div className='text-gray-600 text-sm font-medium font-pretendard'>
             {Math.floor(goalScreenTime / 60)}시간{" "}
             {goalScreenTime % 60 > 0 ? `${goalScreenTime % 60}분` : ""}
           </div>

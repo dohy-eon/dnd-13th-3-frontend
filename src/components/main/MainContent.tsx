@@ -56,7 +56,7 @@ export default function MainContent({
   const goal =
     userProfile?.goal?.custom ??
     mapGoalEnumToLabel(userProfile?.goal?.type, userProfile?.goal?.custom) ??
-    "혼자 있는 시간 디지털 없이 보내기";
+    "혼자 있는 시간 디지털 없이 보내보기";
 
   // 항상 userProfile에서 직접 targetTime을 계산
   const targetTime = userProfile?.screenTimeGoal
