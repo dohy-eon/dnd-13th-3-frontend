@@ -202,13 +202,7 @@ export function ChallengeDetailClient({
               return (
                 <div
                   key={participant.userId}
-                  className={`rounded-xl px-4 py-3 flex items-center gap-3 ${
-                    isTop3
-                      ? "bg-white"
-                      : isTop6
-                        ? "bg-indigo-100"
-                        : "bg-gray-100"
-                  }`}
+                  className={`rounded-xl px-4 py-3 flex items-center gap-3 bg-white`}
                 >
                   <div className='w-[36px] h-[36px] flex items-center justify-center'>
                     {rank === 1 ? (
