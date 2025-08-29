@@ -138,7 +138,7 @@ export default function TimerContainer() {
             type='button'
             onClick={startTimer}
             disabled={!selectedMission}
-            className={`flex-1 btn-medium ${
+            className={`flex-1 btn-main ${
               selectedMission
                 ? "btn-primary"
                 : "bg-gray-200 text-gray-500 cursor-not-allowed"
@@ -151,7 +151,7 @@ export default function TimerContainer() {
             <button
               type='button'
               onClick={buttonState.isPaused ? startTimer : pauseTimer}
-              className={`flex-1 btn-medium ${
+              className={`flex-1 btn-main ${
                 buttonState.isPaused
                   ? "bg-gray-200 text-gray-500"
                   : "btn-secondary"
@@ -162,7 +162,7 @@ export default function TimerContainer() {
             <button
               type='button'
               onClick={handleEndClick}
-              className='flex-1 btn-medium btn-primary'
+              className='flex-1 btn-main btn-primary'
             >
               끝내기
             </button>

@@ -50,17 +50,17 @@ export function ChallengeDetailClient({
   };
 
   const sortedParticipants = [...challenge.participants].sort(
-    (a, b) => b.achievement_rate - a.achievement_rate
+    (a, b) => a.current_time_minutes - b.current_time_minutes
   );
 
   const top3 = sortedParticipants.slice(0, 3);
 
   return (
-    <div className='flex flex-col h-[100dvh] bg-primary'>
+    <div className='flex flex-col h-[100dvh] bg-gray-100'>
       <div className='relative px-4 py-6 flex items-center'>
         <button type='button' onClick={handleBack}>
           <Image
-            src='/images/logos/BackBtnWhite.svg'
+            src='/images/logos/SettingBack.svg'
             alt='뒤로가기'
             width={12}
             height={22}
@@ -68,16 +68,16 @@ export function ChallengeDetailClient({
             className='w-[12px] h-[22px]'
           />
         </button>
-        <h1 className='absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold text-white'>
+        <h1 className='absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold text-gray-900'>
           {" "}
         </h1>
       </div>
       <div className='flex-1 px-4 pb-6 overflow-y-auto'>
         <div className='mb-8 text-center'>
-          <h1 className='text-white text-xl font-semibold mb-2'>
+          <h1 className='text-black text-xl font-semibold mb-2'>
             {challenge.title}
           </h1>
-          <p className='text-gray-200 text-sm font-normal'>
+          <p className='text-gray-400 text-sm font-normal'>
             {formatDate(challenge.start_date)} -{" "}
             {formatDate(challenge.end_date)}
           </p>
@@ -99,15 +99,16 @@ export function ChallengeDetailClient({
                       alt='캐릭터'
                       width={100}
                       height={100}
+                      priority
                       className='rounded-full pt-[4px] z-10'
                     />
                   </div>
                 </div>
                 <div className='text-center'>
-                  <div className='text-white text-base font-medium mb-1'>
+                  <div className='text-gray-900 text-base font-medium mb-1'>
                     {top3[0].nickname}
                   </div>
-                  <div className='text-gray-200 text-xs font-medium '>
+                  <div className='text-gray-400 text-xs font-medium '>
                     {formatTime(top3[0].current_time_minutes)}
                   </div>
                 </div>
@@ -129,15 +130,16 @@ export function ChallengeDetailClient({
                         alt='캐릭터'
                         width={64}
                         height={64}
+                        priority
                         className='rounded-full pb-[15px] z-10'
                       />
                     </div>
                   </div>
                   <div className='text-center'>
-                    <div className='text-white text-base font-medium  mb-1'>
+                    <div className='text-gray-900 text-base font-medium  mb-1'>
                       {top3[1].nickname}
                     </div>
-                    <div className='text-gray-200 text-xs font-medium '>
+                    <div className='text-gray-400 text-xs font-medium '>
                       {formatTime(top3[1].current_time_minutes)}
                     </div>
                   </div>
@@ -162,15 +164,16 @@ export function ChallengeDetailClient({
                         alt='캐릭터'
                         width={64}
                         height={64}
+                        priority
                         className='rounded-full pb-[15px] z-10'
                       />
                     </div>
                   </div>
                   <div className='text-center'>
-                    <div className='text-white text-base font-medium mb-1'>
+                    <div className='text-gray-900 text-base font-medium mb-1'>
                       {top3[2].nickname}
                     </div>
-                    <div className='text-gray-200 text-xs font-medium '>
+                    <div className='text-gray-400 text-xs font-medium '>
                       {formatTime(top3[2].current_time_minutes)}
                     </div>
                   </div>
@@ -182,18 +185,22 @@ export function ChallengeDetailClient({
           </div>
         </div>
         <div>
-          <h2 className='text-white text-lg font-semibold mb-4'>최종 랭킹</h2>
+          <h2 className='text-gray-900 text-lg font-semibold mb-4'>최종 랭킹</h2>
           <div className='space-y-3'>
             {sortedParticipants.map((participant, index) => {
               const rank = index + 1;
               const isMe =
                 userProfile && participant.userId.toString() === userProfile.id;
+              const isTop3 = rank <= 3;
+              const isTop6 = rank <= 6;
+              const totalGoalTime = challenge.goal_time_minutes * 7; 
+              const hasExceededGoal = participant.current_time_minutes >= totalGoalTime;
 
               return (
                 <div
                   key={participant.userId}
                   className={`rounded-xl px-4 py-3 flex items-center gap-3 ${
-                    isMe ? "bg-white" : "bg-gray-100"
+                    isTop3 ? "bg-white" : isTop6 ? "bg-indigo-100" : "bg-gray-100"
                   }`}
                 >
                   <div className='w-[36px] h-[36px] flex items-center justify-center'>
@@ -203,6 +210,7 @@ export function ChallengeDetailClient({
                         alt='1등'
                         width={36}
                         height={36}
+                        priority
                       />
                     ) : rank === 2 ? (
                       <Image
@@ -210,6 +218,7 @@ export function ChallengeDetailClient({
                         alt='2등'
                         width={36}
                         height={36}
+                        priority
                       />
                     ) : rank === 3 ? (
                       <Image
@@ -217,6 +226,7 @@ export function ChallengeDetailClient({
                         alt='3등'
                         width={36}
                         height={36}
+                        priority
                       />
                     ) : (
                       <div className='w-9 h-9 flex items-center justify-center'>
@@ -232,6 +242,7 @@ export function ChallengeDetailClient({
                       alt='캐릭터'
                       width={44}
                       height={44}
+                      priority
                       className='rounded-full'
                     />
                   </div>
@@ -240,7 +251,9 @@ export function ChallengeDetailClient({
                       <div className='text-sm font-medium text-gray-900'>
                         {participant.nickname}
                       </div>
-                      <div className='text-xs text-gray-500'>
+                      <div className={`text-xs font-medium ${
+                        hasExceededGoal ? 'text-gray-400' : 'text-primary'
+                      }`}>
                         {formatTime(participant.current_time_minutes)}
                       </div>
                     </div>

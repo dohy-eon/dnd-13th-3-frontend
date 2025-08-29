@@ -107,21 +107,21 @@ export default function MissionSelectModal({
           </button>
           {isCustomInput && (
             <div className='flex flex-col items-center gap-2'>
-              <div className='w-full flex flex-col items-end gap-2'>
-                <div className='w-full h-11 relative bg-white border-b-2 border-gray-100'>
+              <div className='w-full rounded-xl outline outline-1 outline-offset-[-1px] outline-gray-200 focus-within:outline-gray-500 focus-within:outline-2'>
+                <div className='px-6 py-3.5'>
                   <input
                     type='text'
                     value={customMission}
                     onChange={(e) => setCustomMission(e.target.value)}
                     placeholder='미션을 입력해주세요'
-                    className='w-full h-full text-xl font-semibold text-gray-900 leading-7 focus:outline-none'
-                    maxLength={10}
+                    className='w-full bg-white text-base font-medium text-gray-600 placeholder-gray-400 outline-none'
+                    maxLength={20}
                   />
                 </div>
-                <span className='text-xs font-normal text-gray-400 leading-none tracking-tight'>
-                  ({customMission.length}/10)
-                </span>
               </div>
+              <span className='w-full text-right text-xs font-normal text-gray-400 leading-none tracking-tight'>
+                ({customMission.length}/20)
+              </span>
             </div>
           )}
         </div>

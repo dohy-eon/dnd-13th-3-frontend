@@ -14,6 +14,12 @@ export default function InviteFriendModal({
 }: InviteFriendModalProps) {
   const [isLinkCopied, setIsLinkCopied] = useState(false);
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   const handleCopyLink = async () => {
     if (!inviteUrl) {
       alert("초대 링크가 없습니다.");
@@ -53,7 +59,10 @@ export default function InviteFriendModal({
   }
 
   return (
-    <div className='fixed inset-0 bg-dim-background flex items-center justify-center z-[99999] p-4'>
+    <div 
+      className='fixed inset-0 bg-dim-background flex items-center justify-center z-[99999] p-4'
+      onClick={handleBackdropClick}
+    >
       <div className='bg-white rounded-2xl p-6 min-w-screen-mobile w-[327px] mx-auto'>
         <div className='flex flex-col justify-start items-center gap-5'>
           <div className='flex flex-col justify-start items-center gap-3'>

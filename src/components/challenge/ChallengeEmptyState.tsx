@@ -24,7 +24,7 @@ export default function ChallengeEmptyState({
   return (
     <div className='flex flex-col h-full'>
       <div className='flex-1 relative'>
-        <div className='flex items-end justify-center h-full relative'>
+        <div className='mt-6 flex items-end justify-center h-full relative'>
           <div className='absolute bottom-0 left-0 right-0 flex items-end justify-center'>
             <div className='w-full min-h-96 relative'>
               <Image
@@ -46,7 +46,7 @@ export default function ChallengeEmptyState({
               />
             </div>
           </div>
-          <div className='relative z-20 mb-20'>
+          <div className='relative z-20 mb-[100px]'>
             <div className='w-[301px] h-[237px] relative'>
               <Image
                 src={"/images/logos/NoChallenge.svg"}
@@ -57,7 +57,7 @@ export default function ChallengeEmptyState({
               />
             </div>
           </div>
-          <div className='absolute bottom-12 left-1/2 transform -translate-x-1/2 z-30'>
+          <div className='absolute bottom-[4.2rem] left-1/2 transform -translate-x-1/2 z-30'>
             <button
               type='button'
               onClick={handleViewHistory}

@@ -40,10 +40,10 @@ export function ChallengeHistoryTab({
 
   if (!challenges || challenges.length === 0) {
     return (
-      <div className='flex flex-col items-center justify-center py-8'>
+      <div className='flex flex-col items-center justify-center mt-2'>
         <div className='w-[335px] h-[153px] relative'>
           <Image
-            src='/images/logos/ChallengeEmpty.svg'
+            src='/images/logos/NoChallenge2.svg'
             alt='챌린지 기록 없음'
             fill
             className='object-contain'

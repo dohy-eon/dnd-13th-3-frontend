@@ -7,8 +7,17 @@ interface ChallengeFullModalProps {
 export default function ChallengeFullModal({
   onClose,
 }: ChallengeFullModalProps) {
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className='fixed inset-0 bg-dim-background flex items-center justify-center z-50 p-4'>
+    <div 
+      className='fixed inset-0 bg-dim-background flex items-center justify-center z-50 p-4'
+      onClick={handleBackdropClick}
+    >
       <div className='bg-white rounded-2xl p-6 min-w-screen-mobile w-[327px] mx-auto'>
         <div className='flex flex-col justify-start items-center gap-5'>
           <div className='flex flex-col justify-start items-center gap-3'>

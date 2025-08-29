@@ -16,26 +16,26 @@ export default function MissionSelectButton({
 }: MissionSelectButtonProps) {
   const getButtonStyle = () => {
     if (disabled) {
-      return "px-5 py-2 bg-gray-200 rounded-2xl outline outline-1 outline-offset-[-1px] outline-gray-300 inline-flex justify-center items-center gap-1 mb-8 cursor-not-allowed";
+      return "px-5 py-2 bg-gray-200 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-gray-300 inline-flex justify-center items-center gap-1 mb-8 cursor-not-allowed";
     }
 
     if (selectedMission) {
-      return "px-5 py-2 bg-gray-100 rounded-2xl outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-1 mb-8";
+      return "px-5 py-2 bg-gray-100 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-2 mb-8";
     }
 
-    return "px-5 py-2 bg-gray-100 rounded-2xl outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-1 mb-8";
+    return "px-5 py-2 bg-gray-100 rounded-[46px] outline outline-1 outline-offset-[-1px] outline-point inline-flex justify-center items-center gap-2 mb-8";
   };
 
   const getTextStyle = () => {
     if (disabled) {
-      return "justify-start text-gray-500 text-base font-medium leading-normal tracking-tight";
+      return "justify-start text-gray-500 text-base font-semibold leading-normal tracking-tight";
     }
 
     if (selectedMission) {
-      return "justify-start text-primary text-base font-medium leading-normal tracking-tight";
+      return "justify-start text-primary text-base font-semibold leading-normal tracking-tight";
     }
 
-    return "justify-start text-primary text-base font-medium leading-normal tracking-tight";
+    return "justify-start text-primary text-base font-semibold leading-normal tracking-tight";
   };
 
   return (
@@ -45,13 +45,21 @@ export default function MissionSelectButton({
       disabled={disabled}
       className={getButtonStyle()}
     >
+      <Image
+        src='/images/logos/Fire2.svg'
+        alt='Fire'
+        width={32}
+        height={32}
+        priority
+      />
       <span className={getTextStyle()}>{selectedMission || "모드 선택"}</span>
-      <div className='w-5 h-5 relative'>
+      <div className='relative'>
         <Image
-          src='/images/logos/ArrowBottom.svg'
+          src='/images/logos/Vector.svg'
           alt='arrow'
           width={20}
           height={20}
+          priority
           className={`transition-transform duration-300 ${isModalOpen ? "rotate-180" : ""} ${disabled ? "opacity-50" : ""}`}
         />
       </div>
