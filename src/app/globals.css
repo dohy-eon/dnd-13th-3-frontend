@@ -50,6 +50,15 @@ body {
   }
 }
 
+/* Safe Area Insets for Mobile */
+.pb-safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe-area-inset-top {
+  padding-top: env(safe-area-inset-top);
+}
+
 /* 입력 필드 폰트 통일 */
 input, textarea, select, button {
   font-family: inherit;

@@ -8,6 +8,7 @@ import type {
 } from "@/lib/challenge";
 import type { UserProfileResponse } from "@/types/auth";
 import { ChallengeHistoryTab } from "./ChallengeHistoryTab";
+import InviteFriendModal from "./InviteFriendModal";
 
 interface ChallengeOngoingProps {
   challenge: CurrentChallenge;
@@ -21,6 +22,7 @@ export default function ChallengeOngoing({
   challengeHistory,
 }: ChallengeOngoingProps) {
   const [activeTab, setActiveTab] = useState<"current" | "past">("current");
+  const [showInviteModal, setShowInviteModal] = useState(false);
 
   const sortedParticipants = [...challenge.participants].sort(
     (a, b) => a.current_time_minutes - b.current_time_minutes
@@ -44,6 +46,14 @@ export default function ChallengeOngoing({
 
   const handleTabChange = (tab: "current" | "past") => {
     setActiveTab(tab);
+  };
+
+  const handleInviteClick = () => {
+    setShowInviteModal(true);
+  };
+
+  const handleCloseInviteModal = () => {
+    setShowInviteModal(false);
   };
 
   return (
@@ -112,7 +122,11 @@ export default function ChallengeOngoing({
                   <div className='text-gray-900 text-3xl font-medium leading-10'>
                     {formatTime(currentUser?.current_time_minutes || 0)}
                   </div>
-                  <div className='bg-indigo-300 rounded-2xl px-3 py-2 flex items-center gap-2'>
+                  <button
+                    type='button'
+                    onClick={handleInviteClick}
+                    className='px-[12px] py-[6px] bg-indigo-300 rounded-2xl inline-flex justify-center items-center gap-0.5 overflow-hidden hover:bg-indigo-400 transition-colors'
+                  >
                     <Image
                       src='/images/logos/AddPeople.svg'
                       alt='친구추가'
@@ -123,7 +137,7 @@ export default function ChallengeOngoing({
                     <span className='text-blue-700 text-xs font-medium'>
                      친구 초대
                     </span>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -280,6 +294,12 @@ export default function ChallengeOngoing({
           )}
         </div>
       </div>
+              {showInviteModal && (
+          <InviteFriendModal
+            onClose={handleCloseInviteModal}
+            inviteUrl={challenge.invite_url || ""}
+          />
+        )}
     </div>
   );
 }

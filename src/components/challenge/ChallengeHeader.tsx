@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { CurrentChallenge } from "@/lib/challenge";
 import ChallengeFullModal from "./ChallengeFullModal";
-import InviteFriendModal from "./InviteFriendModal";
 
 interface ChallengeHeaderProps {
   hasChallenge: boolean;
@@ -13,27 +12,13 @@ interface ChallengeHeaderProps {
 }
 
 export default function ChallengeHeader({
-  hasChallenge,
-  challengeData,
+  hasChallenge
 }: ChallengeHeaderProps) {
   const router = useRouter();
-  const [showInviteModal, setShowInviteModal] = useState(false);
   const [showFullModal, setShowFullModal] = useState(false);
 
   const handleSettingClick = () => {
     router.push("/setting");
-  };
-
-  const handleAddClick = () => {
-    if ((challengeData?.participants?.length ?? 0) >= 6) {
-      setShowFullModal(true);
-    } else {
-      setShowInviteModal(true);
-    }
-  };
-
-  const handleCloseInviteModal = () => {
-    setShowInviteModal(false);
   };
 
   const handleCloseFullModal = () => {
@@ -52,14 +37,6 @@ export default function ChallengeHeader({
             priority
           />
           <div className='flex items-center gap-2'>
-            <button type='button' onClick={handleAddClick}>
-              <Image
-                src='/images/logos/Add.svg'
-                alt='Add'
-                width={24}
-                height={24}
-              />
-            </button>
             <button type='button' onClick={handleSettingClick}>
               <Image
                 src='/images/logos/Setting2.svg'
@@ -70,13 +47,6 @@ export default function ChallengeHeader({
             </button>
           </div>
         </div>
-
-        {showInviteModal && (
-          <InviteFriendModal
-            onClose={handleCloseInviteModal}
-            inviteUrl={challengeData?.invite_url || ""}
-          />
-        )}
 
         {showFullModal && <ChallengeFullModal onClose={handleCloseFullModal} />}
       </>

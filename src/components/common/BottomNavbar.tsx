@@ -12,9 +12,9 @@ export default function BottomNavbar() {
   const isRecordActive = pathname === "/record";
 
   return (
-    <div className='w-full pb-4 absolute bottom-0 left-0 right-0 z-[9999]'>
-      <div className='max-w-[272px] mx-auto'>
-        <div className='w-full px-4 bg-white rounded-[32px] outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-between items-center'>
+    <div className='fixed bottom-0 left-0 right-0 z-[9999] pb-safe-area-inset-bottom'>
+      <div className='max-w-[272px] mx-auto px-4 pb-4'>
+        <div className='w-full bg-white rounded-[32px] outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-between items-center shadow-lg'>
           <button
             type='button'
             onClick={() => router.push("/challenge")}
