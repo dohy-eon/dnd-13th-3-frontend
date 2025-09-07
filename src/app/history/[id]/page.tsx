@@ -8,6 +8,16 @@ interface ChallengeDetailPageProps {
   }>;
 }
 
+// 정적 빌드를 위한 generateStaticParams 함수
+export async function generateStaticParams() {
+  // 빈 배열을 반환하여 모든 동적 라우트를 빌드 시점에 생성하지 않음
+  // 런타임에 동적으로 처리됨
+  return [];
+}
+
+// 정적 빌드에서 동적 라우트 허용
+export const dynamicParams = true;
+
 export default async function ChallengeDetailPage({
   params,
 }: ChallengeDetailPageProps) {

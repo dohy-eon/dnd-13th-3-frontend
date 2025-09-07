@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const dynamic = "auto";
 
 import { ChallengeHistoryClient } from "@/components/challenge";
 import { getChallengeHistory } from "@/lib/api/challenge";

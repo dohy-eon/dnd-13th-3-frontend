@@ -6,9 +6,8 @@ import {
 } from "@/lib/api/screentime";
 import { getUserProfile } from "@/lib/api/user";
 
-// Ensure this page is rendered per request so cookies-based API calls work
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Static export compatible
+export const dynamic = "auto";
 
 // Default screen time data structure
 const defaultScreenTimeData = {
