@@ -1,8 +1,11 @@
 "use client";
 
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { Browser } from "@capacitor/browser";
+import { Capacitor } from "@capacitor/core";
+import { loginWithGoogle } from "@/lib/api/auth";
 import { OAUTH_START_URL } from "@/lib/config";
+import clsx from "clsx";
 
 interface GoogleLoginButtonProps {
   onClick?: () => void;
@@ -10,15 +13,54 @@ interface GoogleLoginButtonProps {
 
 export default function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 500);
     return () => clearTimeout(timer);
   }, []);
 
-  const handleClick = () => {
+  const handleNativeLogin = async () => {
+    // 디버깅을 위한 플랫폼 정보 출력
+    console.log("Capacitor.isNativePlatform():", Capacitor.isNativePlatform());
+    console.log("Capacitor.getPlatform():", Capacitor.getPlatform());
+    console.log("User Agent:", navigator.userAgent);
+    
+    if (!Capacitor.isNativePlatform()) {
+      console.log("웹 환경에서 실행 중 - 기존 방식 사용");
+      // 웹에서는 기존 방식 사용
+      window.location.replace(OAUTH_START_URL);
+      return;
+    }
+    
+    console.log("네이티브 환경에서 실행 중 - Capacitor Browser 사용");
+
+    setIsLoading(true);
     onClick?.();
-    window.location.replace(OAUTH_START_URL);
+
+    try {
+      // 네이티브 앱임을 백엔드에 알리기 위한 파라미터 추가
+      const oauthUrl = `${OAUTH_START_URL}?is_native_app=true&platform=${Capacitor.getPlatform()}`;
+      console.log("Opening OAuth URL:", oauthUrl);
+
+      // 네이티브 앱에서 OAuth 플로우 시작
+      await Browser.open({
+        url: oauthUrl,
+        windowName: "_self",
+        presentationStyle: "popover",
+      });
+
+      console.log("Browser opened successfully");
+
+      // OAuth 콜백은 웹 페이지에서 처리되고, 
+      // 앱으로 돌아오는 것은 URL 스킴을 통해 처리됨
+
+    } catch (error) {
+      console.error("네이티브 로그인 오류:", error);
+      alert(error instanceof Error ? error.message : "로그인 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,9 +76,11 @@ export default function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
           type='button'
           className={clsx(
             "w-full flex items-center justify-center gap-3 bg-white py-3 px-4 rounded-xl",
-            "hover:shadow-md transition-all duration-200"
+            "hover:shadow-md transition-all duration-200",
+            isLoading && "opacity-50 cursor-not-allowed"
           )}
-          onClick={handleClick}
+          onClick={handleNativeLogin}
+          disabled={isLoading}
         >
           <div className='flex-shrink-0 w-5 h-5'>
             <svg
@@ -64,7 +108,9 @@ export default function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
               <path fill='none' d='M0 0h48v48H0z' />
             </svg>
           </div>
-          <span className='text-sm font-semibold'>Google로 로그인</span>
+          <span className='text-sm font-semibold'>
+            {isLoading ? "로그인 중..." : "Google로 로그인"}
+          </span>
         </button>
       </div>
     </div>

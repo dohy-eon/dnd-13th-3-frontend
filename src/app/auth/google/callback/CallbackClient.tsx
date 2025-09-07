@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { loginWithGoogle } from "@/lib/api/auth";
+import { Capacitor } from "@capacitor/core";
 
 export default function CallbackClient() {
   const router = useRouter();
@@ -36,8 +37,15 @@ export default function CallbackClient() {
         // biome-ignore lint/suspicious/noDocumentCookie: SSR을 위해 필요
         document.cookie = `refreshToken=${res.refreshToken}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Strict`;
 
-        // 기본적으로 온보딩으로 이동
-        router.replace("/onboarding");
+        // 네이티브 앱인지 확인
+        if (Capacitor.isNativePlatform()) {
+          console.log("네이티브 앱에서 로그인 완료 - 앱으로 돌아가기");
+          // 앱 스킴을 사용하여 앱으로 돌아가기
+          window.location.href = "minu://auth/success";
+        } else {
+          // 웹에서는 온보딩으로 이동
+          router.replace("/onboarding");
+        }
       } catch (e: unknown) {
         const errorMessage =
           e instanceof Error
